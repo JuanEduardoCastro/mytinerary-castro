@@ -5,8 +5,8 @@ import { NavLink } from "react-router-dom"
 
 const Header = () => {
     return (
-        <header className="flex justify-between bg-indigo-600 bg-opacity-90 w-full ">
-            <div className="flex items-center px-8 gap-3 text-4xl font-bold tracking-wide">
+        <header className="bg-indigo-300 bg-opacity-60 flex justify-between w-full ">
+            <div className="flex items-center px-8 gap-3 text-4xl font-bold tracking-wider">
                 <img src= {logo} className="w-24 h-24 m-1"/>
                 <h1>Mytinerary</h1>
             </div>
