@@ -1,5 +1,4 @@
-import logo from "./assetsComponents/logo_mytinerary.png"
-import { NavLink } from "react-router-dom"
+import { Link, NavLink } from "react-router-dom"
 
 
 
@@ -7,7 +6,7 @@ const Header = () => {
     return (
         <header className="bg-indigo-300 bg-opacity-60 flex justify-between w-full ">
             <div className="flex items-center px-8 gap-3 text-4xl font-bold tracking-wider">
-                <img src= {logo} className="w-24 h-24 m-1"/>
+                <img src="/assets/logo_mytinerary.png" className="w-24 h-24 m-1"/>
                 <h1>Mytinerary</h1>
             </div>
             <nav className="flex items-center px-8 gap-4 text-xl">
@@ -15,13 +14,12 @@ const Header = () => {
                     <p>Home</p>
                 </NavLink>
                 <NavLink to="/cities">
-                    <p>Ciudades</p>
+                    <p>Cities</p>
                 </NavLink>
-                {/* <NavLink>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-                </NavLink> */}
+          {      <Link>
+                    <img src="/assets/login-icon-01.png" className="w-12 h-12 m-1"/>
+                </Link>}
+            
             </nav>
         </header>
     )
