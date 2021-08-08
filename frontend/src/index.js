@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-/* import "/swiper/swiper-bundle.css"; */
 import './index.css';
 import App from './App';
 
