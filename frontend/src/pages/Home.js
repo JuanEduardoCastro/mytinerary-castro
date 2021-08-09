@@ -8,7 +8,7 @@ import SwiperCore, { Navigation, Pagination, Autoplay, }from "swiper";
 
 SwiperCore.use([Navigation, Pagination, Autoplay, ]); 
 
-const fotos = [
+const citiesImg = [
     [ {ubicacion: "hong_kong_06.jpeg", nombre: "Hong Kong"},
     {ubicacion: "bangkok02.jpeg", nombre: "Bangkok"},
     {ubicacion: "macau05.jpeg", nombre: "Macau"},
@@ -32,8 +32,8 @@ export default class Home extends React.Component {
                     <Hero />    
                 </div>
                 <div className="m-2 md:m-20">
-                    <div className="text-center text-6xl mb-12">
-                        <h2>Popular MYtineraries</h2>
+                    <div className="carouselText text-center text-6xl mb-6 mt-6 md:mb-12 md:mr-8">
+                        <h2>Popular Mytineraries</h2>
                     </div>
                     <React.Fragment>
                         <Swiper 
@@ -41,17 +41,17 @@ export default class Home extends React.Component {
                         grabCursor={true}
                         navigation 
                         pagination={{"clickable": true}}
-                        spaceBetween={30} 
+                        spaceBetween={20} 
                         slidesPerView={1}
                         loop={true}
                         autoplay={{"dealy": 4000, "disableOnInteraction": false}}
                         >
-                            {fotos.map((foto, index) => (
+                            {citiesImg.map((cities, index) => (
                                 <SwiperSlide key={`slide-${index}`} >
-                                    <div className="w-full h-full p-12 grid grid-cols-2 gap-3">
-                                        {foto.map((ciudad, index) => (
-                                            <div style={{backgroundImage: `url("/assets/cities/${ciudad.ubicacion}")`}} alt={`slide ${ciudad.nombre}`} key={`slide-${index}`} className="text-white font-medium text-3xl md:text-5xl backdrop-filter backdrop-opacity-80  bg-center bg-cover rounded-md flex justify-start items-end pl-8 pb-8 fotoText hover:opacity-50" >
-                                                <h2>{ciudad.nombre}</h2>
+                                    <div className="w-full h-full p-12 grid grid-cols-1 md:grid-cols-2 gap-3">
+                                        {cities.map((city, index) => (
+                                            <div style={{backgroundImage: `url("/assets/cities/${city.ubicacion}")`}} alt={`slide ${city.nombre}`} key={`slide-${index}`} className="text-white font-medium text-3xl md:text-5xl backdrop-filter backdrop-opacity-80  bg-center bg-cover rounded-md flex justify-start items-end px-8 pb-8 fotoText hover:opacity-50" >
+                                                <h2>{city.nombre}</h2>
                                             </div>
                                         ))}
                                     </div>

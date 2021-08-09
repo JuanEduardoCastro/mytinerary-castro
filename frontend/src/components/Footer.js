@@ -9,7 +9,6 @@ const Footer = () => {
                     <h1>Mytinerary</h1>
                 </div>
                 <div className="flex flex-row justify-center me:flex md:flex-col md:justify-start gap-8 text-center">
-                    {/* menu */}
                     <div className="text-3xl">
                         <h2>Menu</h2>
                     </div>
@@ -21,24 +20,23 @@ const Footer = () => {
                             <h2>Cities</h2>
                         </NavLink>
                     </div>
-
                 </div>
                 <div>
                     {/* redes sociales */}
-                    <div className="flex flex-row md:flex md:flex-col gap-8">
-                        <Link to="">
-                            <img src="/assets/fb_icon.png" alt="facebook" className="w-14 h-14"/>
-                        </Link>
-                        <Link to="">
-                            <img src="/assets/ig_icon.png" alt="instagram" className="w-14 h-14"/>
-                        </Link>
-                        <Link to="">
-                            <img src="/assets/twt_icon.png" alt="tweeter" className="w-14 h-14"/>
-                        </Link>
+                    <div className="flex flex-row md:flex md:flex-col md:justify-center gap-8">
+                        <div>
+                            <a href="https://www.facebook.com" target="_blank"><img src="/assets/fb_icon.png" alt="facebook" className="w-14 h-14"/></a>
+                        </div>
+                        <div>
+                            <a href="https://www.instagram.com/?hl=es" target="_blank"><img src="/assets/ig_icon.png" alt="instagram" className="w-14 h-14"/></a>
+                        </div>
+                        <div>
+                            <a href="https://twitter.com/?lang=es" target="_blank"><img src="/assets/twt_icon.png" alt="tweeter" className="w-14 h-14"/></a>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div className="text-center pb-4">
+            <div className="text-center pb-4 text-indigo-700">
                 <h2>Juan Eduardo Castro Trujillo - MYtinerarie proyect 2021 - All rights reserved</h2>
             </div>
         </footer>
