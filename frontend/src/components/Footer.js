@@ -13,10 +13,10 @@ const Footer = () => {
                         <h2>Menu</h2>
                     </div>
                     <div className="flex flex-row items-end gap-12 md:flex md:flex-col md:items-start md:gap-6 text-xl">
-                        <NavLink exact to="/" activeClassName="text-indigo-700" className="hover:text-indigo-700">
+                        <NavLink exact to="/" activeclasscame="text-indigo-700" className="hover:text-indigo-700">
                             <h2>Home</h2>
                         </NavLink>
-                        <NavLink to="/cities" activeClassName="text-indigo-700" className="hover:text-indigo-700">
+                        <NavLink to="/cities" activeclasscame="text-indigo-700" className="hover:text-indigo-700">
                             <h2>Cities</h2>
                         </NavLink>
                     </div>
@@ -24,15 +24,15 @@ const Footer = () => {
                 <div>
                     {/* redes sociales */}
                     <div className="flex flex-row md:flex md:flex-col md:justify-center gap-8">
-                        <div>
-                            <a href="https://www.facebook.com" target="_blank"><img src="/assets/fb_icon.png" alt="facebook" className="w-14 h-14"/></a>
-                        </div>
-                        <div>
-                            <a href="https://www.instagram.com/?hl=es" target="_blank"><img src="/assets/ig_icon.png" alt="instagram" className="w-14 h-14"/></a>
-                        </div>
-                        <div>
-                            <a href="https://twitter.com/?lang=es" target="_blank"><img src="/assets/twt_icon.png" alt="tweeter" className="w-14 h-14"/></a>
-                        </div>
+                        <Link to="">
+                            <img src="/assets/fb_icon.png" alt="facebook" className="w-14 h-14"/>
+                        </Link>
+                        <Link to="">
+                            <img src="/assets/ig_icon.png" alt="instagram" className="w-14 h-14"/>
+                        </Link>
+                        <Link to="">
+                            <img src="/assets/twt_icon.png" alt="tweeter" className="w-14 h-14"/>
+                        </Link>
                     </div>
                 </div>
             </div>

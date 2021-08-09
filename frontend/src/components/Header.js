@@ -1,7 +1,5 @@
 import { Link, NavLink } from "react-router-dom"
 
-
-
 const Header = () => {
     return (
         <header className="bg-indigo-300 bg-opacity-60 w-full ">
@@ -12,11 +10,17 @@ const Header = () => {
                 </div>
                 <div className="flex justify-between md:justify-end items-center w-full py-3 px-1 md:px-4 gap-4">
                     <div className="flex gap-4">
-                        <NavLink exact to="/" activeClassName="text-indigo-700" className="hover:text-indigo-700"><p>Home</p></NavLink>
-                        <NavLink to="/cities" activeClassName="text-indigo-700" className="hover:text-indigo-700"><p>Cities</p></NavLink>
+                        <NavLink exact to="/" activeclassname="text-indigo-700" className="hover:text-indigo-700"><p>Home</p></NavLink>
+                        <NavLink to="/cities" activeclassname="text-indigo-700" className="hover:text-indigo-700"><p>Cities</p></NavLink>
                     </div>
-                    <div>
-                        <Link to=""><img src="/assets/login-icon-01.png" alt="logo icon" className="w-12 h-12 m-1"/></Link>
+                    <div className="flex items-center">
+                        <div className="flex gap-3">
+                            <Link to="" activeclassname="text-indigo-700" className="hover:text-indigo-700"><p>Log in</p></Link>
+                            <Link to="" activeclassname="text-indigo-700" className="hover:text-indigo-700"><p>Sign up</p></Link>
+                        </div>
+                        <div className="pl-2 m-1">
+                            <Link to=""><img src="/assets/login-icon-01.png" alt="logo icon" className="w-12 h-12"/></Link>
+                        </div>
                     </div>
                 </div>
             </nav>

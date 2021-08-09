@@ -4,7 +4,7 @@ import Footer from "../components/Footer";
 import Hero from "../components/Hero";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
-import SwiperCore, { Navigation, Pagination, Autoplay, }from "swiper";
+import SwiperCore, { Navigation, Pagination, Autoplay }from "swiper";
 
 SwiperCore.use([Navigation, Pagination, Autoplay, ]); 
 
@@ -35,30 +35,27 @@ export default class Home extends React.Component {
                     <div className="carouselText text-center text-6xl mb-6 mt-6 md:mb-12 md:mr-8">
                         <h2>Popular Mytineraries</h2>
                     </div>
-                    <React.Fragment>
-                        <Swiper 
-                        id="main" 
-                        grabCursor={true}
-                        navigation 
-                        pagination={{"clickable": true}}
-                        spaceBetween={20} 
-                        slidesPerView={1}
-                        loop={true}
-                        autoplay={{"dealy": 4000, "disableOnInteraction": false}}
-                        >
-                            {citiesImg.map((cities, index) => (
-                                <SwiperSlide key={`slide-${index}`} >
-                                    <div className="w-full h-full p-12 grid grid-cols-1 md:grid-cols-2 gap-3">
-                                        {cities.map((city, index) => (
-                                            <div style={{backgroundImage: `url("/assets/cities/${city.ubicacion}")`}} alt={`slide ${city.nombre}`} key={`slide-${index}`} className="text-white font-medium text-3xl md:text-5xl backdrop-filter backdrop-opacity-80  bg-center bg-cover rounded-md flex justify-start items-end px-8 pb-8 fotoText hover:opacity-50" >
-                                                <h2>{city.nombre}</h2>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </SwiperSlide>
-                            ))}
-                        </Swiper>
-                    </React.Fragment>
+                    <Swiper 
+                    id="main" 
+                    grabCursor={true}
+                    navigation 
+                    pagination={{"clickable": true}}
+                    spaceBetween={10} 
+                    slidesPerView={1}
+                    loop={true}
+                    autoplay={{"dealy": 4000, "disableOnInteraction": false}}>
+                        {citiesImg.map((cities, index) => (
+                            <SwiperSlide key={`slide-${index}`} >
+                                <div className="w-full h-full p-12 grid grid-cols-1 md:grid-cols-2 gap-3">
+                                    {cities.map((city, index) => (
+                                        <div style={{backgroundImage: `url("/assets/cities/${city.ubicacion}")`}} alt={`slide ${city.nombre}`} key={`slide-${index}`} className="text-white font-medium text-3xl md:text-5xl backdrop-filter backdrop-opacity-80  bg-center bg-cover rounded-md flex justify-start items-end px-8 pb-8 fotoText hover:opacity-50" >
+                                            <h2>{city.nombre}</h2>
+                                        </div>
+                                    ))}
+                                </div>
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
                 </div>
                 <Footer />
             </>

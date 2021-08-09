@@ -11,11 +11,10 @@ const Hero = () => {
             </div>
             <NavLink to="/cities">
                 <div className="shadow-xl">
-                    <button className="rounded-md p-4 bg-indigo-700 ring-1 ring-indigo-600 bg-opacity-90 shadow-2xl cursor-pointer text-xl hover:bg-indigo-900 animate-pulse duration-1000">Let´s find out together!</button>
+                    <button className="rounded-md p-4 bg-indigo-600 ring-1 ring-indigo-500 bg-opacity-90 shadow-2xl cursor-pointer text-2xl italic hover:bg-indigo-800 animate-pulse duration-1000">Let´s find out together!</button>
                 </div>
             </NavLink>
         </div>
-
     )
 }
 
