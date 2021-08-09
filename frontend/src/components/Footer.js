@@ -8,17 +8,23 @@ const Footer = () => {
                     <img src="/assets/logo_mytinerary.png" alt="logo mytinenrary" className="w-28 h-28 m-1"/>
                     <h1>Mytinerary</h1>
                 </div>
-                <div className="flex flex-row justify-center me:flex md:flex-col md:justify-start gap-8 text-center">
-                    <div className="text-3xl">
+                <div className="flex flex-row justify-center me:flex md:flex-col md:justify-start gap-6 md:gap-6 text-center">
+                    <div className=" text-2xl md:text-3xl">
                         <h2>Menu</h2>
                     </div>
-                    <div className="flex flex-row items-end gap-12 md:flex md:flex-col md:items-start md:gap-6 text-xl">
+                    <div className="flex flex-row items-end gap-6 md:gap-6 md:flex md:flex-col md:items-start md:gap-6 text-lg md:text-xl">
                         <NavLink exact to="/" activeclasscame="text-indigo-700" className="hover:text-indigo-700">
                             <h2>Home</h2>
                         </NavLink>
                         <NavLink to="/cities" activeclasscame="text-indigo-700" className="hover:text-indigo-700">
                             <h2>Cities</h2>
                         </NavLink>
+                        <Link to="" className="hover:text-indigo-700">
+                            <h2>Log in</h2>
+                        </Link>
+                        <Link to="" className="hover:text-indigo-700">
+                            <h2>Sign up</h2>
+                        </Link>
                     </div>
                 </div>
                 <div>
