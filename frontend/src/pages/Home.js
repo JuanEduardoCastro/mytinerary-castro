@@ -17,7 +17,7 @@ const citiesImg = [
     {ubicacion: "paris01.jpeg", nombre: "Paris"},  
     {ubicacion: "dubai04.jpeg", nombre: "Dubai"},  
     {ubicacion: "delhi05.jpeg", nombre: "Delhi"} ],
-    [ {ubicacion: "istambul01.jpeg", nombre: "Istambul"},  
+    [ {ubicacion: "istambul01.jpeg", nombre: "Istanbul"},  
     {ubicacion: "kualalumpur01.jpeg", nombre: "Kuala Lumpur"},  
     {ubicacion: "new_york02.jpeg", nombre: "New York"},  
     {ubicacion: "shenzhen01.jpeg", nombre: "Shenzhen"} ]
@@ -48,8 +48,14 @@ export default class Home extends React.Component {
                             <SwiperSlide key={`slide-${index}`} >
                                 <div className="w-full h-full p-12 grid grid-cols-1 md:grid-cols-2 gap-3">
                                     {cities.map((city, index) => (
-                                        <div style={{backgroundImage: `url("/assets/cities/${city.ubicacion}")`}} alt={`slide ${city.nombre}`} key={`slide-${index}`} className="text-white font-medium text-3xl md:text-5xl backdrop-filter backdrop-opacity-80  bg-center bg-cover rounded-md flex justify-start items-end px-8 pb-8 fotoText hover:opacity-50" >
-                                            <h2>{city.nombre}</h2>
+                                        <div 
+                                        style={{backgroundImage: `url("/assets/cities/${city.ubicacion}")`}} 
+                                        alt={`slide ${city.nombre}`} 
+                                        key={`slide-${index}`} 
+                                        className="text-white font-medium text-3xl hover:text-7xl md:text-5xl backdrop-filter backdrop-opacity-80  bg-center bg-cover rounded-md flex justify-start items-end px-8 pb-8 fotoText hover:opacity-50 " >
+                                            <div className="hover:text-7xl"> 
+                                                <h2>{city.nombre}</h2>
+                                            </div>
                                         </div>
                                     ))}
                                 </div>

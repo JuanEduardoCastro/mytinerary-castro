@@ -1,7 +1,8 @@
 import React from "react";
-import Home from "../src/pages/Home"
-import Cities from "../src/pages/Cities"
+import Home from "./pages/Home"
+
 import {BrowserRouter, Route, Switch} from "react-router-dom"
+import Cities from "./pages/Cities";
 
 export default class App extends React.Component {
   render() {
