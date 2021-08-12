@@ -4,7 +4,7 @@
 
 body, html {
   height: 100%;
-  font-family: Georama;
+  font-family: "Georama";
 }
 
 .swiper-container {
@@ -13,10 +13,14 @@ body, html {
 }
 
 .fotoText, .carouselText {
-  text-shadow: 4px 4px 33px rgba(0, 0, 0, 0.377);
+  text-shadow: 3px 4px 33px rgba(0, 0, 0, 0.377);
 }
 
 .heroText {
   text-shadow: -1px 2px 29px rgba(0, 0, 0, 0.678);
+}
+
+.permanentMarkerFont {
+  font-family: "Permanent Marker";
 }
 

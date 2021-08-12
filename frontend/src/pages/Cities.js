@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import Header from "../components/Header";
 import axios from "axios";
 
 const Cities = () => {
@@ -12,6 +13,7 @@ const Cities = () => {
         setLoader(true)
         axios.get("http://localhost:4000/api/information/cities")
         .then((response) => {
+            console.log(response)
             setLoader(false)
             setCitiesList(response.data.response)
             })
@@ -27,6 +29,7 @@ const Cities = () => {
 
     return (
         <div /* style={{backgroundImage: `url("/assets/background01_edit.jpg")`}} */ alt="background living" className="w-full  flex flex-col justify-between bg-top bg-cover">
+            <Header />
             <div className="w-full h-full bg-indigo-300 bg-opacity-60 flex justify-center items-center">
                 <input 
                 type="text" 
@@ -39,11 +42,11 @@ const Cities = () => {
                 {citiesList.map((city) => console.log(city))}
                 
                 {citiesList.filter(city => (city.cityName).toLowerCase().startsWith(letter)).map((filteredCity, index) => (
-                    <Link to={`/city/${filteredCity.id}`} >
+                    <Link to={`/city/${filteredCity._id}`} >
                         <div 
                         style={{backgroundImage: `url("/assets/citiesImg/${filteredCity.imgSource}")`}} 
                         alt={filteredCity.cityName} 
-                        key={index}
+                        key={filteredCity._id}
                         className="w-10/12 h-40 bg-cover bg-center mx-auto my-2.5 rounded-md"
                         >
                             <div className="text-white text-3xl">

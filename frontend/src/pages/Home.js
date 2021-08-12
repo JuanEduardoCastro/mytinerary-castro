@@ -1,5 +1,5 @@
 import React from "react";
-
+import Header from "../components/Header";
 import Hero from "../components/Hero";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
@@ -25,12 +25,13 @@ const citiesImg = [
 export default class Home extends React.Component {
     render() {
         return (
-            <>
+            <div className="bg-gradient-to-b from-indigo-300">
                 <div style={{backgroundImage: `url("/assets/background02_edit.jpeg")`}} alt="background plane" className="bg-top bg-cover bg-opacity-70">
+                    <Header />
                     <Hero />    
                 </div>
                 <div className="m-2 md:m-20">
-                    <div className="carouselText text-center text-6xl mb-6 mt-6 md:mb-12 md:mr-8">
+                    <div className="carouselText text-center text-6xl mb-6 mt-6 md:mb-12 md:mr-8 permanentMarkerFont ">
                         <h2>Popular Mytineraries</h2>
                     </div>
                     <Swiper 
@@ -61,7 +62,7 @@ export default class Home extends React.Component {
                         ))}
                     </Swiper>
                 </div>
-            </>
+            </div>
         )
     }
 }

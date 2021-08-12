@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Header from "../components/Header";
 import axios from "axios";
 
 const City = (props) => {
@@ -8,16 +9,17 @@ const City = (props) => {
         axios.get(`http://localhost:4000/api/information/city/${props.match.params.id}`)
         .then((response) => setCity(response.data.response))
     }, [props.match.params.id])
-    console.log(city)
+    console.log(props)
     
     return (
-        <>
+        <div className="h-screen">
             <div 
             style={{backgroundImage: `url("/assets/citiesImg/${city.imgSource}")`}}
             alt={city.cityName}
-            key={city.id}
-            className="w-full h-60 bg-center bg-cover"
+            key={city._id}
+            className="w-full h-full bg-center bg-cover"
             > 
+                <Header />
                 <div className="text-white text-3xl">
                     <h2>{city.cityName}</h2>
                     <h2>{city.countryName}</h2>
@@ -26,7 +28,7 @@ const City = (props) => {
             <div>
                 <h2>Underconstruction...</h2>
             </div>
-        </>
+        </div>
     )
 }
 
