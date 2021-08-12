@@ -1,12 +1,11 @@
 import React from "react";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+
 import Hero from "../components/Hero";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 import SwiperCore, { Navigation, Pagination, Autoplay }from "swiper";
 
-SwiperCore.use([Navigation, Pagination, Autoplay, ]); 
+SwiperCore.use([Navigation, Pagination, Autoplay ]); 
 
 const citiesImg = [
     [ {ubicacion: "hong_kong_06.jpeg", nombre: "Hong Kong"},
@@ -28,7 +27,6 @@ export default class Home extends React.Component {
         return (
             <>
                 <div style={{backgroundImage: `url("/assets/background02_edit.jpeg")`}} alt="background plane" className="bg-top bg-cover bg-opacity-70">
-                    <Header />
                     <Hero />    
                 </div>
                 <div className="m-2 md:m-20">
@@ -63,7 +61,6 @@ export default class Home extends React.Component {
                         ))}
                     </Swiper>
                 </div>
-                <Footer />
             </>
         )
     }
