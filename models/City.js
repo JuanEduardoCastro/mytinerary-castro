@@ -9,6 +9,7 @@ const citySchema = new mongoose.Schema({
     currency: {type: String}, 
     codeISO: {type: String}, 
     currencySymbol: {type: String},  
+    age: {type: Number}
 })
 
 const City = mongoose.model("city", citySchema)

@@ -22,19 +22,7 @@ const citiesImg = [
     {ubicacion: "shenzhen01.jpeg", nombre: "Shenzhen"} ]
 ]
 
-export default class Home extends React.Component {
-    render() {
-        return (
-            <div className="bg-gradient-to-b from-indigo-300">
-                <div style={{backgroundImage: `url("/assets/background02_edit.jpeg")`}} alt="background plane" className="bg-top bg-cover bg-opacity-70">
-                    <Header />
-                    <Hero />    
-                </div>
-                <div className="m-2 md:m-20">
-                    <div className="carouselText text-center text-6xl mb-6 mt-6 md:mb-12 md:mr-8 permanentMarkerFont ">
-                        <h2>Popular Mytineraries</h2>
-                    </div>
-                    <Swiper 
+var carousel = <Swiper 
                     id="main" 
                     grabCursor={true}
                     navigation 
@@ -42,7 +30,7 @@ export default class Home extends React.Component {
                     spaceBetween={10} 
                     slidesPerView={1}
                     loop={true}
-                    autoplay={{"dealy": 4000, "disableOnInteraction": false}}>
+                    autoplay={{"dealy": 5000, "disableOnInteraction": false, pauseOnMouseEnter: true}}>
                         {citiesImg.map((cities, index) => (
                             <SwiperSlide key={`slide-${index}`} >
                                 <div className="w-full h-full p-12 grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -51,7 +39,7 @@ export default class Home extends React.Component {
                                         style={{backgroundImage: `url("/assets/cities/${city.ubicacion}")`}} 
                                         alt={`slide ${city.nombre}`} 
                                         key={`slide-${index}`} 
-                                        className="text-white font-medium text-3xl hover:text-7xl md:text-5xl backdrop-filter backdrop-opacity-80  bg-center bg-cover rounded-md flex justify-start items-end px-8 pb-8 fotoText hover:opacity-50 " >
+                                        className="text-white font-medium text-3xl hover:text-7xl md:text-5xl backdrop-filter backdrop-opacity-80  bg-center bg-cover rounded-md flex justify-start items-end px-8 pb-8 fotoText hover:opacity-50 duration-300" >
                                             <div className="hover:text-7xl"> 
                                                 <h2>{city.nombre}</h2>
                                             </div>
@@ -61,6 +49,22 @@ export default class Home extends React.Component {
                             </SwiperSlide>
                         ))}
                     </Swiper>
+
+export default class Home extends React.Component {
+    render() {
+        return (
+            <div className="bg-gradient-to-b from-indigo-300">
+                <div style={{backgroundImage: `url("/assets/background02_edit.jpeg")`}} alt="background plane" className="bg-top bg-cover bg-opacity-70 ">
+                    <div className="bg-indigo-200 bg-opacity-40">
+                        <Header />
+                        <Hero />    
+                    </div>
+                </div>
+                <div className="m-2 md:m-20">
+                    <div className="carouselText text-center text-6xl mb-6 mt-6 md:mb-12 md:mr-8 permanentMarkerFont tracking-wider">
+                        <h2>Popular Mytineraries</h2>
+                    </div>
+                    {carousel}
                 </div>
             </div>
         )

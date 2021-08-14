@@ -1,19 +1,24 @@
 const City = require("../models/City")
 
-
-// const citiesList = []
-
 const citiesControllers = {           
 
-    getCities: (req, res) => {
-        City.find()
-        .then((cities) => res.json({ response: cities }))
-        .catch(err => res.json({ success: false, error: err}))
+    getCities: async (req, res) => {
+        try {
+            var cities = await City.find()
+            if (cities) {
+            res.json({ success: true, response: cities })
+            } else {
+                throw new Error("couldn´t get all documents")
+            }
+        } catch (error) {
+            res.json({ success: false, response: error.message})
+        }
     },
+    //catchea error
+    addCity: async (req, res) => {
+        try {
 
-    addCity: (req, res) => {
-        console.log(req.body)
-        const addCity = new City({
+        const city = new City({
             cityName: req.body.cityName, 
             countryName: req.body.countryName,
             imgSource: req.body.imgSource,
@@ -21,28 +26,62 @@ const citiesControllers = {
             currency: req.body.currency,
             codeISO: req.body.codesISO,
             currencySymbol: req.body.currencySymbol,
+            age: req.body.age 
         })
-        addCity.save()
-        .then(() => res.json({ success: true }))
-        .catch(err => res.json({ success: false, error: err}))
+        var addCity = await city.save()
+        if (addCity) {
+            res.json({ success: true })
+        } else {
+            throw new Error("Check the type and required of value in City")
+        }
+    } catch (error) {
+        res.json({ success: false, error: error})
+    }
+        // .then(() => res.json({ success: true }))
+        // .catch(error => res.json({ success: false, error: error}))
+    },
+    //catchea error
+    getCity: async (req, res) => {
+        try {
+            var city = await City.findOne({_id: req.params.id})
+            if (city) {
+                res.json({ success: true, response: city })
+            } else {
+                throw new Error("couldn´t get the document") 
+            }
+        } catch(error) {
+            res.json({success: false, response: error.message})
+        }
+        // City.findOne({_id: req.params.id})
+        // .then((city) => res.json({ response: city}))
+        // .catch(error => res.json({ success: false, error: error}))
     },
 
-    getCity: (req, res) => {
-        City.findOne({_id: req.params.id})
-        .then((city) => res.json({ response: city}))
-        .catch(err => res.json({ success: false, error: err}))
+    //catchea error
+    removeCity: async (req, res) => {
+        try {
+            var removeCity = await City.findOneAndDelete({_id: req.params.id})
+            if (removeCity) {
+                res.json({ success: true })
+            } else {
+                throw new Error("Couldn´t remove the document")
+            }
+        } catch (error) {
+            res.json({ success: false, error: error})
+        }
     },
-
-    removeCity: (req, res) => {
-        City.findOneAndDelete({_id: req.params.id})
-        .then(() => res.json({ success: true }))
-        .catch(err => res.json({ success: false, error: err}))
-    },
-
-    updateCity: (req, res) => {
-        City.findOneAndUpdate({_id: req.params.id}, {...req.body})
-        .then(() => res.json({ success: true}))
-        .catch(err => res.json({ success: false, error: err}))
+    //catchea error
+    updateCity: async (req, res) => {
+        try {
+            var updateCity = City.findOneAndUpdate({_id: req.params.id}, {...req.body})
+            if (updateCity) {
+                res.json({ success: true})
+            } else {
+                throw new Error("couldn´t update the document")
+            }
+        } catch (error) {
+            res.json({ success: false, error: error})
+        }
     }
 }
 

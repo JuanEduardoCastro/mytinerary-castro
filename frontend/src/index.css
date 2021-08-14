@@ -12,7 +12,11 @@ body, html {
   height: 90vh;
 }
 
-.fotoText, .carouselText {
+.fotoText {
+  text-shadow: 4px 4px 33px rgba(0, 0, 0, 0.377);
+}
+
+.carouselText {
   text-shadow: 3px 4px 33px rgba(0, 0, 0, 0.377);
 }
 
@@ -23,4 +27,3 @@ body, html {
 .permanentMarkerFont {
   font-family: "Permanent Marker";
 }
-
