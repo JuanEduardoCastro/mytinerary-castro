@@ -1,10 +1,10 @@
-import { Link, NavLink } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 import React, { useState, useEffect } from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBars, faUserCircle } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faUserCircle, faTimes } from '@fortawesome/free-solid-svg-icons'
 
 const Header = () => {
-    
+
     const [menuButton, setMenuButton] = useState(false)
     const [menuGuy, setMenuGuy] = useState(false)
     const [screenWidth, setScreenWidth] = useState(window.innerWidth)
@@ -39,7 +39,7 @@ const Header = () => {
                 <div className="w-full h-full flex justify-between md:justify-end items-start md:items-start pt-4 px-8">
                     <div className=" flex flex-col items-start justify-center gap- pt-2">
                         <div className="w-14 h-14 p-2 text-xl text-black block md:hidden">
-                            <FontAwesomeIcon icon={faBars} onClick={toggleMenuButton} size="2x" />
+                            <FontAwesomeIcon icon={menuButton ? faTimes : faBars} onClick={toggleMenuButton} size="2x" />
                         </div>
                         {(menuButton || screenWidth > 768) && (
                             <ul className=" flex flex-col md:flex md:flex-row text-center list-none gap-4 text-xl cursor-pointer py-2.5 px-2 md:pt-4 overflow-visible text-bolder">

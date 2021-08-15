@@ -2,7 +2,7 @@ import React from "react";
 import Home from "./pages/Home";
 import City from "./pages/City";
 import Error404 from "./pages/Error404";
-
+import Loader from "./components/Loader"
 import Footer from "./components/Footer";
 
 
@@ -17,7 +17,8 @@ export default class App extends React.Component {
           <Route exact path="/" component={Home} />
           <Route path="/cities" component={Cities} />
           <Route path="/city/:id" component={City} />
-          <Route paths="/error404" component={Error404} />
+          <Route path="/error404" component={Error404} />
+          <Route path="/loader" component={Loader} />
           <Redirect to="/error404" />
         </Switch>
         <Footer/>
