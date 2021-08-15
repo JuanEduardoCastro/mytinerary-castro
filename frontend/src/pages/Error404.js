@@ -1,13 +1,26 @@
 import Header from "../components/Header";
+import { Link } from "react-router-dom";
+import React, { useLayoutEffect } from "react";
+
 
 const Error404 = () => {
+
+    useLayoutEffect(() => {
+        window.scrollTo(0,0)
+    })
+
     return (
         <>
             <div>
                 <Header />
-            </div>
-            <div>
-                <img src="/assets/error 404.png" />
+                <div className="w-full h-screen flex flex-col items-center justify-start">
+                    <img src="https://i.imgur.com/bjeuiBg.png?1" alt="error 404" className="py-4"/>
+                    <div className="flex flex-col items-center justify-center gap-4 text-2xl">
+                        <h2>Sorry, this page doesn´t exist or is no longer available.</h2>
+                        <h2>Go back to <Link exact to="/" ><span className="hover:text-indigo-700 permanentMarkerFont text-4xl"> Mytinerary </span></Link> home page.</h2>
+                    </div>
+                </div>
+                
             </div>
         </>    
     )   

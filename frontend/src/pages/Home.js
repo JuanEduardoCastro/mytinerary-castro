@@ -51,6 +51,12 @@ var carousel = <Swiper
                     </Swiper>
 
 export default class Home extends React.Component {
+
+    componentDidMount() {
+        window.scrollTo(0,0)
+    }
+
+
     render() {
         return (
             <div className="bg-gradient-to-b from-indigo-300">
