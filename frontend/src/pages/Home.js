@@ -54,7 +54,7 @@ export default class Home extends React.Component {
     render() {
         return (
             <div className="bg-gradient-to-b from-indigo-300">
-                <div style={{backgroundImage: `url("/assets/background02_edit.jpeg")`}} alt="background plane" className="bg-top bg-cover bg-opacity-70 ">
+                <div style={{backgroundImage: `url("https://i.imgur.com/zJKyzjj.jpg")`}} alt="background plane" className="bg-top bg-cover bg-opacity-70 ">
                     <div className="bg-indigo-200 bg-opacity-40">
                         <Header />
                         <Hero />    

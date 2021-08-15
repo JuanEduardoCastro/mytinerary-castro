@@ -32,56 +32,49 @@ const Cities = () => {
         setLetter(((e.target.value).toLowerCase().trim()))
     } 
 
+ 
     var cityFiltered = citiesList.filter(city => (city.cityName).toLowerCase().startsWith(letter)).map((filteredCity, index) => (
-                    <Link to={`/city/${filteredCity._id}`} className="flex justify-center w-full">
-                        <div className="relative flex items-center justify-center my-3 overflow-hidden shadow-xl w-10/12 h-80 rounded-md">
-                            <span 
-                            /* style={{backgroundImage: `url("/assets/citiesImg/${filteredCity.imgSource}")`}}  */
-                            alt={filteredCity.cityName} 
-                            key={filteredCity.index}
-                            className="absolute w-full h-full transition-scale duration-1000 ease-in-out transform bg-center bg-cover hover:scale-110 delay-200"
-                            /* className="w-10/12 h-40 bg-cover bg-center mx-auto my-2.5 rounded-md" */
-                            >
-                            <img 
-                            {src=`("/assets/citiesImg/${filteredCity.imgSource}")`}
-                            className="object-cover"
-                            />
-                            </span>
-                                    
-                            <span className="absolute w-full h-full transition-opacity duration-700 ease-in-out transform border border-black border-2 hover:opacity-60 hover:scale-75 delay-200">
-                            
-                            </span>
-                            <span className="absolute text-white text-3xl pl-4 pt-2 ">
-                                <h2>{filteredCity.cityName}</h2>
-                                <h2>{filteredCity.countryName}</h2>
-                            </span> 
-                        </div>
-                    </Link>
-                )) 
+        <Link to={`/city/${filteredCity._id}`} className="flex justify-center w-10/12 mx-auto">
+            {console.log(filteredCity.imgSource)}
+            {/* padre */} {/* intercambiar con el link */}
+            <div className="relative group flex items-center justify-center my-3 overflow-hidden shadow-md w-full h-64 rounded-md">
+                <div 
+                style={{backgroundImage: `url("${filteredCity.imgSource}")`}}  
+                alt={filteredCity.cityName} 
+                key={filteredCity.index}
+                className="absolute w-full h-full transition-all duration-1000 ease-in-out transform bg-center bg-cover group-hover:scale-125 delay-100"
+                >
+                </div>      
+                <div className="absolute w-full h-full transition-border duration-700 ease-in-out transform border border-black border-4 group-hover:opacity-70 group-hover:scale-90 delay-200 opacity-60">
+                    <div className="w-full h-full hover:bg-indigo-300">
+                        <div className="absolute text-white opacity-100 text-white text-4xl transition-text duration-700 transform easy-in-out hover:text-6xl pl-4 pt-2 ">
+                            <h2>{filteredCity.cityName}</h2>
+                            <h2>{filteredCity.countryName}</h2>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+        </Link>
+    )) 
 
     console.log(cityFiltered)
 
     return (
         <>
-        <div style={{backgroundImage: `url("/assets/background03.jpeg")`}} alt="background living" className="w-full h-60 flex flex-col justify-between bg-top bg-cover">
-            <Header />
-            <div className="w-full h-48 flex justify-center items-center">
-                <input 
-                type="text" 
-                name="filterCity"
-                placeholder="Find a city to explore" 
-                className="border border-indigo-700 focus:indigo-700 rounded-lg bg-white text-black text-4xl px-4 py-2 text-center " 
-                onChange={inputHandler} />                
+            <div style={{backgroundImage: `url("/assets/turismo04.jpeg")`}} alt="background living" className="w-full h-80 flex flex-col justify-between bg-top bg-cover">
+                <Header />
+                <div className="w-full h-48 flex justify-center items-center">
+                    <input 
+                    type="text" 
+                    name="filterCity"
+                    placeholder="Find a city to explore" 
+                    className="border border-indigo-700 focus:indigo-700 rounded-lg bg-white text-black text-4xl px-4 py-2 text-center " 
+                    onChange={inputHandler} />                
+                </div>
             </div>
-        </div>
-            <div className="">                
+            <div className="pt-2">                
                 {!cityFiltered.length < 1 ? cityFiltered : <h2>Sorry.. City found</h2> }
             </div>
-            {/* <div className="relative flex items-center justify-center m-3 overflow-hidden shadow-xl w-60 h-60 rounded-2xl">
-                <div className="absolute w-full h-full transition-all duration-500 ease-in-out transform bg-center bg-cover hover:scale-150" 
-                style={{backgroundImage: `url("/assets/background03.jpeg")`}}  ></div>
-                <div className="absolute text-5xl font-black transition-all duration-500 ease-in-out transform scale-150 text-gray-50 opacity-60 hover:scale-100">TEXT</div>
-            </div>             */}
         </>
     )
 }

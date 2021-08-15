@@ -8,10 +8,10 @@ const citiesControllers = {
             if (cities) {
             res.json({ success: true, response: cities })
             } else {
-                throw new Error("couldn´t get all documents")
+                throw new Error("Couldn´t get all documents")
             }
         } catch (error) {
-            res.json({ success: false, response: error.message})
+            res.json({ success: false, response: error.message })
         }
     },
     //catchea error
@@ -35,7 +35,7 @@ const citiesControllers = {
             throw new Error("Check the type and required of value in City")
         }
     } catch (error) {
-        res.json({ success: false, error: error})
+        res.json({ success: false, error: error.message })
     }
         // .then(() => res.json({ success: true }))
         // .catch(error => res.json({ success: false, error: error}))
@@ -43,14 +43,14 @@ const citiesControllers = {
     //catchea error
     getCity: async (req, res) => {
         try {
-            var city = await City.findOne({_id: req.params.id})
+            var city = await City.findOne({ _id: req.params.id })
             if (city) {
                 res.json({ success: true, response: city })
             } else {
-                throw new Error("couldn´t get the document") 
+                throw new Error("Couldn´t get the document") 
             }
         } catch(error) {
-            res.json({success: false, response: error.message})
+            res.json({ success: false, response: error.message })
         }
         // City.findOne({_id: req.params.id})
         // .then((city) => res.json({ response: city}))
@@ -60,27 +60,28 @@ const citiesControllers = {
     //catchea error
     removeCity: async (req, res) => {
         try {
-            var removeCity = await City.findOneAndDelete({_id: req.params.id})
+            var removeCity = await City.findOneAndDelete({ _id: req.params.id })
             if (removeCity) {
                 res.json({ success: true })
             } else {
-                throw new Error("Couldn´t remove the document")
+                throw new Error("Couldn´t find the document to remove")
             }
         } catch (error) {
-            res.json({ success: false, error: error})
+            res.json({ success: false, error: error.message })
         }
     },
     //catchea error
     updateCity: async (req, res) => {
         try {
-            var updateCity = City.findOneAndUpdate({_id: req.params.id}, {...req.body})
+            var updateCity = City.findOneAndUpdate({ _id: req.params.id}, {...req.body} )
             if (updateCity) {
-                res.json({ success: true})
+                res.json({ success: true })
             } else {
-                throw new Error("couldn´t update the document")
+            conosole.log(req.body)
+                throw new Error("Couldn´t update the document")
             }
         } catch (error) {
-            res.json({ success: false, error: error})
+            res.json({ success: false, error: error.message })
         }
     }
 }

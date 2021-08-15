@@ -20,8 +20,8 @@ const City = (props) => {
             }
         })
         .catch((error) => console.error(error))         //redireccionar a pagina de error depende de que error tira y boton a home
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.match.params.id])                 //pegar un comentario para sacar el alert del array de dependencia del useEffect
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.match.params.id])                 
 
     if (loader) {
         return <div className="w-full h-80 text-7xl flex justify-center items-center"><h2>Loading...</h2></div>
@@ -30,7 +30,7 @@ const City = (props) => {
     return (
         <div className="">
             <div 
-            style={{backgroundImage: `url("/assets/citiesImg/${city.imgSource}")`}}
+            style={{backgroundImage: `url("${city.imgSource}")`}}
             alt={city.cityName}
             key={city._id}
             className="w-full h-80 bg-center bg-cover"
