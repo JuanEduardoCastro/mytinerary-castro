@@ -13,7 +13,7 @@ const Error404 = () => {
         <>
             <div>
                 <Header />
-                <div className="w-full h-screen flex flex-col items-center justify-start">
+                <div className="w-full h-screen flex flex-col items-center justify-start text-center">
                     <img src="https://i.imgur.com/bjeuiBg.png?1" alt="error 404" className="py-4"/>
                     <div className="flex flex-col items-center justify-center gap-4 text-2xl">
                         <h2>Sorry, this page doesn´t exist or is no longer available.</h2>

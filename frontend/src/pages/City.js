@@ -17,7 +17,6 @@ const City = (props) => {
         setLoader(true)
         axios.get(`http://localhost:4000/api/information/city/${props.match.params.id}`)
         .then((response) => {
-            console.log(response)
             if (response.data.success) {
                 setCity(response.data.response) 
                 setLoader(false)
@@ -30,7 +29,7 @@ const City = (props) => {
     }, [props.match.params.id])                 
 
     if (loader) {
-        return <div /* className="w-full h-80 text-7xl flex justify-center items-center" */><Loader /></div>
+        return <div><Loader /></div>
     }
     
     return (
@@ -54,14 +53,11 @@ const City = (props) => {
                     <h2 className="text-3xl ">Please select another city.</h2>
                     <div className="flex flex-col items-center mt-4 gap-4 text-indigo-900">
                         <div className="rounded-md mt-4 mb-8 p-4 bg-indigo-500 ring-1 ring-indigo-500 bg-opacity-90 shadow-2xl cursor-pointer text-2xl italic hover:bg-indigo-700 hover:text-black duration-300">
-                            <Link to="/cities"><button>Try again!</button></Link>
+                            <Link to="/cities"><button>Try with another city!</button></Link>
                         </div>
                     </div>
                 </div>
             </div>
-            {/* <div className="w-ful h-80 flex justify-center text-7xl">
-                <h2>Underconstruction...</h2>
-            </div> */}
         </div>
     )
 }

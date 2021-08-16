@@ -2,7 +2,10 @@ import React, { useState, useEffect, useLayoutEffect } from "react";
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import Loader from "../components/Loader";
+import Error404 from "./Error404";
 import axios from "axios";
+import Aos from "aos";
+import "aos/dist/aos.css";
 
 const Cities = () => {
 
@@ -11,10 +14,15 @@ const Cities = () => {
     const [loader, setLoader] = useState(true)
     const [reset, setReset] = useState(true)
     const [inputValue, setInputValue] = useState("")
+    const [error, setError] = useState(null)
 
     useLayoutEffect(() => {
         window.scrollTo(0,0)
     })
+
+    useEffect(() => {
+        Aos.init({ offset: 120, duration: 600})
+    }, [])
 
     useEffect(() => {
         setReset(false)
@@ -24,10 +32,13 @@ const Cities = () => {
             if (response.data.success) {
                 setCitiesList(response.data.response) 
             } else {
-                console.error(response.data.success)        //crear visual de error
+                // console.error(response.data.success)        //crear visual de error
+                throw new Error ("no se pudo conectar al servidor")
             }
         })
-        .catch((error) => console.error(error))             //crear visual de error
+        .catch((error) => {
+            setError(error.message)                          //crear visual de error
+        })             
         .finally(() => setLoader(false))
     }, [])
 
@@ -51,11 +62,11 @@ const Cities = () => {
 
     var cityFiltered = citiesList.filter(city => (city.cityName).toLowerCase().startsWith(letter)).map((filteredCity, index) => (
         <Link to={`/city/${filteredCity._id}`} className="flex justify-center w-10/12 mx-auto">
-            <div className="relative group flex items-center justify-center my-3 overflow-hidden shadow-md w-full h-64 rounded-md">
+            <div data-aos="fade-up" className="relative group flex items-center justify-center my-3 overflow-hidden shadow-md w-full h-64 rounded-md">
                 <div 
                 style={{backgroundImage: `url("${filteredCity.imgSource}")`}}  
                 alt={filteredCity.cityName} 
-                key={filteredCity.index}
+                key={index}
                 className="absolute w-full h-full transition-all duration-1000 ease-in-out transform bg-center bg-cover group-hover:scale-125 delay-100"
                 >
                 </div>      
@@ -73,6 +84,7 @@ const Cities = () => {
 
     return (
         <>
+            {error && <Error404/> }              
             <div style={{backgroundImage: `url("https://i.imgur.com/6zHiJfR.jpg?1")`}} alt="background living" className="w-full h-72 flex flex-col justify-between bg-top bg-cover">
                 <Header />
                 <div className="w-full h-48 flex justify-center items-center">
@@ -85,9 +97,9 @@ const Cities = () => {
                     onChange={inputHandler} />                
                 </div>
             </div>
-            <div className="pt-2 bg-gradient-to-t from-indigo-300 via-indigo-100">                
+            <div className="pt-2 bg-gradient-to-t from-indigo-300 via-indigo-100">  
                 {!cityFiltered.length < 1 ? cityFiltered : (
-                    <div className=" w-full h-full ">
+                    <div className=" w-full h-full text-center">
                         <div className="w-full py-4 pb-6 flex flex-col items-center justify-around text-3xl text-black bg-gradient-to-t from-red-200 tracking-wide">
                             <img src="https://i.imgur.com/ZsCN2Qk.png" alt="Not found logo" className="w-32 h-32" />
                             <h2 className="text-4xl ">Sorry, we don´t have information about that city.</h2>

@@ -17,7 +17,6 @@ const citiesControllers = {
     //catchea error
     addCity: async (req, res) => {
         try {
-
         const city = new City({
             cityName: req.body.cityName, 
             countryName: req.body.countryName,
@@ -25,8 +24,7 @@ const citiesControllers = {
             flag: req.body.flag,
             currency: req.body.currency,
             codeISO: req.body.codesISO,
-            currencySymbol: req.body.currencySymbol,
-            age: req.body.age 
+            currencySymbol: req.body.currencySymbol
         })
         var addCity = await city.save()
         if (addCity) {

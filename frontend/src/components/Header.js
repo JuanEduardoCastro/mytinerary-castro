@@ -1,7 +1,9 @@
-import { NavLink } from "react-router-dom"
-import React, { useState, useEffect } from "react"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBars, faUserCircle, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { NavLink } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars, faUserCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
+import Aos from "aos";
+import "aos/dist/aos.css";
 
 const Header = () => {
 
@@ -18,6 +20,10 @@ const Header = () => {
     }
 
     useEffect(() => {
+        Aos.init({ offset: 120, duration: 600})
+    }, [])
+
+    useEffect(() => {
         const changeWidth = () => {
             setScreenWidth(window.innerWidth)
         }
@@ -30,7 +36,7 @@ const Header = () => {
     }, [])
 
     return (
-        <header className="w-full h-28 md:h-28 sticky top-0">
+        <header data-aos="fade-down" className="w-full h-28 md:h-28 ">
             <nav className="h-full flex justify-between items-start md:items-center  ">
                 <div className="hidden md:flex md:items-center md:block py-2.5 px-8 gap-3 text-5xl tracking-wider permanentMarkerFont leading-10">
                     <img src="https://i.imgur.com/slgCIZZ.png" alt="logo mytinerary" className="w-24 h-24 m-1"/>

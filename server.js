@@ -8,7 +8,7 @@ const app = express()
 
 //middleware
 app.use(cors())
-app.use(express.json())                    // para convertir todo lo que venga json a javascript 
+app.use(express.json())                      // para convertir todo lo que venga json a javascript 
 
 app.use("/api", router)
 
