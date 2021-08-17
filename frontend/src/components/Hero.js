@@ -11,7 +11,7 @@ const Hero = () => {
             </div>
             <NavLink to="/cities">
                 <div className="shadow-xl">
-                    <button className="rounded-md p-4 bg-indigo-500 ring-1 ring-indigo-500 bg-opacity-90 shadow-2xl cursor-pointer text-2xl italic hover:bg-indigo-700 duration-300">Let´s find out together!</button>
+                    <button className="rounded-md p-4 bg-gradient-to-t from-indigo-500 to-indigo-200 ring-1 ring-indigo-500 bg-opacity-90 shadow-2xl cursor-pointer text-2xl italic text-indigo-900 hover:text-black duration-300">Let´s find out together!</button>
                 </div>
             </NavLink>
         </div>

@@ -6,25 +6,32 @@ const citiesControllers = {
         try {
             var cities = await City.find()
             if (cities) {
-            res.json({ success: true, response: cities })
+                res.json({ success: true, response: cities })
             } else {
                 throw new Error("Couldn´t get all documents")
             }
         } catch (error) {
             res.json({ success: false, response: error.message })
+            console.log(error.message)
         }
     },
+
     //catchea error
     addCity: async (req, res) => {
         try {
         const city = new City({
             cityName: req.body.cityName, 
             countryName: req.body.countryName,
+            continent: req.body.continent,
+            coordinates: req.body.coordinates,
             imgSource: req.body.imgSource,
+            textColorTag: req.body.textColorTag,
             flag: req.body.flag,
             currency: req.body.currency,
             codeISO: req.body.codesISO,
-            currencySymbol: req.body.currencySymbol
+            currencySymbol: req.body.currencySymbol,
+            description: req.body.description,
+            language: req.body.language
         })
         var addCity = await city.save()
         if (addCity) {
@@ -34,10 +41,10 @@ const citiesControllers = {
         }
     } catch (error) {
         res.json({ success: false, error: error.message })
-    }
-        // .then(() => res.json({ success: true }))
-        // .catch(error => res.json({ success: false, error: error}))
+        console.log(error)
+        }
     },
+
     //catchea error
     getCity: async (req, res) => {
         try {
@@ -47,12 +54,12 @@ const citiesControllers = {
             } else {
                 throw new Error("Couldn´t get the document") 
             }
+
         } catch(error) {
             res.json({ success: false, response: error.message })
+            /* console.log(error.message) */
+
         }
-        // City.findOne({_id: req.params.id})
-        // .then((city) => res.json({ response: city}))
-        // .catch(error => res.json({ success: false, error: error}))
     },
 
     //catchea error
@@ -66,16 +73,17 @@ const citiesControllers = {
             }
         } catch (error) {
             res.json({ success: false, error: error.message })
+            console.log(error)
         }
     },
+
     //catchea error
     updateCity: async (req, res) => {
         try {
-            var updateCity = City.findOneAndUpdate({ _id: req.params.id}, {...req.body} )
+            var updateCity = await City.findOneAndUpdate({ _id: req.params.id}, {...req.body} )
             if (updateCity) {
                 res.json({ success: true })
             } else {
-            conosole.log(req.body)
                 throw new Error("Couldn´t update the document")
             }
         } catch (error) {

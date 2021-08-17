@@ -32,12 +32,12 @@ const Cities = () => {
             if (response.data.success) {
                 setCitiesList(response.data.response) 
             } else {
-                // console.error(response.data.success)        //crear visual de error
-                throw new Error ("no se pudo conectar al servidor")
+                throw new Error ("Couldn´t connect to the database")
             }
         })
         .catch((error) => {
-            setError(error.message)                          //crear visual de error
+            setError(error.message)                         
+            console.error(error.message)
         })             
         .finally(() => setLoader(false))
     }, [])
@@ -61,7 +61,7 @@ const Cities = () => {
     }
 
     var cityFiltered = citiesList.filter(city => (city.cityName).toLowerCase().startsWith(letter)).map((filteredCity, index) => (
-        <Link to={`/city/${filteredCity._id}`} className="flex justify-center w-10/12 mx-auto">
+        <Link to={`/city/${filteredCity._id}`} key={index} className="flex justify-center w-10/12 mx-auto">
             <div data-aos="fade-up" className="relative group flex items-center justify-center my-3 overflow-hidden shadow-md w-full h-64 rounded-md">
                 <div 
                 style={{backgroundImage: `url("${filteredCity.imgSource}")`}}  
@@ -72,10 +72,15 @@ const Cities = () => {
                 </div>      
                 <div className="absolute w-full h-full transition-border duration-700 ease-in-out transform border border-black border-4 group-hover:opacity-70 group-hover:scale-90 delay-200 opacity-60">
                     <div className="w-full h-full hover:bg-indigo-300">
-                        <div className="absolute text-4xl transition-text duration-700 transform easy-in-out hover:text-6xl pl-4 pt-2 ">
+                        <div className="absolute text-5xl transition-text duration-700 transform easy-in-out hover:text-6xl pl-4 pt-2 ">
                             <h2>{filteredCity.cityName}</h2>
                             <h2>{filteredCity.countryName}</h2>
                         </div> 
+                        <div className="w-full h-full text-transparent sm:hover:text-black ">
+                            <div className="absolute w-8/12  bottom-3 right-3 sm:text-xl md:text-3xl text-justify" >
+                                <h2>{filteredCity.description}</h2>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -84,34 +89,36 @@ const Cities = () => {
 
     return (
         <>
-            {error && <Error404/> }              
-            <div style={{backgroundImage: `url("https://i.imgur.com/6zHiJfR.jpg?1")`}} alt="background living" className="w-full h-72 flex flex-col justify-between bg-top bg-cover">
-                <Header />
-                <div className="w-full h-48 flex justify-center items-center">
-                    <input 
-                    type="text" 
-                    name="filterCity"
-                    value={inputValue}
-                    placeholder="Find a city to explore" 
-                    className="border border-indigo-700 focus:indigo-700 rounded-lg bg-white text-black text-4xl px-4 py-2 text-center bg-gradient-to-t from-indigo-300 " 
-                    onChange={inputHandler} />                
+            {!error ? (
+            <>
+                <div style={{backgroundImage: `url("https://i.imgur.com/6zHiJfR.jpg?1")`}} alt="background living" className="w-full h-72 flex flex-col justify-between bg-top bg-cover">
+                    <Header />
+                    <div className="w-full h-48 flex justify-center items-center">
+                        <input 
+                        type="text" 
+                        name="filterCity"
+                        value={inputValue}
+                        placeholder="Find a city to explore" 
+                        className="border border-indigo-700 focus:indigo-700 rounded-lg bg-white text-black text-2xl md:text-4xl mt-8 px-4 py-2 text-center " 
+                        onChange={inputHandler} />                
+                    </div>
                 </div>
-            </div>
-            <div className="pt-2 bg-gradient-to-t from-indigo-300 via-indigo-100">  
-                {!cityFiltered.length < 1 ? cityFiltered : (
-                    <div className=" w-full h-full text-center">
-                        <div className="w-full py-4 pb-6 flex flex-col items-center justify-around text-3xl text-black bg-gradient-to-t from-red-200 tracking-wide">
-                            <img src="https://i.imgur.com/ZsCN2Qk.png" alt="Not found logo" className="w-32 h-32" />
-                            <h2 className="text-4xl ">Sorry, we don´t have information about that city.</h2>
-                            <div className="flex flex-col items-center mt-4 gap-4 text-indigo-900">
-                                <div className="rounded-md my-8 p-4 bg-indigo-500 ring-1 ring-indigo-500 bg-opacity-90 shadow-2xl cursor-pointer text-2xl italic hover:bg-indigo-700 hover:text-black duration-300">
-                                    <button onClick={resetCities}>Try again!</button>
+                <div className="pt-8 md:pt-8 pb-8 bg-gradient-to-t from-indigo-300 via-indigo-100">  
+                    {!cityFiltered.length < 1 ? cityFiltered : (
+                        <div className=" w-full h-full text-center">
+                            <div className="w-full py-4 pb-6 flex flex-col items-center justify-around text-3xl text-black bg-gradient-to-t from-red-200 tracking-wide">
+                                <img src="https://i.imgur.com/ZsCN2Qk.png" alt="Not found logo" className="w-32 h-32" />
+                                <h2 className="text-4xl ">Sorry, we don´t have information about that city.</h2>
+                                <div className="flex flex-col items-center mt-4 gap-4 text-indigo-900">
+                                    <div className="rounded-md my-8 p-4 ring-1 ring-indigo-500 bg-opacity-90 shadow-2xl bg-gradient-to-t from-indigo-500 to-indigo-200 cursor-pointer text-2xl italic hover:bg-indigo-700 hover:text-black duration-300">
+                                        <button onClick={resetCities}>Try again!</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                )}
-            </div>
+                    )}
+                </div>          
+            </> ) : <Error404/> }          
         </>
     )
 }
