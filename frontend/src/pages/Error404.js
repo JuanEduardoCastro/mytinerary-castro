@@ -19,8 +19,7 @@ const Error404 = () => {
                         <h2>Sorry, this page doesn´t exist or is no longer available.</h2>
                         <h2>Go back to <Link exact to="/" ><span className="hover:text-indigo-700 transition-all hover:scale-110 py-2 permanentMarkerFont text-5xl"> Mytinerary </span></Link> home page.</h2>
                     </div>
-                </div>
-                
+                </div>  
             </div>
         </>    
     )   

@@ -10,7 +10,6 @@ const Header = () => {
 
     const [menuButton, setMenuButton] = useState(false)
     const [menuGuy, setMenuGuy] = useState(false)
-    // const [screenWidth, setScreenWidth] = useState(window.innerWidth)
 
     const toggleMenuButton = () => {
         setMenuButton(!menuButton)
@@ -27,6 +26,7 @@ const Header = () => {
     const handleClickAwayGuy = () => {
         setMenuGuy(false)
     }
+
     const clickAwayRef = useClickAwayListener(handleClickAway)
     const clickAwayRefGuy = useClickAwayListener(handleClickAwayGuy)
 
@@ -60,7 +60,7 @@ const Header = () => {
                                     </ul> 
                                 )}
                             </div>
-                            <ul className=" hidden md:block flex flex-col md:flex md:flex-row text-center list-none gap-4 text-xl cursor-pointer py-2.5 px-2 md:pt-4 overflow-visible text-bolder">
+                            <ul className="hidden md:block flex flex-col md:flex md:flex-row text-center list-none gap-4 text-xl cursor-pointer py-2.5 px-2 md:pt-4 overflow-visible text-bolder">
                                 <li>
                                     <NavLink exact to="/" activeClassName="text-indigo-700" className="hover:text-indigo-700">
                                         <p>Home</p>
@@ -93,28 +93,3 @@ const Header = () => {
 }
 
 export default Header
-
-
-
-
-
-
-
-
-
-// useEffect(() => {
-//     const changeWidth = () => {
-//         setScreenWidth(window.innerWidth)
-//     }
-    
-//     window.addEventListener("resize", changeWidth)
-    
-//     return () => {
-//         window.removeEventListener("resize", changeWidth)
-//     }
-// }, [])
-
-
-
-
-// {(menuButton || screenWidth > 768) && (

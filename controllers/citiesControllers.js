@@ -19,20 +19,7 @@ const citiesControllers = {
     //catchea error
     addCity: async (req, res) => {
         try {
-        const city = new City({
-            cityName: req.body.cityName, 
-            countryName: req.body.countryName,
-            continent: req.body.continent,
-            coordinates: req.body.coordinates,
-            imgSource: req.body.imgSource,
-            textColorTag: req.body.textColorTag,
-            flag: req.body.flag,
-            currency: req.body.currency,
-            codeISO: req.body.codesISO,
-            currencySymbol: req.body.currencySymbol,
-            description: req.body.description,
-            language: req.body.language
-        })
+        const city = new City({ ...req.body })
         var addCity = await city.save()
         if (addCity) {
             res.json({ success: true })
@@ -80,9 +67,9 @@ const citiesControllers = {
     //catchea error
     updateCity: async (req, res) => {
         try {
-            var updateCity = await City.findOneAndUpdate({ _id: req.params.id}, {...req.body} )
+            var updateCity = await City.findOneAndUpdate({ _id: req.params.id}, {...req.body}, {new: true} )
             if (updateCity) {
-                res.json({ success: true })
+                res.json({ success: true, response: updateCity }) 
             } else {
                 throw new Error("Couldn´t update the document")
             }
