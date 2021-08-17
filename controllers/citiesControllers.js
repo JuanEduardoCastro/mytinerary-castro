@@ -8,10 +8,10 @@ const citiesControllers = {
             if (cities) {
                 res.json({ success: true, response: cities })
             } else {
-                throw new Error("Couldn´t get all documents")
+                throw new Error()
             }
         } catch (error) {
-            res.json({ success: false, response: error.message })
+            res.json({ success: false, response: "Couldn´t get all documents" })
             console.log(error.message)
         }
     },
@@ -24,10 +24,10 @@ const citiesControllers = {
         if (addCity) {
             res.json({ success: true })
         } else {
-            throw new Error("Check the type and required of value in City")
+            throw new Error()
         }
     } catch (error) {
-        res.json({ success: false, error: error.message })
+        res.json({ success: false, error: "Check the type and required of value in City" })
         console.log(error)
         }
     },
@@ -39,12 +39,12 @@ const citiesControllers = {
             if (city) {
                 res.json({ success: true, response: city })
             } else {
-                throw new Error("Couldn´t get the document") 
+                throw new Error() 
             }
 
-        } catch(error) {
-            res.json({ success: false, response: error.message })
-            /* console.log(error.message) */
+        } catch (error) {
+            res.json({ success: false, response: "Couldn´t get the document" })
+            console.log(error.message)
 
         }
     },
@@ -56,10 +56,10 @@ const citiesControllers = {
             if (removeCity) {
                 res.json({ success: true })
             } else {
-                throw new Error("Couldn´t find the document to remove")
+                throw new Error()
             }
         } catch (error) {
-            res.json({ success: false, error: error.message })
+            res.json({ success: false, error: "Couldn´t find the document to remove" })
             console.log(error)
         }
     },
@@ -71,10 +71,10 @@ const citiesControllers = {
             if (updateCity) {
                 res.json({ success: true, response: updateCity }) 
             } else {
-                throw new Error("Couldn´t update the document")
+                throw new Error()
             }
         } catch (error) {
-            res.json({ success: false, error: error.message })
+            res.json({ success: false, error: "Couldn´t update the document" })
         }
     }
 }
