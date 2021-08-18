@@ -72,12 +72,12 @@ const Cities = () => {
                 </div>      
                 <div className="absolute w-full h-full transition-border duration-700 ease-in-out transform border border-black border-4 group-hover:opacity-70 group-hover:scale-90 delay-200 opacity-60">
                     <div className="w-full h-full hover:bg-indigo-300">
-                        <div className="absolute text-5xl transition-text duration-700 transform easy-in-out hover:text-6xl pl-4 pt-2 ">
+                        <div className="absolute text-5xl transition-text duration-700 transform easy-in-out hover:text-6xl pl-4 pt-2 heroText">
                             <h2>{filteredCity.cityName}</h2>
                             <h2>{filteredCity.countryName}</h2>
                         </div> 
                         <div className="w-full h-full text-transparent sm:hover:text-black ">
-                            <div className="absolute w-8/12  bottom-3 right-3 sm:text-xl md:text-3xl text-justify" >
+                            <div className="absolute w-8/12  bottom-3 right-3 sm:text-xl md:text-3xl text-justify fotoText" >
                                 <h2>{filteredCity.description}</h2>
                             </div>
                         </div>

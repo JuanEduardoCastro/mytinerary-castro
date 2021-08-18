@@ -4,10 +4,12 @@ import Header from "../components/Header";
 import Loader from "../components/Loader";
 import Error404 from "./Error404";
 import axios from "axios";
+import Itinerary from "../components/Itinerary";
 
 const City = (props) => {
 
     const [city, setCity] = useState({})
+    const [itineraries, setItineraries] = useState({})
     const [loader, setLoader] = useState(true)
     const [error, setError] = useState(null)
 
@@ -15,13 +17,26 @@ const City = (props) => {
         window.scrollTo(0,0)
     })
 
+    // api city by id
     useEffect(() => {
         setLoader(true)
         axios.get(`http://localhost:4000/api/information/city/${props.match.params.id}`)
         .then((response) => {
             if (response.data.success) {
                 setCity(response.data.response) 
-                setLoader(false)
+            } else {           
+                throw new Error("Couldn´t connect to the database")
+            }
+        })
+        .catch((error) => { 
+            setError(error.message) 
+            console.error(error.message)
+        })
+        
+        axios.get("http://localhost:4000/api/itineraries")
+        .then((response) => {
+            if (response.data.success) {
+                setItineraries(response.data.response) 
             } else {           
                 throw new Error("Couldn´t connect to the database")
             }
@@ -32,7 +47,7 @@ const City = (props) => {
         })
         .finally(() => setLoader(false)) 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])                 
+    }, [])                                
 
     if (loader) {
         return <div><Loader /></div>
@@ -49,11 +64,13 @@ const City = (props) => {
                 className="w-full h-72 bg-center bg-cover"
                 > 
                     <Header />
-                    <div className="text-5xl pl-4 pt-2 fotText">
+                    <div className="text-5xl pl-4 pt-2 heroText">
                         {city.textColorTag ? (<><h2 className="text-white">{city.cityName}</h2><h2 className="text-white">{city.countryName}</h2></>) : (<><h2 className="text-black">{city.cityName}</h2><h2 className="text-black">{city.countryName}</h2></>)}
                     </div>   
                 </div>
-                <div className=" w-full h-full ">
+
+                {(itineraries.length < 1) ? (
+                <div className=" w-full h-full fotoText">
                     <div className="w-full py-4 pb-6 flex flex-col items-center justify-around text-3xl text-black bg-gradient-to-t from-red-200 tracking-wide text-center">
                         <img src="https://i.imgur.com/LmKOcmk.png" alt="Not found logo" className="w-32 h-32" />
                         <h2 className="text-4xl text-black">We are under construction!</h2>
@@ -64,8 +81,10 @@ const City = (props) => {
                             </div>
                         </div>
                     </div>
-                </div>
-            </div> ) : (<Error404/> )}
+                </div>) : (itineraries.map((itinerary, index) => {
+                    return <Itinerary key={index} itinerary={itinerary}/>
+                }))} 
+            </div> ) : ( <Error404/> )}
         </>
     )
 }

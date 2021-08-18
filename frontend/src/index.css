@@ -13,11 +13,11 @@ body, html {
 }
 
 .fotoText {
-  text-shadow: 4px 4px 33px rgba(0, 0, 0, 0.377);
+  text-shadow: 4px 4px 33px rgba(0, 0, 0, 0.450);
 }
 
 .carouselText {
-  text-shadow: 3px 4px 33px rgba(0, 0, 0, 0.377);
+  text-shadow: 2px 4px 33px rgba(0, 0, 0, 0.320);
 }
 
 .heroText {

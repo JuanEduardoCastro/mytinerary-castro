@@ -12,7 +12,7 @@ const citiesControllers = {
             }
         } catch (error) {
             res.json({ success: false, response: "Couldn´t get all documents" })
-            console.log(error.message)
+            console.error(error.message)
         }
     },
 
@@ -27,8 +27,8 @@ const citiesControllers = {
             throw new Error()
         }
     } catch (error) {
-        res.json({ success: false, error: "Check the type and required of value in City" })
-        console.log(error)
+        res.json({ success: false, error: "Check the type and required of values in City" })
+        console.error(error)
         }
     },
 
@@ -44,7 +44,7 @@ const citiesControllers = {
 
         } catch (error) {
             res.json({ success: false, response: "Couldn´t get the document" })
-            console.log(error.message)
+            console.errorg(error.message)
 
         }
     },
@@ -60,7 +60,7 @@ const citiesControllers = {
             }
         } catch (error) {
             res.json({ success: false, error: "Couldn´t find the document to remove" })
-            console.log(error)
+            console.error(error.message)
         }
     },
 
@@ -75,6 +75,7 @@ const citiesControllers = {
             }
         } catch (error) {
             res.json({ success: false, error: "Couldn´t update the document" })
+            console.error(error.message)
         }
     }
 }

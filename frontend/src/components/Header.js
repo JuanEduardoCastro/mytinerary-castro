@@ -41,7 +41,7 @@ const Header = () => {
                     <img src="https://i.imgur.com/slgCIZZ.png" alt="logo mytinerary" className="w-24 h-24 m-1"/>
                     <h1 className="">Mytinerary</h1>
                 </div>
-                <div className="w-full h-full flex justify-between md:justify-end items-start md:items-start pt-3 px-8">
+                <div className="w-full h-full flex justify-between md:justify-end items-start md:items-start pt-3 px-8 fotoText">
                     <div className=" flex flex-col items-start justify-center gap- pt-2">
                             <div ref={clickAwayRef} className="w-14 h-14 p-2 text-xl text-black block md:hidden cursor-pointer">
                                     <FontAwesomeIcon icon={menuButton ? faTimes : faBars} onClick={toggleMenuButton} size="2x" className="transform hover:scale-110" />
