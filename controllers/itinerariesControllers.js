@@ -42,6 +42,19 @@ const itinerariesControllers = {
             res.json({ success: false, error: "Couldn´t find the document to remove" })
             console.error(error.message)
         }
+    },
+
+    updateItinerary: async (req, res) => {
+        try {
+            var updateItinerary = await Itinerary.findOneAndUpdate({ _id: req.params.id}, {...req.body}, {new: true})
+            if (updateItinerary) {
+                res.json({ success: true, response: updateItinerary})
+            } else {
+                throw new Error()
+            }
+        } catch (error) {
+            res.json({ success: false, error: "Couldn´t update the document" })
+        }
     }
 }
 
