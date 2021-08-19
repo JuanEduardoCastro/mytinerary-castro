@@ -3,44 +3,55 @@ import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import Loader from "../components/Loader";
 import Error404 from "./Error404";
-import axios from "axios";
 import Aos from "aos";
 import "aos/dist/aos.css";
+import { connect } from "react-redux";
+import citiesActions from "../redux/actions/citiesActions";
 
-const Cities = () => {
+const Cities = (props) => {
 
     const [citiesList, setCitiesList] = useState([])
     const [letter, setLetter] = useState("")
     const [loader, setLoader] = useState(true)
-    const [reset, setReset] = useState(true)
+    const [reset, setReset] = useState(false)
     const [inputValue, setInputValue] = useState("")
     const [error, setError] = useState(null)
-
+    
     useLayoutEffect(() => {
         window.scrollTo(0,0)
     })
-
+  
     useEffect(() => {
         Aos.init({ offset: 120, duration: 600})
     }, [])
+    
+    useEffect(() => {
+        props.getCitiesList()
+    }, [])
 
     useEffect(() => {
-        setReset(false)
-        setLoader(true)
-        axios.get("http://localhost:4000/api/information/cities")
-        .then((response) => {
-            if (response.data.success) {
-                setCitiesList(response.data.response) 
-            } else {
-                throw new Error ("Couldn´t connect to the database")
-            }
-        })
-        .catch((error) => {
-            setError(error.message)                         
-            console.error(error.message)
-        })             
-        .finally(() => setLoader(false))
-    }, [])
+
+        setCitiesList(props.allCitiesList)
+        setLoader(false)
+    })
+
+    // useEffect(() => {
+    //     setReset(false)
+    //     setLoader(true)
+    //     axios.get("http://localhost:4000/api/information/cities")
+    //     .then((response) => {
+    //         if (response.data.success) {
+    //             setCitiesList(response.data.response) 
+    //         } else {
+    //             throw new Error ("Couldn´t connect to the database")
+    //         }
+    //     })
+    //     .catch((error) => {
+    //         setError(error.message)                         
+    //         console.error(error.message)
+    //     })             
+    //     .finally(() => setLoader(false))
+    // }, [])
 
     if (loader) {
         return <div><Loader /></div>
@@ -123,4 +134,15 @@ const Cities = () => {
     )
 }
 
-export default Cities
+const mapStateToProps = (state) => {
+    return {
+        allCitiesList: state.cities.citiesListStore
+        
+    }
+}
+
+const mapDispatchToProps = {
+    getCitiesList: citiesActions.getCitiesList,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cities)
