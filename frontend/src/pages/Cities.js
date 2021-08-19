@@ -12,11 +12,12 @@ const Cities = (props) => {
 
     const [citiesList, setCitiesList] = useState([])
     const [letter, setLetter] = useState("")
+    const [filteredCities, setFilteredCities] = useState([])
     const [loader, setLoader] = useState(true)
     const [reset, setReset] = useState(false)
     const [inputValue, setInputValue] = useState("")
     const [error, setError] = useState(null)
-    
+
     useLayoutEffect(() => {
         window.scrollTo(0,0)
     })
@@ -27,31 +28,14 @@ const Cities = (props) => {
     
     useEffect(() => {
         props.getCitiesList()
+        // props.getCitiesFiltered(inputHandler)
+        setLoader(false)
     }, [])
 
     useEffect(() => {
-
         setCitiesList(props.allCitiesList)
-        setLoader(false)
+        setFilteredCities(props.citiesFiltered)
     })
-
-    // useEffect(() => {
-    //     setReset(false)
-    //     setLoader(true)
-    //     axios.get("http://localhost:4000/api/information/cities")
-    //     .then((response) => {
-    //         if (response.data.success) {
-    //             setCitiesList(response.data.response) 
-    //         } else {
-    //             throw new Error ("Couldn´t connect to the database")
-    //         }
-    //     })
-    //     .catch((error) => {
-    //         setError(error.message)                         
-    //         console.error(error.message)
-    //     })             
-    //     .finally(() => setLoader(false))
-    // }, [])
 
     if (loader) {
         return <div><Loader /></div>
@@ -59,9 +43,11 @@ const Cities = (props) => {
 
     const inputHandler = (e) => {
         setLetter(((e.target.value).toLowerCase().trim()))
+        props.getCitiesFiltered(letter)
         setInputValue(e.target.value)
     } 
 
+    
     const resetCities = () => {
         setReset(false)
         if (reset === false) {
@@ -71,7 +57,8 @@ const Cities = (props) => {
         }
     }
 
-    var cityFiltered = citiesList.filter(city => (city.cityName).toLowerCase().startsWith(letter)).map((filteredCity, index) => (
+    // var cityFiltered = citiesList.filter(city => (city.cityName).toLowerCase().startsWith(letter)).map((filteredCity, index) => (
+    var citiesFromFilter = (letter === "" ? citiesList : filteredCities).map((filteredCity, index) => (
         <Link to={`/city/${filteredCity._id}`} key={index} className="flex justify-center w-10/12 mx-auto">
             <div data-aos="fade-up" className="relative group flex items-center justify-center my-3 overflow-hidden shadow-md w-full h-64 rounded-md">
                 <div 
@@ -98,51 +85,92 @@ const Cities = (props) => {
         </Link> 
     )) 
 
+
     return (
         <>
-            {!error ? (
-            <>
-                <div style={{backgroundImage: `url("https://i.imgur.com/6zHiJfR.jpg?1")`}} alt="background living" className="w-full h-72 flex flex-col justify-between bg-top bg-cover">
-                    <Header />
-                    <div className="w-full h-48 flex justify-center items-center">
-                        <input 
-                        type="text" 
-                        name="filterCity"
-                        value={inputValue}
-                        placeholder="Find a city to explore" 
-                        className="border border-indigo-700 focus:indigo-700 rounded-lg bg-white text-black text-2xl md:text-4xl mt-8 px-4 py-2 text-center " 
-                        onChange={inputHandler} />                
-                    </div>
+            <div style={{backgroundImage: `url("https://i.imgur.com/6zHiJfR.jpg?1")`}} alt="background living" className="w-full h-72 flex flex-col justify-between bg-top bg-cover">
+                <Header />
+                <div className="w-full h-48 flex justify-center items-center">
+                    <input 
+                    type="text" 
+                    name="filterCity"
+                    value={inputValue}
+                    placeholder="Find a city to explore" 
+                    className="border border-indigo-700 focus:indigo-700 rounded-lg bg-white text-black text-2xl md:text-4xl mt-8 px-4 py-2 text-center " 
+                    onChange={inputHandler} />                
                 </div>
-                <div className="pt-8 md:pt-8 pb-8 bg-gradient-to-t from-indigo-300 via-indigo-100">  
-                    {!cityFiltered.length < 1 ? cityFiltered : (
-                        <div className=" w-full h-full text-center">
-                            <div className="w-full py-4 pb-6 flex flex-col items-center justify-around text-3xl text-black bg-gradient-to-t from-red-200 tracking-wide">
-                                <img src="https://i.imgur.com/ZsCN2Qk.png" alt="Not found logo" className="w-32 h-32" />
-                                <h2 className="text-4xl ">Sorry, we don´t have information about that city.</h2>
-                                <div className="flex flex-col items-center mt-4 gap-4 text-indigo-900">
-                                    <div className="rounded-md my-8 p-4 ring-1 ring-indigo-500 bg-opacity-90 shadow-2xl bg-gradient-to-t from-indigo-500 to-indigo-200 cursor-pointer text-2xl italic hover:bg-indigo-700 hover:text-black duration-300">
-                                        <button onClick={resetCities}>Try again!</button>
-                                    </div>
-                                </div>
+            </div>
+            {citiesFromFilter.length > 0 ? citiesFromFilter : (
+            <div className="pt-8 md:pt-8 pb-8 bg-gradient-to-t from-indigo-300 via-indigo-100">              
+                <div className=" w-full h-full text-center">
+                    <div className="w-full py-4 pb-6 flex flex-col items-center justify-around text-3xl text-black bg-gradient-to-t from-red-200 tracking-wide">
+                        <img src="https://i.imgur.com/ZsCN2Qk.png" alt="Not found logo" className="w-32 h-32" />
+                        <h2 className="text-4xl ">Sorry, we don´t have information about that city.</h2>
+                        <div className="flex flex-col items-center mt-4 gap-4 text-indigo-900">
+                            <div className="rounded-md my-8 p-4 ring-1 ring-indigo-500 bg-opacity-90 shadow-2xl bg-gradient-to-t from-indigo-500 to-indigo-200 cursor-pointer text-2xl italic hover:bg-indigo-700 hover:text-black duration-300">
+                                <button onClick={resetCities}>Try again!</button>
                             </div>
                         </div>
-                    )}
-                </div>          
-            </> ) : <Error404/> }          
+                    </div>
+                </div> 
+            </div> )}          
         </>
     )
 }
 
 const mapStateToProps = (state) => {
     return {
-        allCitiesList: state.cities.citiesListStore
+        allCitiesList: state.cities.citiesListStore,
+        citiesFiltered: state.cities.citiesFilteredStore
         
     }
 }
 
 const mapDispatchToProps = {
     getCitiesList: citiesActions.getCitiesList,
+    getCitiesFiltered: citiesActions.getCitiesFiltered,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cities)
+
+
+
+
+
+    // useEffect(() => {
+    //     setReset(false)
+    //     setLoader(true)
+    //     axios.get("http://localhost:4000/api/information/cities")
+    //     .then((response) => {
+    //         if (response.data.success) {
+    //             setCitiesList(response.data.response) 
+    //         } else {
+    //             throw new Error ("Couldn´t connect to the database")
+    //         }
+    //     })
+    //     .catch((error) => {
+    //         setError(error.message)                         
+    //         console.error(error.message)
+    //     })             
+    //     .finally(() => setLoader(false))
+    // }, [])
+
+
+
+
+
+        //             // (citiesFromFilter.length > 0 ? citiesFromFilter : (
+        //             //     <div className=" w-full h-full text-center">
+        //             //         <div className="w-full py-4 pb-6 flex flex-col items-center justify-around text-3xl text-black bg-gradient-to-t from-red-200 tracking-wide">
+        //             //             <img src="https://i.imgur.com/ZsCN2Qk.png" alt="Not found logo" className="w-32 h-32" />
+        //             //             <h2 className="text-4xl ">Sorry, we don´t have information about that city.</h2>
+        //             //             <div className="flex flex-col items-center mt-4 gap-4 text-indigo-900">
+        //             //                 <div className="rounded-md my-8 p-4 ring-1 ring-indigo-500 bg-opacity-90 shadow-2xl bg-gradient-to-t from-indigo-500 to-indigo-200 cursor-pointer text-2xl italic hover:bg-indigo-700 hover:text-black duration-300">
+        //             //                     <button onClick={resetCities}>Try again!</button>
+        //             //                 </div>
+        //             //             </div>
+        //             //         </div>
+        //             //     </div> )
+        //             // )}
+        //     // </> ) : <Error404/> }          
+        // </>

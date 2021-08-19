@@ -5,8 +5,11 @@ import Loader from "../components/Loader";
 import Error404 from "./Error404";
 import axios from "axios";
 import Itinerary from "../components/Itinerary";
+import { connect } from "react-redux";
+import citiesAction from "../redux/actions/citiesActions";
 
 const City = (props) => {
+    console.log(props.uniqCity)
 
     const [city, setCity] = useState({})
     const [itineraries, setItineraries] = useState({})
@@ -17,37 +20,46 @@ const City = (props) => {
         window.scrollTo(0,0)
     })
 
-    // api city by id
     useEffect(() => {
-        setLoader(true)
-        axios.get(`http://localhost:4000/api/information/city/${props.match.params.id}`)
-        .then((response) => {
-            if (response.data.success) {
-                setCity(response.data.response) 
-            } else {           
-                throw new Error("Couldn´t connect to the database")
-            }
-        })
-        .catch((error) => { 
-            setError(error.message) 
-            console.error(error.message)
-        })
+        props.getUniqCity(props.match.params.id)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+    
+    useEffect(() => {
+        setCity(props.uniqCity)
+        setLoader(false)
+    },)
+
+    //api city by id
+    // useEffect(() => {
+        // axios.get(`http://localhost:4000/api/information/city/${props.match.params.id}`)
+        // .then((response) => {
+        //     if (response.data.success) {
+        //         setCity(response.data.response) 
+        //     } else {           
+        //         throw new Error("Couldn´t connect to the database")
+        //     }
+        // })
+        // .catch((error) => { 
+        //     setError(error.message) 
+        //     console.error(error.message)
+        // })
         
-        axios.get("http://localhost:4000/api/itineraries")
-        .then((response) => {
-            if (response.data.success) {
-                setItineraries(response.data.response) 
-            } else {           
-                throw new Error("Couldn´t connect to the database")
-            }
-        })
-        .catch((error) => { 
-            setError(error.message) 
-            console.error(error.message)
-        })
-        .finally(() => setLoader(false)) 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])                                
+    //     axios.get("http://localhost:4000/api/itineraries")
+    //     .then((response) => {
+    //         if (response.data.success) {
+    //             setItineraries(response.data.response) 
+    //         } else {           
+    //             throw new Error("Couldn´t connect to the database")
+    //         }
+    //     })
+    //     .catch((error) => { 
+    //         setError(error.message) 
+    //         console.error(error.message)
+    //     })
+    //     .finally(() => setLoader(false)) 
+    // // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [])                                
 
     if (loader) {
         return <div><Loader /></div>
@@ -69,7 +81,7 @@ const City = (props) => {
                     </div>   
                 </div>
 
-                {(itineraries.length < 1) ? (
+                {/* {(itineraries.length < 1) ? (
                 <div className=" w-full h-full fotoText">
                     <div className="w-full py-4 pb-6 flex flex-col items-center justify-around text-3xl text-black bg-gradient-to-t from-red-200 tracking-wide text-center">
                         <img src="https://i.imgur.com/LmKOcmk.png" alt="Not found logo" className="w-32 h-32" />
@@ -83,10 +95,20 @@ const City = (props) => {
                     </div>
                 </div>) : (itineraries.map((itinerary, index) => {
                     return <Itinerary key={index} itinerary={itinerary}/>
-                }))} 
+                }))} */} 
             </div> ) : ( <Error404/> )}
         </>
     )
 }
 
-export default City
+const mapStateToProps = (state) => {
+    return {
+        uniqCity: state.cities.cityStore
+    }
+}
+
+const mapDispatchToProps = {
+    getUniqCity: citiesAction.getUniqCity
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(City)
