@@ -19,15 +19,30 @@ const City = (props) => {
 
     useEffect(() => {
         props.getUniqCity(props.match.params.id)
-        props.getItineraries()
+        async function getItineraries() {
+            try {
+                await props.getItinerariesOfACity(props.match.params.id)
+                setLoader(false)
+            } catch (error) {
+                setLoader(false)
+                setError(error)
+                return false
+            }
+        } 
+        getItineraries()
+
+        // props.getUniqCity(props.match.params.id)
+        // props.getItineraries()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+    
+    if (error) {
+        return <div><Error404 /></div>
+    }
 
-    useEffect(() => {
-        if (props.itineraries.length > 0) {
-            setLoader(false)
-        }
-    },)
+    // setTimeout(() => {
+    //     props.history.push("/")    
+    // }, 5000);
     
     if (loader) {
         return <div><Loader /></div>
@@ -64,7 +79,12 @@ const City = (props) => {
                     </div>) : (props.itineraries.map((itinerary, index) => {
                         return <Itinerary key={index} itinerary={itinerary}/>
                     }))} 
+                <div className="flex justify-center gap-4">
+                    <button className="rounded-md mt-4 mb-8 p-4 bg-gradient-to-t from-indigo-500 to-indigo-200 ring-1 ring-indigo-500 bg-opacity-90 shadow-2xl cursor-pointer text-2xl italic hover:bg-indigo-700 hover:text-black duration-300">Back to home</button>
+                    <button className="rounded-md mt-4 mb-8 p-4 bg-gradient-to-t from-indigo-500 to-indigo-200 ring-1 ring-indigo-500 bg-opacity-90 shadow-2xl cursor-pointer text-2xl italic hover:bg-indigo-700 hover:text-black duration-300">Back to cities</button>
+                </div>
             </div> ) : ( <Error404/> )} 
+            
         </>
     )
 }
@@ -72,52 +92,13 @@ const City = (props) => {
 const mapStateToProps = (state) => {
     return {
         uniqCity: state.cities.cityStore,
-        itineraries: state.itineraries.itinerariesStore
+        itineraries: state.itineraries.itinerariesOfACityStore
     }
 }
 
 const mapDispatchToProps = {
     getUniqCity: citiesActions.getUniqCity,
-    getItineraries: itinerariesActions.getItineraries
+    getItinerariesOfACity: itinerariesActions.getItinerariesOfACity
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(City)
-
-
-
-
-
-
-
-
-
-//api city by id
-// useEffect(() => {
-    // axios.get(`http://localhost:4000/api/information/city/${props.match.params.id}`)
-        // .then((response) => {
-        //     if (response.data.success) {
-        //         setCity(response.data.response) 
-        //     } else {           
-        //         throw new Error("Couldn´t connect to the database")
-        //     }
-        // })
-        // .catch((error) => { 
-        //     setError(error.message) 
-        //     console.error(error.message)
-        // })
-        
-    //     axios.get("http://localhost:4000/api/itineraries")
-    //     .then((response) => {
-    //         if (response.data.success) {
-    //             setItineraries(response.data.response) 
-    //         } else {           
-    //             throw new Error("Couldn´t connect to the database")
-    //         }
-    //     })
-    //     .catch((error) => { 
-    //         setError(error.message) 
-    //         console.error(error.message)
-    //     })
-    //     .finally(() => setLoader(false)) 
-    // // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [])                                

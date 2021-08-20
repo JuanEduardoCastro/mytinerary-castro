@@ -4,9 +4,9 @@ const citiesControllers = {
 
     getCities: async (req, res) => {
         try {
-            var cities = await City.find()
-            if (cities) {
-                res.json({ success: true, response: cities })
+            var getCities = await City.find()
+            if (getCities) {
+                res.json({ success: true, response: getCities })
             } else {
                 throw new Error()
             }
@@ -35,9 +35,9 @@ const citiesControllers = {
     //catchea error
     getCity: async (req, res) => {
         try {
-            var city = await City.findOne({ _id: req.params.id })
-            if (city) {
-                res.json({ success: true, response: city })
+            var getCity = await City.findOne({ _id: req.params.id })
+            if (getCity) {
+                res.json({ success: true, response: getCity })
             } else {
                 throw new Error() 
             }

@@ -2,6 +2,9 @@ const mongoose = require("mongoose")
 
 const activitySchema = new mongoose.Schema({
 
+    
+
+
     // authorName: {type: String},
     // authorPhoto: {type: String},
     // itineraryName: {type: String},

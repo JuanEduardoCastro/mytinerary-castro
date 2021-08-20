@@ -24,21 +24,28 @@ const Cities = (props) => {
     }, [])
 
     useEffect(() => {
-        props.getCitiesList()
-        // setLoader(false)
+        async function getCitiesList() {
+            try {
+                await props.getCitiesList()
+                setLoader(false)
+            } catch (error) {
+                setLoader(false)
+                setError(error)
+                return false
+            }
+        } 
+        getCitiesList()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, []) 
 
-    useEffect(() => {
-        if (props.allCitiesList.length > 0) {
-            setLoader(false)
-        }
-    })
+    if (error) {
+        return <div><Error404 /></div>
+    }
+
+    // setTimeout(() => {
+    //     props.history.push("/")    
+    // }, 5000);
     
-    // props.allCitiesList.length > 0 && setLoader(false)
-    console.log(props.allCitiesList)
-
-
     if (loader) {
         return <div><Loader /></div>
     }
@@ -131,45 +138,3 @@ const mapDispatchToProps = {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cities)
-
-
-
-
-
-    // useEffect(() => {
-    //     setReset(false)
-    //     setLoader(true)
-    //     axios.get("http://localhost:4000/api/information/cities")
-    //     .then((response) => {
-    //         if (response.data.success) {
-    //             setCitiesList(response.data.response) 
-    //         } else {
-    //             throw new Error ("Couldn´t connect to the database")
-    //         }
-    //     })
-    //     .catch((error) => {
-    //         setError(error.message)                         
-    //         console.error(error.message)
-    //     })             
-    //     .finally(() => setLoader(false))
-    // }, [])
-
-
-
-
-
-        //             // (citiesFromFilter.length > 0 ? citiesFromFilter : (
-        //             //     <div className=" w-full h-full text-center">
-        //             //         <div className="w-full py-4 pb-6 flex flex-col items-center justify-around text-3xl text-black bg-gradient-to-t from-red-200 tracking-wide">
-        //             //             <img src="https://i.imgur.com/ZsCN2Qk.png" alt="Not found logo" className="w-32 h-32" />
-        //             //             <h2 className="text-4xl ">Sorry, we don´t have information about that city.</h2>
-        //             //             <div className="flex flex-col items-center mt-4 gap-4 text-indigo-900">
-        //             //                 <div className="rounded-md my-8 p-4 ring-1 ring-indigo-500 bg-opacity-90 shadow-2xl bg-gradient-to-t from-indigo-500 to-indigo-200 cursor-pointer text-2xl italic hover:bg-indigo-700 hover:text-black duration-300">
-        //             //                     <button onClick={resetCities}>Try again!</button>
-        //             //                 </div>
-        //             //             </div>
-        //             //         </div>
-        //             //     </div> )
-        //             // )}
-        //     // </> ) : <Error404/> }          
-        // </>
