@@ -1,4 +1,4 @@
-const citiesReducer = (state = { citiesListStore: [], citiesFilteredStore: [], cityStore: {} }, action) => {
+const citiesReducer = (state = { citiesListStore: [], citiesFilteredStore: [], cityStore: [] }, action) => {
     switch (action.type) {
         case "GET_CITIES_LIST":
             return {
@@ -6,8 +6,7 @@ const citiesReducer = (state = { citiesListStore: [], citiesFilteredStore: [], c
                 citiesListStore: action.payload, 
             }
 
-        case "GET_CITIES_FILTERED":
-            
+        case "GET_CITIES_FILTERED":   
             let citiesFiltered = state.citiesListStore.filter(city => (city.cityName).toLowerCase().startsWith((action.payload.toLowerCase().trim())))
             return {
                 ...state,
@@ -15,12 +14,14 @@ const citiesReducer = (state = { citiesListStore: [], citiesFilteredStore: [], c
             }
 
         case "GET_UNIQ_CITY":
+            let uniqCity = state.citiesListStore.find(city => (city._id === action.payload))
             return {
                 ...state,
-                cityStore: action.payload
-            } 
+                cityStore: uniqCity
+            }
+
         default:
-         return state
+            return state
     }
 }
 

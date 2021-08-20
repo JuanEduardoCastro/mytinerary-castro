@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const citiesAction = {
+const citiesActions = {
     getCitiesList: () => {
         return async (dispatch) => {
             let response = await axios.get("http://localhost:4000/api/information/cities")
@@ -9,19 +9,17 @@ const citiesAction = {
         }
     },
 
-    getCitiesFiltered: (char) => {
+    getCitiesFiltered: (letter) => {
         return (dispatch) => {
-            dispatch({type: "GET_CITIES_FILTERED", payload: char})
+            dispatch({type: "GET_CITIES_FILTERED", payload: letter})
         }
     },
 
     getUniqCity: (id) => {
-        return async (dispatch) => {
-            let response = await axios.get(`http://localhost:4000/api/information/city/${id}`)
-            let data = response.data.response
-            dispatch({type: "GET_UNIQ_CITY", payload: data})
+        return (dispatch) => {
+            dispatch({type: "GET_UNIQ_CITY", payload: id})
         }
-    }
+    },
 }
 
-export default citiesAction
+export default citiesActions

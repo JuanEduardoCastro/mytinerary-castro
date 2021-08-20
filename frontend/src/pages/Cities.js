@@ -10,9 +10,6 @@ import citiesActions from "../redux/actions/citiesActions";
 
 const Cities = (props) => {
 
-    const [citiesList, setCitiesList] = useState([])
-    const [letter, setLetter] = useState("")
-    const [filteredCities, setFilteredCities] = useState([])
     const [loader, setLoader] = useState(true)
     const [reset, setReset] = useState(false)
     const [inputValue, setInputValue] = useState("")
@@ -21,44 +18,47 @@ const Cities = (props) => {
     useLayoutEffect(() => {
         window.scrollTo(0,0)
     })
-  
+    
     useEffect(() => {
         Aos.init({ offset: 120, duration: 600})
     }, [])
-    
+
     useEffect(() => {
         props.getCitiesList()
-        // props.getCitiesFiltered(inputHandler)
-        setLoader(false)
+        // setLoader(false)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
-        setCitiesList(props.allCitiesList)
-        setFilteredCities(props.citiesFiltered)
+        if (props.allCitiesList.length > 0) {
+            setLoader(false)
+        }
     })
+    
+    // props.allCitiesList.length > 0 && setLoader(false)
+    console.log(props.allCitiesList)
+
 
     if (loader) {
         return <div><Loader /></div>
     }
 
     const inputHandler = (e) => {
-        setLetter(((e.target.value).toLowerCase().trim()))
-        props.getCitiesFiltered(letter)
+        props.getCitiesFiltered(e.target.value)
         setInputValue(e.target.value)
     } 
-
     
     const resetCities = () => {
         setReset(false)
         if (reset === false) {
             setReset(true)
-            setLetter("")
             setInputValue("")
         }
     }
 
-    // var cityFiltered = citiesList.filter(city => (city.cityName).toLowerCase().startsWith(letter)).map((filteredCity, index) => (
-    var citiesFromFilter = (letter === "" ? citiesList : filteredCities).map((filteredCity, index) => (
+    //corregir vuelta extra 
+    // var citiesFromFilter = (inputValue === "" && filteredCities.length < 1 ? citiesList : filteredCities).map((filteredCity, index) => (
+    var citiesFromFilter = (inputValue === "" ? props.allCitiesList : props.citiesFiltered).map((filteredCity, index) => (
         <Link to={`/city/${filteredCity._id}`} key={index} className="flex justify-center w-10/12 mx-auto">
             <div data-aos="fade-up" className="relative group flex items-center justify-center my-3 overflow-hidden shadow-md w-full h-64 rounded-md">
                 <div 
@@ -84,7 +84,6 @@ const Cities = (props) => {
             </div>
         </Link> 
     )) 
-
 
     return (
         <>

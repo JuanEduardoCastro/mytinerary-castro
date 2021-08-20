@@ -8,11 +8,11 @@ const Itinerary = (props) => {
 
     var clockCount = []
     for (let i = 0; i < props.itinerary.duration; i++) {
-        clockCount.push(<FontAwesomeIcon icon={faClock} size="2x" className="transform scale-75"/>)
+        clockCount.push(<FontAwesomeIcon icon={faClock} key={i} size="2x" className="transform scale-75"/>)
     }
     var moneyCount = []
     for (let i = 0; i < props.itinerary.price; i++) {
-        moneyCount.push(<FontAwesomeIcon icon={faCoins} size="2x" className="transform scale-75"/>)
+        moneyCount.push(<FontAwesomeIcon icon={faCoins} key={i} size="2x" className="transform scale-75"/>)
     }
 
     const activitiesButtonHandler = () => {
