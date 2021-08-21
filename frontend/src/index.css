@@ -28,3 +28,9 @@ body, html {
   font-family: "Permanent Marker";
 }
 
+
+/* @layer components {
+  .btn {
+    @apply 
+  } 
+} */
