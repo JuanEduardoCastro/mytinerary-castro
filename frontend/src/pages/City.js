@@ -7,6 +7,8 @@ import Itinerary from "../components/Itinerary";
 import { connect } from "react-redux";
 import citiesActions from "../redux/actions/citiesActions";
 import itinerariesActions from "../redux/actions/itinerariesActions";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCoins, faLanguage, faSortDown } from '@fortawesome/free-solid-svg-icons';
 
 const City = (props) => {
 
@@ -30,22 +32,20 @@ const City = (props) => {
             }
         } 
         getItineraries()
-
-        // props.getUniqCity(props.match.params.id)
-        // props.getItineraries()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     
     if (error) {
         return <div><Error404 /></div>
     }
-
-    // setTimeout(() => {
-    //     props.history.push("/")    
-    // }, 5000);
     
     if (loader) {
         return <div><Loader /></div>
+    }
+
+    const dinamicTextColor = {
+        white: "text-white",
+        black: "text-black"
     }
 
     return (
@@ -56,12 +56,38 @@ const City = (props) => {
                 style={{backgroundImage: `url("${props.uniqCity.imgSource}")`}}
                 alt={props.uniqCity.cityName}
                 key={props.uniqCity._id}
-                className="w-full h-72 bg-center bg-cover"
+                className="w-full h-96 bg-center bg-cover border-b-8 border-indigo-800 rounded-b-sm"
                 > 
                     <Header />
-                    <div className="text-5xl pl-4 pt-2 heroText">
-                        {props.uniqCity.textColorTag ? (<><h2 className="text-white">{props.uniqCity.cityName}</h2><h2 className="text-white">{props.uniqCity.countryName}</h2></>) : (<><h2 className="text-black">{props.uniqCity.cityName}</h2><h2 className="text-black">{props.uniqCity.countryName}</h2></>)}
+                    <div className="text-6xl pl-6 py-2 heroText bg-indigo-300 bg-opacity-90">
+                        {props.uniqCity.textColorTag}
+                        <h2 className={`${props.uniqCity.textColotTag ? dinamicTextColor.black : dinamicTextColor.white}`} >{props.uniqCity.cityName}</h2>
                     </div>   
+                </div>
+                <div className="w-full h-40 flex justify-around items-center px-12 bg-indigo-100 border-b-4 border-gray-100">
+                    <div 
+                    style={{backgroundImage: `url("${props.uniqCity.flag}")`}} 
+                    className="w-32 h-20 bg-center bg-cover rounded-md shadow-md"></div>
+                    <div className="w-auto h-20 flex items-center justify-center gap-2.5 p-2.5">
+                        <FontAwesomeIcon icon={faCoins} size="2x" />
+                        <div className="text-lg">
+                            <h2><span className="text-xl font-medium">{props.uniqCity.currencySymbol}</span> {props.uniqCity.codeISO}</h2>
+                            <h2>({props.uniqCity.currency})</h2>
+                        </div>
+                    </div>
+                    <div className="w-auto h-20 flex items-center justify-center gap-2.5 p-2.5"> 
+                        <FontAwesomeIcon icon={faLanguage} size="3x" />  
+                        <div className="text-lg">
+                            {(props.uniqCity.language).map((language, index) => (
+                                <h2 key={index}>{language}</h2>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+                <div className="w-full flex items-center justify-center gap-12 ">
+                    <FontAwesomeIcon icon={faSortDown} size="4x" className="animate-bounce"/>
+                    <h2 className="text-4xl permanentMarkerFont">Mytineraries</h2>
+                    <FontAwesomeIcon icon={faSortDown} size="4x" className="animate-bounce"/>
                 </div>
 
                 {((props.itineraries).length < 1) ? (

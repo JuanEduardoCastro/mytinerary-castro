@@ -12,14 +12,16 @@ const Itinerary = (props) => {
     }
     var moneyCount = []
     for (let i = 0; i < props.itinerary.price; i++) {
-        moneyCount.push(<FontAwesomeIcon icon={faCoins} key={i} size="2x" className="transform scale-75"/>)
+        moneyCount.push(<div style={{backgroundImage: `url("https://i.imgur.com/kq6Tr5F.png")`}} 
+        key={i} 
+        className="w-14 h-14 bg-cover bg-center" ></div>)
+        // moneyCount.push(<img src="https://i.imgur.com/kq6Tr5F.png" key={i} className="w-14 h-14 bg-red-100" />)
+        // moneyCount.push(<FontAwesomeIcon icon={faCoins} key={i} size="2x" className="transform scale-75"/>)
     }
 
     const activitiesButtonHandler = () => {
         setActivitiesButton(!activitesButton)
     }
-
-    console.log(activitesButton)
 
     return (
         <div className="w-full mi-h-full flex justify-center items-center py-8 ">
@@ -57,11 +59,11 @@ const Itinerary = (props) => {
                                     })}
                                 </div>
                                 <div className="w-full flex justify-start gap-8 py-6 ">
-                                    <div>
-                                        {clockCount.map((clock, index) => clock)}
-                                    </div>
-                                    <div>
-                                        {moneyCount.map((coin, index) => coin)}
+                     {/*                <div>
+                                        {clockCount.map((clock) => clock)}
+                                    </div> */}
+                                    <div className="flex ">
+                                        {moneyCount.map((coin) => coin)}
                                     </div>  
                                 </div>
                             </div>

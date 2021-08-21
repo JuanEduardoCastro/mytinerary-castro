@@ -56,7 +56,7 @@ export default class Home extends React.Component {
 
     componentDidMount() {
         window.scrollTo(0,0)
-        Aos.init({ offset:120, duration: 600})
+        Aos.init({ offset: 120, duration: 400})
     }
 
     render() {
