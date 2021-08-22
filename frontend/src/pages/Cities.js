@@ -65,6 +65,7 @@ const Cities = (props) => {
 
     //corregir vuelta extra 
     // var citiesFromFilter = (inputValue === "" && filteredCities.length < 1 ? citiesList : filteredCities).map((filteredCity, index) => (
+
     var citiesFromFilter = (inputValue === "" ? props.allCitiesList : props.citiesFiltered).map((filteredCity, index) => (
         <Link to={`/city/${filteredCity._id}`} key={index} className="flex justify-center w-10/12 mx-auto">
             <div data-aos="fade-up" className="relative group flex items-center justify-center my-3 overflow-hidden shadow-md w-full h-64 rounded-md">
@@ -94,7 +95,7 @@ const Cities = (props) => {
 
     return (
         <>
-            <div style={{backgroundImage: `url("https://i.imgur.com/6zHiJfR.jpg?1")`}} alt="background living" className="w-full h-72 flex flex-col justify-between bg-top bg-cover">
+            <div style={{backgroundImage: `url("https://i.imgur.com/6zHiJfR.jpg?1")`}} alt="background living" className="w-full h-72 flex flex-col justify-between bg-top bg-cover border-b-8 border-indigo-700 rounded-b-sm">
                 <Header />
                 <div className="w-full h-48 flex justify-center items-center">
                     <input 
@@ -106,20 +107,21 @@ const Cities = (props) => {
                     onChange={inputHandler} />                
                 </div>
             </div>
-            {citiesFromFilter.length > 0 ? citiesFromFilter : (
-            <div className="pt-8 md:pt-8 pb-8 bg-gradient-to-t from-indigo-300 via-indigo-100">              
-                <div className=" w-full h-full text-center">
-                    <div className="w-full py-4 pb-6 flex flex-col items-center justify-around text-3xl text-black bg-gradient-to-t from-red-200 tracking-wide">
-                        <img src="https://i.imgur.com/ZsCN2Qk.png" alt="Not found logo" className="w-32 h-32" />
-                        <h2 className="text-4xl ">Sorry, we don´t have information about that city.</h2>
-                        <div className="flex flex-col items-center mt-4 gap-4 text-indigo-900">
-                            <div className="rounded-md my-8 p-4 ring-1 ring-indigo-500 bg-opacity-90 shadow-2xl bg-gradient-to-t from-indigo-500 to-indigo-200 cursor-pointer text-2xl italic hover:bg-indigo-700 hover:text-black duration-300">
-                                <button onClick={resetCities}>Try again!</button>
-                            </div>
+            {citiesFromFilter.length > 0 ? <div className=" bg-gradient-to-t from-indigo-300 py-8 pb-12"> {citiesFromFilter} </div> : (
+                <div className="w-full h-full text-center py-4 flex flex-col items-center justify-around bg-gradient-to-t from-red-200 pt-8 pb-10">
+                    <img src="https://i.imgur.com/ZsCN2Qk.png" alt="Not found logo" className="w-32 h-32" />
+                    <h2 className="text-2xl md:text-4xl text-black tracking-wide">Sorry, we don´t have information about that city.</h2>
+                    <div className="flex flex-col items-center mt-4 gap-4 text-indigo-900">
+                        <div 
+                        >
+                            <button 
+                            onClick={resetCities}
+                            className="btn text-2xl"
+                            >Try again!</button>
                         </div>
                     </div>
-                </div> 
-            </div> )}          
+                </div>
+            )}          
         </>
     )
 }

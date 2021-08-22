@@ -10,9 +10,9 @@ const Hero = () => {
                 <h3>Find your perfect trip, designed by insiders who know and love their cities!</h3>
             </div>
             <NavLink to="/cities">
-                <div className="shadow-xl">
-                    <button className="rounded-md p-4 bg-gradient-to-t from-indigo-500 to-indigo-200 ring-1 ring-indigo-500 bg-opacity-90 shadow-2xl cursor-pointer text-2xl italic text-indigo-900 hover:text-black duration-300">Let´s find out together!</button>
-                </div>
+                    <button 
+                    className="btn shadow-2xl text-2xl italic "                    
+                    >Let´s find out together!</button>
             </NavLink>
         </div>
     )

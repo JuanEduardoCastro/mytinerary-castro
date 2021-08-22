@@ -29,8 +29,8 @@ body, html {
 }
 
 
-/* @layer components {
+@layer components {
   .btn {
-    @apply 
+    @apply my-4 py-2 px-4 ring-1 ring-indigo-500 rounded-md bg-gradient-to-t from-indigo-500 to-indigo-200 shadow-lg text-center text-black hover:bg-indigo-700 hover:text-indigo-900 transform hover:scale-105;
   } 
-} */
+}
