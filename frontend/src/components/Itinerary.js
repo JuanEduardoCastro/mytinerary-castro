@@ -1,10 +1,17 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import Aos from 'aos';
+import "aos/dist/aos.css";
+
 
 const Itinerary = (props) => {
 
     const [activitesButton, setActivitiesButton] = useState(false)
+
+    useEffect(() => {
+        Aos.init({ offset: 120, duration: 600 })
+    })
 
     var moneyCount = []
     for (let i = 0; i < props.itinerary.price; i++) {
@@ -18,7 +25,7 @@ const Itinerary = (props) => {
     }
 
     return (
-        <div className="w-full h-full mb-14  ">
+        <div className="w-full h-full mb-14 ">
             <div className="w-9/12 border mx-auto shadow-md bg-gradient-to-b from-indigo-200">
                 <div className="text-2xl text-center p-2.5 sm:p-3">
                     <h2 className="carouselText">{props.itinerary.itineraryName}</h2>                    
@@ -54,7 +61,7 @@ const Itinerary = (props) => {
                             <h2 className="text-lg">{`"${props.itinerary.introSentence}"`}</h2>
                         </div>
                         <div className="pt-2 pl-4">
-                            <div className="w-2/5 flex justify-between gap-3 text-sm text-gray-500 pl-4">
+                            <div className="w-full flex justify-start gap-3 text-sm text-gray-500 pl-4 flex-wrap">
                                 {props.itinerary.hashtags.map((hashtag, index) => {
                                     return <h2 key={index}>{`#${hashtag}`}</h2>
                                 })}
@@ -80,7 +87,7 @@ const Itinerary = (props) => {
                             >View more</button>
                     </div>
                     <div className="w-full h-full fotoText">
-                        <div className={activitesButton ? "block" : "hidden"} >
+                        <div className={activitesButton ? "block" : "hidden"} data-aos="fade-down" >
                             <div className="w-full py-4 pb- flex flex-col items-center justify-around bg-gradient-to-t from-red-200 tracking-wide">
                                 <img src="https://i.imgur.com/LmKOcmk.png" alt="Not found logo" className="w-32 h-32" />
                                 <h2 className="text-center text-4xl text-black">We are under construction!</h2>
