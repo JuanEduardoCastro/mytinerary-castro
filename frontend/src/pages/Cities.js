@@ -92,24 +92,26 @@ const Cities = (props) => {
         </Link> 
     )) 
 
+    const heroPage = <div 
+                        style={{backgroundImage: `url("https://i.imgur.com/6zHiJfR.jpg?1")`}} 
+                        alt="background living" 
+                        className="w-full h-72 flex flex-col justify-between bg-top bg-cover border-b-8 border-indigo-700 rounded-b-sm">
+                            <Header />
+                            <div className="w-full h-48 flex justify-center items-center">
+                                <input 
+                                type="text" 
+                                name="filterCity"
+                                value={inputValue}
+                                placeholder="Find a city to explore" 
+                                className="border border-indigo-700 focus:indigo-700 rounded-lg bg-white text-black text-2xl md:text-4xl mt-8 px-4 py-2 text-center " 
+                                onChange={inputHandler} />                
+                            </div>
+                        </div>
+
     return (
         <>
-            <div 
-            style={{backgroundImage: `url("https://i.imgur.com/6zHiJfR.jpg?1")`}} 
-            alt="background living" 
-            className="w-full h-72 flex flex-col justify-between bg-top bg-cover border-b-8 border-indigo-700 rounded-b-sm">
-                <Header />
-                <div className="w-full h-48 flex justify-center items-center">
-                    <input 
-                    type="text" 
-                    name="filterCity"
-                    value={inputValue}
-                    placeholder="Find a city to explore" 
-                    className="border border-indigo-700 focus:indigo-700 rounded-lg bg-white text-black text-2xl md:text-4xl mt-8 px-4 py-2 text-center " 
-                    onChange={inputHandler} />                
-                </div>
-            </div>
-            {citiesFromFilter.length > 0 ? <div className=" bg-gradient-to-t from-indigo-300 py-8 pb-12"> {citiesFromFilter} </div> : (
+            {heroPage}
+            {citiesFromFilter.length > 0 ? <div className=" bg-gradient-to-t from-indigo-300 py-8 pb-12"> {citiesFromFilter} </div> : ( 
                 <div className="w-full h-full text-center py-4 flex flex-col items-center justify-around bg-gradient-to-t from-red-200 pt-8 pb-10">
                     <img 
                     src="https://i.imgur.com/ZsCN2Qk.png" 

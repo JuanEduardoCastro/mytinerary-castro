@@ -68,30 +68,32 @@ const City = (props) => {
         myTineraryRef.current.scrollIntoView({ behavior: "smooth"})
     }
 
+    const heroPage = <div 
+                        style={{backgroundImage: `url("${props.uniqCity.imgSource}")`}}
+                        alt={props.uniqCity.cityName}
+                        key={props.uniqCity._id}
+                        className="w-full h-96 bg-center bg-cover border-b-8 border-indigo-700 rounded-b-sm"
+                        > 
+                            <Header />
+                            <motion.div 
+                            initial={{x: -3000}}
+                            animate={{x: 0}}
+                            transition={{duration: 1, delay: 0.2, ease: "easeOut"}}
+                            className="text-6xl py-2 heroText bg-indigo-300 bg-opacity-90 mt-16 md:mt-0 text-center">
+                                {props.uniqCity.textColorTag}
+                                <motion.h2
+                                initial={{x: -900}}
+                                animate={{x: 0}}
+                                transition={{duration: 1, delay: 0.5, ease: "easeOut"}} 
+                                className={`${props.uniqCity.textColotTag ? dinamicTextColor.black : dinamicTextColor.white}`} >{props.uniqCity.cityName}</motion.h2>
+                            </motion.div>   
+                        </div>
+
     return (
         <>
             {!error ? (
             <div className="">
-                <div 
-                style={{backgroundImage: `url("${props.uniqCity.imgSource}")`}}
-                alt={props.uniqCity.cityName}
-                key={props.uniqCity._id}
-                className="w-full h-96 bg-center bg-cover border-b-8 border-indigo-700 rounded-b-sm"
-                > 
-                    <Header />
-                    <motion.div 
-                    initial={{x: -3000}}
-                    animate={{x: 0}}
-                    transition={{duration: 1, delay: 0.2, ease: "easeOut"}}
-                    className="text-6xl py-2 heroText bg-indigo-300 bg-opacity-90 mt-16 md:mt-0 text-center">
-                        {props.uniqCity.textColorTag}
-                        <motion.h2
-                        initial={{x: -900}}
-                        animate={{x: 0}}
-                        transition={{duration: 1, delay: 0.5, ease: "easeOut"}} 
-                        className={`${props.uniqCity.textColotTag ? dinamicTextColor.black : dinamicTextColor.white}`} >{props.uniqCity.cityName}</motion.h2>
-                    </motion.div>   
-                </div>
+                {heroPage}
                 <div  className="w-full h-40 flex justify-between md:justify-around items-center px-2.5 md:px-12 bg-indigo-100 border-b-4 border-gray-100">
                     <div 
                     style={{backgroundImage: `url("${props.uniqCity.flag}")`}}
@@ -133,7 +135,6 @@ const City = (props) => {
                 </Link>
             </div>
             </div> 
-
             ) : ( <Error404/> )} 
             
         </>
