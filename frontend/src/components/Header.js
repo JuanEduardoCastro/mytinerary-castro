@@ -6,10 +6,15 @@ import useClickAwayListener from "use-click-away-listener";
 import Aos from "aos";
 import "aos/dist/aos.css";
 
-const Header = () => {
+const Header = (props) => {
+    console.log(props)
 
     const [menuButton, setMenuButton] = useState(false)
     const [menuGuy, setMenuGuy] = useState(false)
+    
+    useEffect(() => {
+        Aos.init({ offset: 120, duration: 600})
+    }, [])
 
     const toggleMenuButton = () => {
         setMenuButton(!menuButton)
@@ -30,16 +35,19 @@ const Header = () => {
     const clickAwayRef = useClickAwayListener(handleClickAway)
     const clickAwayRefGuy = useClickAwayListener(handleClickAwayGuy)
 
-    useEffect(() => {
-        Aos.init({ offset: 120, duration: 600})
-    }, [])
+
+    const dinamicTextColor = {
+        white: "text-white",
+        black: "text-black"
+    }
+
 
     return (
         <header data-aos="fade-down" className="w-full h-28 md:h-28">
             <nav className="h-full flex justify-between items-start md:items-center ">
                 <div className="hidden md:flex md:items-center md:block py-2.5 px-8 gap-3 text-5xl tracking-wider permanentMarkerFont leading-10">
                     <img src="https://i.imgur.com/slgCIZZ.png" alt="logo mytinerary" className="w-24 h-24 m-1"/>
-                    <h1 className="">Mytinerary</h1>
+                    <h1 className={`${props.textColorTag && dinamicTextColor.white }`} >Mytinerary</h1>
                 </div>
                 <div className="w-full h-full flex justify-between md:justify-end items-start md:items-start pt-3 px-8 fotoText">
                     <div className=" flex flex-col items-start justify-center gap- pt-2">
@@ -48,8 +56,8 @@ const Header = () => {
                                 {(menuButton) && (
                                     <ul className=" flex flex-col md:flex md:flex-row text-center list-none gap-4 text-xl cursor-pointer py-2.5 px-2 md:pt-4 overflow-visible text-bolder">
                                         <li>
-                                            <NavLink exact to="/" activeClassName="text-indigo-700" className="hover:text-indigo-700">
-                                                <p>Home</p>
+                                            <NavLink exact={true} to="/" activeClassName="text-indigo-700" className="hover:text-indigo-700">
+                                                <p> Home</p>
                                             </NavLink>
                                         </li>
                                         <li>
@@ -62,7 +70,7 @@ const Header = () => {
                             </div>
                             <ul className="hidden md:block flex flex-col md:flex md:flex-row text-center list-none gap-4 text-xl cursor-pointer py-2.5 px-2 md:pt-4 overflow-visible text-bolder">
                                 <li>
-                                    <NavLink exact to="/" activeClassName="text-indigo-700" className="hover:text-indigo-700">
+                                    <NavLink exact={true} to="/" activeClassName="text-indigo-700" className="hover:text-indigo-700">
                                         <p>Home</p>
                                     </NavLink>
                                 </li>

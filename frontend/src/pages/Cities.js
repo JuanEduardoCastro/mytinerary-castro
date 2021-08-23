@@ -22,7 +22,7 @@ const Cities = (props) => {
     })
     
     useEffect(() => {
-        Aos.init({ offset: 120, duration: 600 })
+        Aos.init({ offset: 80, duration: 600 })
     }, [])
 
     useEffect(() => {

@@ -74,7 +74,7 @@ const City = (props) => {
                         key={props.uniqCity._id}
                         className="w-full h-96 bg-center bg-cover border-b-8 border-indigo-700 rounded-b-sm"
                         > 
-                            <Header />
+                            <Header textColorTag={props.uniqCity.textColorTag}/>
                             <motion.div 
                             initial={{x: -1500}}
                             animate={{x: 0}}
@@ -127,7 +127,7 @@ const City = (props) => {
                     }))} 
                 </div>    
             <div className={`${(props.itineraries).length < 1 && "hidden"} flex justify-center gap-4`}>
-                <Link exact={true} to="/" >
+                <Link to="/" >
                     <button className="btn">Back to home</button>
                 </Link>
                 <Link to="/cities" >
