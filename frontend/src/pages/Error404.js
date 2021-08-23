@@ -10,9 +10,9 @@ const Error404 = (props) => {
         window.scrollTo(0,0)
     })
 
-    // setTimeout(() => {
-    //     props.history.push("/")     
-    // }, 5000)
+    setTimeout(() => {
+        props.history.push("/")     
+    }, 5000)
 
     return (
         <>

@@ -16,7 +16,7 @@ export default class App extends React.Component {
           <Route path="/cities" component={Cities} />
           <Route path="/city/:id" component={City} />
           <Route path="/loader" component={Loader} />
-          <Route path="/error404" component={Error404} />
+          <Route path="/error404" component={Error404} /> 
           <Redirect to="/error404" />
         </Switch>
         <Footer/>

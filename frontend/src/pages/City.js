@@ -45,7 +45,7 @@ const City = (props) => {
     }, [])
 
     if (error) {
-        return <div><Error404 /></div>
+        return <div><Error404 history={props.history}/></div>
     }
     
     if (loader) {
@@ -76,15 +76,15 @@ const City = (props) => {
                         > 
                             <Header />
                             <motion.div 
-                            initial={{x: -3000}}
+                            initial={{x: -1500}}
                             animate={{x: 0}}
-                            transition={{duration: 1, delay: 0.2, ease: "easeOut"}}
+                            transition={{duration: 0.6, delay: 0.1, ease: "easeOut"}}
                             className="text-6xl py-2 heroText bg-indigo-300 bg-opacity-90 mt-16 md:mt-0 text-center">
                                 {props.uniqCity.textColorTag}
                                 <motion.h2
                                 initial={{x: -900}}
                                 animate={{x: 0}}
-                                transition={{duration: 1, delay: 0.5, ease: "easeOut"}} 
+                                transition={{duration: 0.8, delay: 0.3, ease: "easeOut"}} 
                                 className={`${props.uniqCity.textColotTag ? dinamicTextColor.black : dinamicTextColor.white}`} >{props.uniqCity.cityName}</motion.h2>
                             </motion.div>   
                         </div>
@@ -127,7 +127,7 @@ const City = (props) => {
                     }))} 
                 </div>    
             <div className={`${(props.itineraries).length < 1 && "hidden"} flex justify-center gap-4`}>
-                <Link exact="true" to="/" >
+                <Link exact={true} to="/" >
                     <button className="btn">Back to home</button>
                 </Link>
                 <Link to="/cities" >

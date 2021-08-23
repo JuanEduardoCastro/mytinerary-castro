@@ -41,7 +41,7 @@ const Cities = (props) => {
     }, []) 
 
     if (error) {
-        return <div><Error404 /></div>
+        return <div><Error404 history={props.history}/></div>
     }
     
     if (loader) {
