@@ -2,13 +2,13 @@ const express = require("express")
 const cors = require("cors")
 const router = require("./routes/index.js")
 require("dotenv").config()
-require("./config/database")                  //primero se ve el console.log de aca y despues la del fetcheo
+require("./config/database")
 
 const app = express()
 
 //middleware
 app.use(cors())
-app.use(express.json())                      // para convertir todo lo que venga json a javascript 
+app.use(express.json())
 
 app.use("/api", router)
 

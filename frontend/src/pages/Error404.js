@@ -4,7 +4,6 @@ import React, { useLayoutEffect } from "react";
 
 
 const Error404 = (props) => {
-    console.log(props)
 
     useLayoutEffect(() => {
         window.scrollTo(0,0)
@@ -22,7 +21,7 @@ const Error404 = (props) => {
                     <img src="https://i.imgur.com/bjeuiBg.png?1" alt="error 404" className="py-4"/>
                     <div className="flex flex-col items-center justify-center gap-4 text-2xl">
                         <h2>Sorry, this page doesn´t exist or is no longer available.</h2>
-                        <h2>Go back to <Link exact={true} to="/"><span className="hover:text-indigo-700 transition-all hover:scale-110 py-2 permanentMarkerFont text-5xl"> Mytinerary </span></Link> home page.</h2>
+                        <h2>Go back to <Link exact={true} to="/" ><span className="hover:text-indigo-700 transition-all hover:scale-110 py-2 permanentMarkerFont text-5xl"> Mytinerary </span></Link> home page.</h2>
                     </div>
                 </div> 
             </div>
