@@ -79,6 +79,16 @@ const Header = (props) => {
                                         <p>Cities</p>
                                     </NavLink>
                                 </li>
+                                <li>
+                                    <NavLink to="/signup" activeClassName="text-indigo-700" className="hover:text-indigo-700">
+                                        <p>Sign up</p>
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="/login" activeClassName="text-indigo-700" className="hover:text-indigo-700">
+                                        <p>Log in</p>
+                                    </NavLink>
+                                </li>
                             </ul>
                     </div>
                     <div className="w-28 flex flex-col items-end md:items-end md:justify-end">
@@ -89,8 +99,16 @@ const Header = (props) => {
                         </div>
                         {menuGuy && (
                             <ul className="flex flex-col items-end text-center list-none gap-4 text-xl cursor-pointer py-2.5 px-4 overflow-visible">
-                                <li to="" activeclassname="text-indigo-700" className="hover:text-indigo-700"><p>Log in</p></li>
-                                <li to="" activeclassname="text-indigo-700" className="hover:text-indigo-700"><p>Sign up</p></li>
+                                <li>
+                                    <NavLink to="/login" activeClassName="text-indigo-700" className="hover:text-indigo-700">
+                                        <p>Log in</p>
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to="/signup" activeClassName="text-indigo-700" className="hover:text-indigo-700">
+                                        <p>Sign up</p>
+                                    </NavLink>
+                                </li>
                             </ul>
                         )}
                     </div>

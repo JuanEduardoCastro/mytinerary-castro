@@ -31,6 +31,10 @@ body, html {
 
 @layer components {
   .btn {
-    @apply my-4 py-2 px-4 ring-1 ring-indigo-500 rounded-md bg-gradient-to-t from-indigo-500 to-indigo-200 shadow-lg text-center text-black hover:bg-indigo-700 hover:text-indigo-900 transform hover:scale-105;
+    @apply my-2.5 py-2 px-4 ring-1 ring-indigo-500 rounded-md bg-gradient-to-t from-indigo-500 to-indigo-200 shadow-lg text-center text-black hover:bg-indigo-700 hover:text-indigo-900 transform hover:scale-105;
   } 
+
+  .inputBox {
+    @apply my-2.5 px-4 py-2 border border-indigo-700 rounded-lg bg-white text-center text-black text-xl md:text-2xl ;
+  }
 }
