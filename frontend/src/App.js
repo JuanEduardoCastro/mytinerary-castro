@@ -15,7 +15,7 @@ const App = (props) => {
   
   useEffect(() => {
     if (localStorage.getItem("token")) {
-      props.logInLocalStorage(localStorage.getItem("userName"))
+      props.logInLocalStorage(localStorage.getItem("token"), localStorage.getItem("userName"))
     } 
   }, [])
   
@@ -38,7 +38,7 @@ const App = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    logInUser: state.users.logInStore
+    token: state.users.token
   }
 }
 

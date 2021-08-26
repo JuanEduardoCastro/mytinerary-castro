@@ -55,6 +55,7 @@ var carousel = <Swiper
 export default class Home extends React.Component {
 
     componentDidMount() {
+        document.title="Home - Mytinerary"
         window.scrollTo(0,0)
         Aos.init({ offset: 120, duration: 400})
     }

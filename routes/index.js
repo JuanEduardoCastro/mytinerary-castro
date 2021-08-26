@@ -2,6 +2,7 @@ const express = require("express");
 const citiesControllers = require("../controllers/citiesControllers");
 const itinerariesControllers = require("../controllers/itinerariesControllers");
 const usersControllers = require("../controllers/usersControllers");
+const userValidator = require("../controllers/userValidator");
 
 const router = express.Router()
 
@@ -27,7 +28,7 @@ router.route("/itineraries/:cityId")
 .get(itinerariesControllers.getItinerariesOfACity)
 
 router.route("/user/signup")
-.post(usersControllers.addNewUser)
+.post(userValidator, usersControllers.addNewUser)
 
 router.route("/user/login")
 .post(usersControllers.logInUser)

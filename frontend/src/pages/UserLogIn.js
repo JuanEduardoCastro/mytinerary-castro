@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { connect } from "react-redux";
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import usersActions from '../redux/actions/usersActions';
 
 const UserLogIn = (props) => {
 
+    document.title="Log in"
+
     const [logInData, setLogInData] = useState({})
     const [messageToUser, setMessageToUser] = useState("")
-    // const [clickLogIn, setClickLogIn] = useState(false)
     const [error, setError] = useState(null)
 
     const inputHandler = (e) => {
@@ -45,7 +47,6 @@ const UserLogIn = (props) => {
     // console.log(messageToUser)
     // console.log(error)
 
-
     return (
         <div 
         style={{backgroundImage: `url("https://i.imgur.com/zJKyzjj.jpg")`}} 
@@ -54,8 +55,10 @@ const UserLogIn = (props) => {
             <div className="w-full h-full bg-indigo-200 bg-opacity-40">
                 <Header />
                 <div className="flex flex-col justify-center items-center">
-                    <h2 className="text-center text-4xl">Create an account!</h2>
-                    <h2 className={`${logInData === {} ? "hidden" : "block"} text-red-500`}>{messageToUser}</h2>
+                    <div className="flex flex-col h-20">
+                        <h2 className="text-center text-4xl">Create an account!</h2>
+                        <h2 className={`${logInData === {} ? "hidden" : "block"} text-red-500`}>{messageToUser}</h2>
+                    </div>
                     <input 
                         type="email" 
                         pattern=".+@" 
@@ -75,6 +78,9 @@ const UserLogIn = (props) => {
                     <button
                         onClick={clickLogInHandler} 
                         className="btn text-2xl">Log in!</button>
+                    <div>
+                        <h2>If you don´t have an account, click here to <Link to="/signup" className="text-lg text-indigo-700">Sign up!</Link></h2>
+                    </div>
                 </div> 
             </div>
         </div>

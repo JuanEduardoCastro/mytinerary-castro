@@ -18,7 +18,7 @@ const usersControllers = {
                 throw new Error("That email allready exist")
             }
         } catch (error) {
-            res.json({ success: false, error: error.message }) //revisar mensajes
+            res.json({ success: false, error: "error controlador" }) //revisar mensajes
         }
     },
 
@@ -29,7 +29,7 @@ const usersControllers = {
             if (userEmailCheck) {
                 let userPasswordCheck = bcrypt.compareSync(userPassword, userEmailCheck.userPassword)
                 if (userPasswordCheck) {
-                    const token = jwt.sign({ ...userEmailChack }, process.env.SECRETORKEY)
+                    const token = jwt.sign({ ...userEmailCheck }, process.env.SECRETORKEY)
                     res.json({ success: true, response: { token, userName: userEmailCheck.userName, userPhoto: userEmailCheck.userPhoto }})
                 } else {
                     throw new Error("password are invalid")

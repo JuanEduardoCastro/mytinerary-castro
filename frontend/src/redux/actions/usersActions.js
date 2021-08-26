@@ -29,9 +29,9 @@ const usersActions = {
         }
     },
 
-    logInLocalStorage: (userName) => {
+    logInLocalStorage: (token, userName) => {
         return (dispatch) => {
-            dispatch({ type: "LOG_IN_USER", payload: {userName} })
+            dispatch({ type: "LOG_IN_USER", payload: { token, userName } })
         }
     }
 

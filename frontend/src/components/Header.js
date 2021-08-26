@@ -45,7 +45,7 @@ const Header = (props) => {
         white: "text-white",
         black: "text-black"
     }
-
+    // console.log(props)
     return (
         <header data-aos="fade-down" className="w-full h-28 md:h-28">
             <nav className="h-full flex justify-between items-start md:items-center ">
@@ -110,7 +110,7 @@ const Header = (props) => {
                                 <FontAwesomeIcon icon={faUserCircle} onClick={toggleMenuGuy} size="4x" className="transform hover:scale-110"/>
                             : <div onClick={toggleMenuGuy} 
                             style={{backgroundImage: `url("${props.userPhoto}")`}}
-                            className="w-14 h-14 transform hover:scale-110 bg-cover bg-center rounded-50"></div>}
+                            className="w-14 h-14 transform hover:scale-110 bg-cover bg-center rounded-full cursor-pointer"></div>}
                             </div>
                         </div>
                         {menuGuy && (
@@ -147,8 +147,9 @@ const Header = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        logInUser: state.users.logInStore,
-        userName: state.users.userNameStore
+        token: state.users.token,
+        userName: state.users.userNameStore,
+        userPhoto: state.users.userPhotoStore
     }
 }
 
