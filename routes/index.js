@@ -27,7 +27,6 @@ router.route("/itineraries/:cityId")
 .get(itinerariesControllers.getItinerariesOfACity)
 
 router.route("/user/signup")
-.get(usersControllers.getAllUsers)
 .post(usersControllers.addNewUser)
 
 router.route("/user/login")

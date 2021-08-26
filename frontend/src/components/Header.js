@@ -1,13 +1,14 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faUserCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
 import useClickAwayListener from "use-click-away-listener";
 import Aos from "aos";
 import "aos/dist/aos.css";
+import { connect } from "react-redux";
+import usersActions from '../redux/actions/usersActions';
 
 const Header = (props) => {
-    console.log(props)
 
     const [menuButton, setMenuButton] = useState(false)
     const [menuGuy, setMenuGuy] = useState(false)
@@ -32,6 +33,10 @@ const Header = (props) => {
         setMenuGuy(false)
     }
 
+    const logOutClick = () => {
+        props.logOutUser()
+    }
+
     const clickAwayRef = useClickAwayListener(handleClickAway)
     const clickAwayRefGuy = useClickAwayListener(handleClickAwayGuy)
 
@@ -40,7 +45,6 @@ const Header = (props) => {
         white: "text-white",
         black: "text-black"
     }
-
 
     return (
         <header data-aos="fade-down" className="w-full h-28 md:h-28">
@@ -68,38 +72,50 @@ const Header = (props) => {
                                     </ul> 
                                 )}
                             </div>
-                            <ul className="hidden md:block flex flex-col md:flex md:flex-row text-center list-none gap-4 text-xl cursor-pointer py-2.5 px-2 md:pt-4 overflow-visible text-bolder">
-                                <li>
+                            <div className="hidden md:block flex flex-col md:flex md:flex-row text-center list-none gap-4 text-xl cursor-pointer py-2.5 px-2 md:pt-4 overflow-visible text-bolder">
+                                
                                     <NavLink exact={true} to="/" activeClassName="text-indigo-700" className="hover:text-indigo-700">
                                         <p>Home</p>
                                     </NavLink>
-                                </li>
-                                <li>
+                                
+                                
                                     <NavLink to="/cities" activeClassName="text-indigo-700" className="hover:text-indigo-700">
                                         <p>Cities</p>
                                     </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink to="/signup" activeClassName="text-indigo-700" className="hover:text-indigo-700">
+                                
+          
+                                {!props.token && 
+                                    <Link to="/signup" className="hover:text-indigo-700">
                                         <p>Sign up</p>
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink to="/login" activeClassName="text-indigo-700" className="hover:text-indigo-700">
+                                    </Link>}
+         
+                                {!props.token &&
+                                    <Link to="/login" className="hover:text-indigo-700">
                                         <p>Log in</p>
-                                    </NavLink>
-                                </li>
-                            </ul>
+                                    </Link>}
+     
+                                {/* {props.token && 
+                                    <h2>{props.userName}</h2>} */}
+          
+                                {props.token && 
+                                    <h2 onClick={logOutClick} className="hover:text-indigo-700">Log out</h2>
+                                }
+                            </div>
+                    
                     </div>
                     <div className="w-28 flex flex-col items-end md:items-end md:justify-end">
                         <div className="pt-2 pl-2 m-1 md:pl-0 md:m-0">
                             <div ref={clickAwayRefGuy}className="w-14 h-14 md:w-16 md:h-16 cursor-pointer">
+                                {!props.token ? 
                                 <FontAwesomeIcon icon={faUserCircle} onClick={toggleMenuGuy} size="4x" className="transform hover:scale-110"/>
+                            : <div onClick={toggleMenuGuy} 
+                            style={{backgroundImage: `url("${props.userPhoto}")`}}
+                            className="w-14 h-14 transform hover:scale-110 bg-cover bg-center rounded-50"></div>}
                             </div>
                         </div>
                         {menuGuy && (
                             <ul className="flex flex-col items-end text-center list-none gap-4 text-xl cursor-pointer py-2.5 px-4 overflow-visible">
-                                <li>
+                                {/* <li>
                                     <NavLink to="/login" activeClassName="text-indigo-700" className="hover:text-indigo-700">
                                         <p>Log in</p>
                                     </NavLink>
@@ -108,7 +124,18 @@ const Header = (props) => {
                                     <NavLink to="/signup" activeClassName="text-indigo-700" className="hover:text-indigo-700">
                                         <p>Sign up</p>
                                     </NavLink>
-                                </li>
+                                </li> */}
+                                {!props.token && 
+                                    <Link to="/signup" className="hover:text-indigo-700">
+                                        <p>Sign up</p>
+                                    </Link>}
+         
+                                {!props.token &&
+                                    <Link to="/login" className="hover:text-indigo-700">
+                                        <p>Log in</p>
+                                    </Link>}
+                                {props.token && <li><p>{props.userName}</p></li>}
+                                {props.token && <li><p onClick={logOutClick} className="hover:text-indigo-700">Log out</p></li>}
                             </ul>
                         )}
                     </div>
@@ -118,4 +145,14 @@ const Header = (props) => {
     )
 }
 
-export default Header
+const mapStateToProps = (state) => {
+    return {
+        logInUser: state.users.logInStore,
+        userName: state.users.userNameStore
+    }
+}
+
+const mapDispatchToProps = {
+    logOutUser: usersActions.logOutUser
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Header)

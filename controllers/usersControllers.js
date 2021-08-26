@@ -1,19 +1,8 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const usersControllers = {
-    getAllUsers: async (req, res) => {
-        try {
-            const getAllUsers = await User.find()
-            if (getAllUsers) {
-                res.json({ success: true, response: getAllUsers })
-            } else {
-                throw new Error("Couldn´t get all users")
-            }
-        } catch (error) {
-            res.json({ success: false, error: error.message })
-        }
-    },
 
     addNewUser: async (req, res) => {
         const { userEmail, userName, userLastName, userPassword, userPhoto, userCountry } = req.body
@@ -23,12 +12,13 @@ const usersControllers = {
             let userEmailCheck = await User.findOne({ userEmail: userEmail })
             if (!userEmailCheck) {
                 await newUser.save()
-                res.json({ success: true, response: newUser })
+                const token = jwt.sign({ ...newUser }, process.env.SECRETORKEY )
+                res.json({ success: true, response: { token, userName: newUser.userName, userPhoto: newUser.userPhoto }})
             } else {
                 throw new Error("That email allready exist")
             }
         } catch (error) {
-            res.json({ success: false, error: error.message /* "Couldn´t add the user" */ }) //revisar mensajes
+            res.json({ success: false, error: error.message }) //revisar mensajes
         }
     },
 
@@ -39,18 +29,17 @@ const usersControllers = {
             if (userEmailCheck) {
                 let userPasswordCheck = bcrypt.compareSync(userPassword, userEmailCheck.userPassword)
                 if (userPasswordCheck) {
-                    res.json({ success: true, response: "You are log in" })
+                    const token = jwt.sign({ ...userEmailChack }, process.env.SECRETORKEY)
+                    res.json({ success: true, response: { token, userName: userEmailCheck.userName, userPhoto: userEmailCheck.userPhoto }})
                 } else {
-                    throw new Error("Username or password are invalid")
+                    throw new Error("password are invalid")
                 }
             } else {
-                throw new Error("Username or password are invalid")
+                throw new Error("Username are invalid")
             } 
         } catch (error) {
             res.json({ succes: false, error: error.message }) //revisar mensajes
         }
     }
-
-
 }
 module.exports = usersControllers
