@@ -15,8 +15,9 @@ const App = (props) => {
   
   useEffect(() => {
     if (localStorage.getItem("token")) {
-      props.logInLocalStorage(localStorage.getItem("token"), localStorage.getItem("userName"))
+      props.logInLocalStorage(localStorage.getItem("token"), localStorage.getItem("userName"), localStorage.getItem("userPhoto"))
     } 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   
   return ( 
@@ -29,7 +30,7 @@ const App = (props) => {
         {!props.token && <Route path="/signup" component={UserSignUp} />}
         {!props.token && <Route path="/login" component={UserLogIn} />}
         <Route path="/error404" component={Error404} /> 
-        <Redirect to="/error404" />
+        <Redirect to="/" />
       </Switch>
       <Footer />
     </BrowserRouter>

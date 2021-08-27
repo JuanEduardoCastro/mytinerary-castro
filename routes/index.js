@@ -3,11 +3,12 @@ const citiesControllers = require("../controllers/citiesControllers");
 const itinerariesControllers = require("../controllers/itinerariesControllers");
 const usersControllers = require("../controllers/usersControllers");
 const userValidator = require("../controllers/userValidator");
+const passport = require("passport")
 
 const router = express.Router()
 
 router.route("/information/cities")
-.get(citiesControllers.getCities)
+.get(passport.authenticate('jwt', { session: false }), citiesControllers.getCities)
 .post(citiesControllers.addCity)
 
 router.route("/information/city/:id")

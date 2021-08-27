@@ -1,13 +1,16 @@
 import axios from "axios"
 
 const citiesActions = {
-    getCitiesList: () => {
+    getCitiesList: (token) => {
         return async (dispatch) => {
-            let response = await axios.get("http://localhost:4000/api/information/cities")
+            let response = await axios.get("http://localhost:4000/api/information/cities", {
+                headers: { 'Authorization' : 'Bearer ' + token }}
+                )
             if(!response.data.success) {
                 throw new Error("There was a problem with the database")
             }
             let data = response.data.response
+            console.log(data)
             dispatch({type: "GET_CITIES_LIST", payload: data})
         }
     },

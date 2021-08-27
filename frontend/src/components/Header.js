@@ -40,14 +40,18 @@ const Header = (props) => {
     const clickAwayRef = useClickAwayListener(handleClickAway)
     const clickAwayRefGuy = useClickAwayListener(handleClickAwayGuy)
 
-
     const dinamicTextColor = {
         white: "text-white",
         black: "text-black"
     }
-    // console.log(props)
+    console.log(props)
     return (
-        <header data-aos="fade-down" className="w-full h-28 md:h-28">
+        <header data-aos="fade-down" className="relative w-full h-28 md:h-28">
+            {/* <div className="absolute w-full h-20 inset-x-0 top-20">
+                <div className="flex justify-center items-center mx-auto w-1/3 h-28 mt-10 border border-indigo bg-indigo-200 bg-opacity-90">
+                    <h2 className="text-2xl">{`Bienvenido ${props.userName}`}</h2>
+                </div>
+            </div> */}
             <nav className="h-full flex justify-between items-start md:items-center ">
                 <div className="hidden md:flex md:items-center md:block py-2.5 px-8 gap-3 text-5xl tracking-wider permanentMarkerFont leading-10">
                     <img src="https://i.imgur.com/slgCIZZ.png" alt="logo mytinerary" className="w-24 h-24 m-1"/>

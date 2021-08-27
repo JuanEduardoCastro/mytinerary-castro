@@ -28,7 +28,7 @@ const Cities = (props) => {
     useEffect(() => {
         async function getCitiesList() {
             try {
-                await props.getCitiesList()
+                await props.getCitiesList(props.token)
                 setLoader(false)
             } catch (error) {
                 setLoader(false)
@@ -136,7 +136,8 @@ const Cities = (props) => {
 const mapStateToProps = (state) => {
     return {
         allCitiesList: state.cities.citiesListStore,
-        citiesFiltered: state.cities.citiesFilteredStore
+        citiesFiltered: state.cities.citiesFilteredStore,
+        token: state.users.token
         
     }
 }

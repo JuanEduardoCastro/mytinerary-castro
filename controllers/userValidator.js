@@ -7,8 +7,7 @@ const userValidator = (req, res, next) => {
         userName: joi.string().trim().min(4).max(20).required(),
         userLastName: joi.string().trim().min(4).max(20).required(),
         userPhoto: joi.string().trim().min(4).max(300).required(),
-        userCountry: joi.string().trim().required()
-        
+        userCountry: joi.string().trim().required()  
     })
 
     const validations = schema.validate(req.body,  {abortEarly: false } )
