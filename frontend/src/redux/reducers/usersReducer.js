@@ -8,7 +8,7 @@ const usersReducer = (state = { token: null, userNameStore: null, userPhotoStore
             return {
                 token: action.payload.token,
                 userNameStore: action.payload.userName,
-                userPhotoStore: action.payload.userPhoto
+                userPhotoStore: action.payload.userPhoto, 
             }
         case "LOG_OUT_USER":
             localStorage.removeItem("token")
@@ -17,7 +17,7 @@ const usersReducer = (state = { token: null, userNameStore: null, userPhotoStore
             return {
                 token: null,
                 userNameStore: null,
-                userPhotoStore: null
+                userPhotoStore: null,
             }
         case "GET_COUNTRIES_LIST":
             return {

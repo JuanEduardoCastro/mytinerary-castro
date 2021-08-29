@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import Header from '../components/Header';
 import { connect } from "react-redux";
 import usersActions from '../redux/actions/usersActions';
 import { Link } from 'react-router-dom';
 import GoogleLogin from "react-google-login";
 import Loader from '../components/Loader';
-
-
 
 // 1086726256498-432u6e7a0ukbsfj0lnkqqf3bli5u3c5a.apps.googleusercontent.com
 
@@ -21,6 +19,10 @@ const UserSignUp = (props) => {
     const [disabledBtn, setDisabledBtn] = useState(true) 
     const [loader, setLoader] = useState(true)
 
+    useLayoutEffect(() => {
+        window.scrollTo(0,0)
+    })
+
     useEffect(() => {
         async function getCountries() {
             try {
@@ -32,7 +34,7 @@ const UserSignUp = (props) => {
             }
         }
         getCountries()
-        console.log("hola")
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     if (loader) {
@@ -95,7 +97,6 @@ const UserSignUp = (props) => {
     }
 
     const responseGoogle = async (info) => {
-        console.log(info)
         let googleUser = {
             userEmail: info.profileObj.email,
             userPassword: info.profileObj.googleId,
@@ -106,17 +107,10 @@ const UserSignUp = (props) => {
             google: true
         }
         let response = await props.addNewUser(googleUser)
-        console.log(response)
         if (!response.data.success) {
             setUserGuide(response.data.error)           //ver impresion de errores
         }
     }
-
-    console.log(userData)
-    // const inputCheck = {
-    //     ok: "focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent ring-2 ring-green-500",
-    //     notOk: "focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent ring-2 ring-red-500",
-    // }
 
     return (
         <div 
@@ -125,13 +119,16 @@ const UserSignUp = (props) => {
         className="w-full h-full bg-top bg-cover bg-fixed bg-opacity-70 ">
             <div className="w-full h-full bg-indigo-200 bg-opacity-40">
                 <Header />
-                <div className="flex w-11/12 mx-auto">
-                    <div className="w-1/3 pt-12 px-4 ">
+                <div className="flex w-11/12 mx-auto justify-center mt-16">
+                    <div className="w-1/3 hidden md:block ">
                         
                     </div>
-                    <div className="w-1/2 flex flex-col justify-center items-center">
-                        <div className="flex flex-col py-2">
-                            <h2 className="text-center text-4xl">Create an account!</h2>
+                    <div className="w-full md:w-1/2 flex flex-col justify-center items-center">
+                        <div className="flex flex-col h-40 md:h-full py-2">
+                            <h2 className="text-center text-4xl tracking-wide heroeText">Create an account!</h2>
+                            <div className={`block md:hidden flex flex-col w-30 px-2.5 py-2 mt-4 text-justify bg-indigo-200 bg-opacity-80 rounded-sm shadow-md border border-gray-400 ${userGuide === "" ? "hidden" : "block"}`}>
+                                <h2 className={`${userGuide === "" ? "hidden" : "block"} text-sm text-black`}>{userGuide}</h2>
+                            </div>
                         </div>
                         <div className="w-full">
                             <input 
@@ -181,7 +178,7 @@ const UserSignUp = (props) => {
                         <div className="">
                             <select 
                                 name="userCountry"
-                                className="bg-gradient-to-t from-indigo-500 to-indigo-200 px-4 py-2 text-lg ring-0 border rounded-md "
+                                className="w-full bg-gradient-to-t from-indigo-500 to-indigo-200 px-4 py-2 text-lg ring-0 border rounded-md "
                                 onChange={inputHandler}>
                                 <option>* Select a country</option>
                                 {props.countriesList.map((country, index) => {
@@ -190,18 +187,18 @@ const UserSignUp = (props) => {
                             </select>
                             <div className="w-full h-5 mb-1">{errorJoi.userCountry && <h2 className="text-sm text-red-700">{errorJoi.userCountry}</h2>}</div>
                         </div>
-                        <div className="w-full flex justify-center items-center gap-4">
+                        <div className="w-full flex flex-col md:flex-row md:justify-center items-center md:items- gap-1 md:gap-4">
                             <button
                             onClick={clickSignUpHandler} 
                             disabled={disabledBtn}
-                            className={` ${disabledBtn ? "btnDisabled" : "btn"} `}>Sign up!</button>
-                            <h2>Or</h2>
-                            <div className="">
+                            className={` ${disabledBtn ? "btnDisabled" : "btn"} w-3/5 md:w-28 `}>Sign up!</button>
+                            <h2 className="self-center ">Or</h2>
+                            <div className="w-3/5 ">
                                 <GoogleLogin
                                 clientId="1086726256498-432u6e7a0ukbsfj0lnkqqf3bli5u3c5a.apps.googleusercontent.com"
                                 buttonText="Sign up with Google"
                                 render={renderProps => (
-                                    <button className="btn flex items-center gap-2" onClick={renderProps.onClick} disabled={renderProps.disabled}><img className="w-6 h-6" src="https://i.imgur.com/kxqxIXj.png" alt="Google icon" /> Sign up with Google</button>
+                                    <button className="btn w-full flex items-center justify-center gap-2" onClick={renderProps.onClick} disabled={renderProps.disabled}><img className="w-6 h-6" src="https://i.imgur.com/kxqxIXj.png" alt="Google icon" /> Sign up with Google</button>
                                   )}
                                 onSuccess={responseGoogle}
                                 onFailure={responseGoogle}
@@ -210,7 +207,7 @@ const UserSignUp = (props) => {
                             </div>
                         </div>
                     </div> 
-                    <div className="w-1/3 ">
+                    <div className="w-1/3 hidden md:block">
                         <div className="flex flex-col py-2">
                             <div className="h-10"></div>
                             <div className={`flex flex-col w-30 px-2.5 py-2 ml-1.5 mt-4 text-justify bg-indigo-200 bg-opacity-80 rounded-sm shadow-md border border-gray-400 ${userGuide === "" ? "hidden" : "block"}`}>
@@ -222,7 +219,7 @@ const UserSignUp = (props) => {
                         </div>   
                     </div>
                 </div> 
-                <div className="flex justify-center pb-12">
+                <div className="px-16 md:px-0 flex justify-center pb-12 text-center">
                     <h2>If you already have an account, click here to <Link to="/login" className="text-lg text-indigo-700">Log in!</Link></h2>
                 </div>   
             </div>
@@ -238,7 +235,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
     addNewUser: usersActions.addNewUser,
     getCountriesList: usersActions.getCountriesList,
-
 }
 
 export default connect(mapStateToProps, mapDispatchToProps) (UserSignUp)
