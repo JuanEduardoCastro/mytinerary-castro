@@ -23,11 +23,11 @@ const usersControllers = {
     },
 
     logInUser: async (req, res) => {
-        const { userEmail, userPassword, google } = req.body
+        const { userEmail, userPassword, googleLogIn } = req.body
         try {   
             let userEmailCheck = await User.findOne({ userEmail: userEmail })
             if (userEmailCheck) {
-                if (userEmailCheck.google && google) {
+                if (userEmailCheck.google === googleLogIn) {
                     let userPasswordCheck = bcrypt.compareSync(userPassword, userEmailCheck.userPassword)
                     if (userPasswordCheck) {
                         const token = jwt.sign({ ...userEmailCheck }, process.env.SECRETORKEY)
@@ -36,7 +36,7 @@ const usersControllers = {
                         throw new Error("The password is not valid")
                     }
                 } else {
-                    throw new Error("You have ")
+                    throw new Error("You have a Gmail account, please try with that one")
                 }
             } else {
                 throw new Error("The username is not valid")

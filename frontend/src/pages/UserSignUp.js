@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import { connect } from "react-redux";
 import usersActions from '../redux/actions/usersActions';
 import { Link } from 'react-router-dom';
 import GoogleLogin from "react-google-login";
+import Loader from '../components/Loader';
 
 
 
@@ -17,9 +18,26 @@ const UserSignUp = (props) => {
     const [userGuide, setUserGuide] = useState("")
     const [userData, setUserData] = useState({})
     const [errorJoi, setErrorJoi] = useState({})
-    // const [error, setError] = useState(null)
-    // const [ringColor, setRingColor] = useState(null)
     const [disabledBtn, setDisabledBtn] = useState(true) 
+    const [loader, setLoader] = useState(true)
+
+    useEffect(() => {
+        async function getCountries() {
+            try {
+                await props.getCountriesList()
+                setLoader(false)
+            } catch (error) {
+                setLoader(false)
+                return false
+            }
+        }
+        getCountries()
+        console.log("hola")
+    }, [])
+
+    if (loader) {
+        return <div><Loader /></div>
+    }
 
     const inputHandler = (e) => {
         if ((e.target.value).length > 0) {
@@ -43,7 +61,6 @@ const UserSignUp = (props) => {
                 ...userData,
                 [e.target.name]: e.target.value 
             })
-            console.log(Object.entries(userData).length)
             if (Object.entries(userData).length === 5 ) {
                 return setDisabledBtn(false)
             }
@@ -54,14 +71,11 @@ const UserSignUp = (props) => {
 
     const clickSignUpHandler = async (e) => {
         e.preventDefault()
-        console.log("click")
         if (Object.entries(userData).length > 0) {
             let response = await props.addNewUser(userData)
-
             if (!response.data.success) {
                 setErrorJoi({})
                 if (response.data.errors) {
-                    // setError(true)
                     response.data.errors.map((error) => {
                         return setErrorJoi(errorJoi => {
                             return {
@@ -76,7 +90,6 @@ const UserSignUp = (props) => {
                 }
             }
         } else {
-            // setError(true)
             setMessageToUser("All fields are required")
         }
     }
@@ -93,17 +106,17 @@ const UserSignUp = (props) => {
             google: true
         }
         let response = await props.addNewUser(googleUser)
+        console.log(response)
         if (!response.data.success) {
-            setUserGuide(response.data.error)
+            setUserGuide(response.data.error)           //ver impresion de errores
         }
-        
     }
 
+    console.log(userData)
     // const inputCheck = {
     //     ok: "focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent ring-2 ring-green-500",
     //     notOk: "focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent ring-2 ring-red-500",
     // }
-
 
     return (
         <div 
@@ -123,10 +136,7 @@ const UserSignUp = (props) => {
                         <div className="w-full">
                             <input 
                                 type="email"                //cambiar type a email ?? revisar
-                                pattern=".+@" 
-                                required
                                 name="userEmail"
-                                // value={userData.userEmail}
                                 placeholder="* Enter your email" 
                                 className={`inputBox w-full `}
                                 onChange={inputHandler} /> 
@@ -136,7 +146,6 @@ const UserSignUp = (props) => {
                             <input 
                                 type="password" 
                                 name="userPassword"
-                                /* value={e.target.value}  */
                                 placeholder="* Enter your password" 
                                 className="inputBox w-full" 
                                 onChange={inputHandler} /> 
@@ -146,7 +155,6 @@ const UserSignUp = (props) => {
                             <input 
                                 type="text" 
                                 name="userName"
-                                /* value={inputValue} */
                                 placeholder="* Enter your name" 
                                 className="inputBox w-full" 
                                 onChange={inputHandler} />
@@ -156,7 +164,6 @@ const UserSignUp = (props) => {
                             <input 
                                 type="text" 
                                 name="userLastName"
-                                /* value={inputValue} */
                                 placeholder="* Enter your last name" 
                                 className="inputBox w-full" 
                                 onChange={inputHandler} /> 
@@ -166,7 +173,6 @@ const UserSignUp = (props) => {
                             <input 
                                 type="text" 
                                 name="userPhoto"
-                                /* value={inputValue} */
                                 placeholder="* Enter your photo" 
                                 className="inputBox w-full" 
                                 onChange={inputHandler} />
@@ -174,20 +180,16 @@ const UserSignUp = (props) => {
                         </div>
                         <div className="">
                             <select 
-                                /* value={inputValue} */
                                 name="userCountry"
                                 className="bg-gradient-to-t from-indigo-500 to-indigo-200 px-4 py-2 text-lg ring-0 border rounded-md "
-                                onChange={inputHandler}
-                                >
+                                onChange={inputHandler}>
                                 <option>* Select a country</option>
-                                <option>pais1</option>
-                                <option>pais2</option>
+                                {props.countriesList.map((country, index) => {
+                                    return <option value={country.name} key={index}>{country.name}</option>
+                                })}
                             </select>
                             <div className="w-full h-5 mb-1">{errorJoi.userCountry && <h2 className="text-sm text-red-700">{errorJoi.userCountry}</h2>}</div>
                         </div>
-                        {/* <div className="flex flex-col h-10">
-                            <h2 className={`${userData === {} ? "hidden" : "block"} text-red-500`}>{messageToUser}</h2>
-                        </div> */}
                         <div className="w-full flex justify-center items-center gap-4">
                             <button
                             onClick={clickSignUpHandler} 
@@ -199,7 +201,7 @@ const UserSignUp = (props) => {
                                 clientId="1086726256498-432u6e7a0ukbsfj0lnkqqf3bli5u3c5a.apps.googleusercontent.com"
                                 buttonText="Sign up with Google"
                                 render={renderProps => (
-                                    <button className="btn flex items-center gap-2" onClick={renderProps.onClick} disabled={renderProps.disabled}><img className="w-6 h-6" src="https://i.imgur.com/kxqxIXj.png" /> Sign up with Google</button>
+                                    <button className="btn flex items-center gap-2" onClick={renderProps.onClick} disabled={renderProps.disabled}><img className="w-6 h-6" src="https://i.imgur.com/kxqxIXj.png" alt="Google icon" /> Sign up with Google</button>
                                   )}
                                 onSuccess={responseGoogle}
                                 onFailure={responseGoogle}
@@ -210,7 +212,6 @@ const UserSignUp = (props) => {
                     </div> 
                     <div className="w-1/3 ">
                         <div className="flex flex-col py-2">
-                            {/* <h2 className="text-center text-4xl">lado derecho</h2> */}
                             <div className="h-10"></div>
                             <div className={`flex flex-col w-30 px-2.5 py-2 ml-1.5 mt-4 text-justify bg-indigo-200 bg-opacity-80 rounded-sm shadow-md border border-gray-400 ${userGuide === "" ? "hidden" : "block"}`}>
                                 <h2 className={`${userGuide === "" ? "hidden" : "block"} text-black`}>{userGuide}</h2>
@@ -229,8 +230,15 @@ const UserSignUp = (props) => {
     )
 }
 
+const mapStateToProps = (state) => {
+    return {
+        countriesList: state.users.countriesList
+    }
+}
 const mapDispatchToProps = {
     addNewUser: usersActions.addNewUser,
+    getCountriesList: usersActions.getCountriesList,
+
 }
 
-export default connect(null, mapDispatchToProps) (UserSignUp)
+export default connect(mapStateToProps, mapDispatchToProps) (UserSignUp)

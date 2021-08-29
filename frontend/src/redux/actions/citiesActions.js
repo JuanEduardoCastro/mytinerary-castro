@@ -10,7 +10,6 @@ const citiesActions = {
                 throw new Error("There was a problem with the database")
             }
             let data = response.data.response
-            console.log(data)
             dispatch({type: "GET_CITIES_LIST", payload: data})
         }
     },

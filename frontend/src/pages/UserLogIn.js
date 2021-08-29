@@ -12,7 +12,6 @@ const UserLogIn = (props) => {
     const [messageToUser, setMessageToUser] = useState("")
     const [userGuide, setUserGuide] = useState("")
     const [logInData, setLogInData] = useState({})
-    // const [error, setError] = useState(null)
     const [disabledBtn, setDisabledBtn] = useState(true) 
 
     const inputHandler = (e) => {
@@ -35,13 +34,14 @@ const UserLogIn = (props) => {
             setMessageToUser("")
             setLogInData({
                 ...logInData,
-                [e.target.name]: e.target.value 
+                [e.target.name]: e.target.value,
+                googleLogIn: false 
             })
             console.log(Object.entries(logInData).length)
             if (Object.entries(logInData).length === 2 ) {
                 return setDisabledBtn(false)
             } else { 
-                return setMessageToUser("there are empty fields")
+                return setUserGuide("there are empty fields")
             }    
         }
     }
@@ -59,7 +59,7 @@ const UserLogIn = (props) => {
         let googleLogIn = {
             userEmail: info.profileObj.email,
             userPassword: info.profileObj.googleId,
-            google: true
+            googleLogIn: true
         }
         let response = await props.logInUser(googleLogIn)
         if (!response.data.success) {
@@ -80,18 +80,11 @@ const UserLogIn = (props) => {
                 <Header />
                 <div className="flex w-11/12 mx-auto">
                     <div className="w-1/3 h-10">
-                        <GoogleLogin
-                            clientId="1086726256498-432u6e7a0ukbsfj0lnkqqf3bli5u3c5a.apps.googleusercontent.com"
-                            buttonText="Log in with Google"
-                            onSuccess={responseGoogle}
-                            onFailure={responseGoogle}
-                            cookiePolicy={'single_host_origin'}
-                            className="btn w-full"/>
                         
-                    </div>
+                    </div> 
                     <div className="w-1/2 flex flex-col justify-center items-center">
                         <div className="flex flex-col py-2">
-                            <h2 className="text-center text-4xl">Create an account!</h2>
+                            <h2 className="text-center text-4xl">Log into your account!</h2>
                         </div>
                         <div className="w-full">
                             <input 
@@ -114,17 +107,26 @@ const UserLogIn = (props) => {
                                 className="inputBox w-full" 
                                 onChange={inputHandler} /> 
                             <div className="w-full h-5 mb-1"></div>
-
                         </div>
-                        
-
-                        <div className="flex flex-col h-10">
-                            <h2 className={`${logInData === {} ? "hidden" : "block"} text-red-500`}>{messageToUser}</h2>
-                        </div>
-                        <button
+                        <div className="w-full flex justify-center items-center gap-4">
+                            <button
                             onClick={clickLogInHandler} 
                             disabled={disabledBtn}
-                            className={` text-xl ${disabledBtn ? "btnDisabled" : "btn"} `}>Sign up!</button>
+                            className={` ${disabledBtn ? "btnDisabled" : "btn"} `}>Sign up!</button>
+                            <h2>Or</h2>
+                            <div className="">
+                                <GoogleLogin
+                                clientId="1086726256498-432u6e7a0ukbsfj0lnkqqf3bli5u3c5a.apps.googleusercontent.com"
+                                buttonText="Sign up with Google"
+                                render={renderProps => (
+                                    <button className="btn flex items-center gap-2" onClick={renderProps.onClick} disabled={renderProps.disabled}><img className="w-6 h-6" src="https://i.imgur.com/kxqxIXj.png" alt="Google icon" /> Sign up with Google</button>
+                                  )}
+                                onSuccess={responseGoogle}
+                                onFailure={responseGoogle}
+                                cookiePolicy={'single_host_origin'}
+                                className="btn"/>
+                            </div>
+                        </div>
                     </div> 
                     <div className="w-1/3 ">
                         <div className="flex flex-col py-2">
@@ -135,7 +137,7 @@ const UserLogIn = (props) => {
                     </div>
                 </div> 
                 <div className="flex justify-center  ">
-                    <h2>If you already have an account, click here to <Link to="/login" className="text-lg text-indigo-700">Log in!</Link></h2>
+                    <h2>If you already have an account, click here to <Link to="/signup" className="text-lg text-indigo-700">Sign up!</Link></h2>
                 </div>   
             </div>
         </div>

@@ -2,7 +2,7 @@ const joi = require("joi");
 
 const userValidator = (req, res, next) => {
     const schema = joi.object({
-        userEmail: joi.string().trim().min(2).max(20).email().required().messages({
+        userEmail: joi.string().trim().min(2).max(50).email().required().messages({
             "string.email":"It must be a valid email (contains \"@\" and .)",
             "string.min":"The length must be at least 4 characters long",
             "string.max":"That´s to long..",

@@ -19,6 +19,10 @@ const usersReducer = (state = { token: null, userNameStore: null, userPhotoStore
                 userNameStore: null,
                 userPhotoStore: null
             }
+        case "GET_COUNTRIES_LIST":
+            return {
+                countriesList: action.payload
+            }
         default: 
             return state
     }  
