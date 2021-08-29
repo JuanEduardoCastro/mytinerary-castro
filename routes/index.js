@@ -8,7 +8,7 @@ const passport = require("passport")
 const router = express.Router()
 
 router.route("/information/cities")
-.get(passport.authenticate('jwt', { session: false }), citiesControllers.getCities)
+.get(citiesControllers.getCities)
 .post(citiesControllers.addCity)
 
 router.route("/information/city/:id")

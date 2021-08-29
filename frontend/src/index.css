@@ -33,8 +33,13 @@ body, html {
   .btn {
     @apply my-2.5 py-2 px-4 ring-1 ring-indigo-500 rounded-md bg-gradient-to-t from-indigo-500 to-indigo-200 shadow-lg text-center text-black hover:bg-indigo-700 hover:text-indigo-900 transform hover:scale-105;
   } 
+  
+  .btnDisabled {
+    @apply my-2.5 py-2 px-4 ring-1 ring-indigo-500 rounded-md bg-gradient-to-t from-indigo-300 to-indigo-100 shadow-lg text-center text-gray-600 cursor-default;
+  }
 
   .inputBox {
-    @apply my-1 px-4 py-1 border border-indigo-700 rounded-lg bg-white text-center text-black text-base md:text-lg ;
+    @apply my-1 px-4 py-1 pl-1 border border-indigo-700 rounded-lg shadow-md bg-white text-black text-base md:text-lg ;
   }
+
 }

@@ -3,28 +3,39 @@ import Header from '../components/Header';
 import { connect } from "react-redux";
 import usersActions from '../redux/actions/usersActions';
 import { Link } from 'react-router-dom';
+import GoogleLogin from "react-google-login";
 
+
+
+// 1086726256498-432u6e7a0ukbsfj0lnkqqf3bli5u3c5a.apps.googleusercontent.com
 
 const UserSignUp = (props) => {
 
     document.title="Sign up"
 
-    const [userData, setUserData] = useState({})
     const [messageToUser, setMessageToUser] = useState("")
-    const [error, setError] = useState(null)
+    const [userGuide, setUserGuide] = useState("")
+    const [userData, setUserData] = useState({})
+    const [errorJoi, setErrorJoi] = useState({})
+    // const [error, setError] = useState(null)
+    // const [ringColor, setRingColor] = useState(null)
+    const [disabledBtn, setDisabledBtn] = useState(true) 
 
     const inputHandler = (e) => {
         if ((e.target.value).length > 0) {
-            // console.log("entro if")
             if (e.target.name === "userEmail") {
-                if (!e.target.value.includes("@")) {
-                    return setMessageToUser("That is not a valid email")
+                if (!e.target.value.includes("@") || !e.target.value.includes(".")) {
+                    return setUserGuide("The email must be at least 4 characters long, contain a @ and a .")
+                } else {
+                    setUserGuide("")
                 }
             }
             setMessageToUser("")
             if (e.target.name === "userPassword") {
-                if ((e.target.value).length < 3 ) {
-                    return setMessageToUser("That is not a valid password")
+                if ((e.target.value).length < 5 ) {
+                    return setUserGuide("The password must be at least 6 characters long, contain one upper case, one lower case and one number ")
+                } else {
+                    setUserGuide("")
                 }
             } 
             setMessageToUser("")
@@ -32,114 +43,187 @@ const UserSignUp = (props) => {
                 ...userData,
                 [e.target.name]: e.target.value 
             })
+            console.log(Object.entries(userData).length)
+            if (Object.entries(userData).length === 5 ) {
+                return setDisabledBtn(false)
+            }
         } else { 
-            // console.log("entro else")
-            return setMessageToUser("there are empty fields")
+            return setMessageToUser("There are empty fields")   
         }
     }
-
-    console.log(userData)
 
     const clickSignUpHandler = async (e) => {
         e.preventDefault()
-        if (userData !== {}) {
-            console.log("si manda el axios")
+        console.log("click")
+        if (Object.entries(userData).length > 0) {
             let response = await props.addNewUser(userData)
+
             if (!response.data.success) {
-                setError(true)
-                setMessageToUser(response.data.error)
+                setErrorJoi({})
+                if (response.data.errors) {
+                    // setError(true)
+                    response.data.errors.map((error) => {
+                        return setErrorJoi(errorJoi => {
+                            return {
+                                ...errorJoi,
+                                [error.path]: error.message
+                            }
+                        })
+                    })
+                }                        
+                if (response.data.error) {
+                    setUserGuide(response.data.error)
+                }
             }
         } else {
-            console.log("campos vacios")
-            setError(true)
+            // setError(true)
             setMessageToUser("All fields are required")
         }
     }
-    
-    // console.log(userData)
-    // console.log(messageToUser)
-    // console.log(error)
+
+    const responseGoogle = async (info) => {
+        console.log(info)
+        let googleUser = {
+            userEmail: info.profileObj.email,
+            userPassword: info.profileObj.googleId,
+            userName: info.profileObj.givenName,
+            userLastName: info.profileObj.familyName,
+            userPhoto: info.profileObj.imageUrl,
+            userCountry: "Argentina",
+            google: true
+        }
+        let response = await props.addNewUser(googleUser)
+        if (!response.data.success) {
+            setUserGuide(response.data.error)
+        }
+        
+    }
+
+    // const inputCheck = {
+    //     ok: "focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent ring-2 ring-green-500",
+    //     notOk: "focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent ring-2 ring-red-500",
+    // }
+
 
     return (
         <div 
         style={{backgroundImage: `url("https://i.imgur.com/zJKyzjj.jpg")`}} 
         alt="background plane" 
-        className="w-full h-screen bg-top bg-cover bg-opacity-70 ">
+        className="w-full h-full bg-top bg-cover bg-fixed bg-opacity-70 ">
             <div className="w-full h-full bg-indigo-200 bg-opacity-40">
                 <Header />
-                <div className="flex flex-col justify-center items-center ">
-                    <div className="flex flex-col py-2">
-                        <h2 className="text-center text-4xl">Create an account!</h2>
+                <div className="flex w-11/12 mx-auto">
+                    <div className="w-1/3 pt-12 px-4 ">
+                        
                     </div>
-                    <div>
-                        <input 
-                            type="email"                //cambiar type a email ?? revisar
-                            pattern=".+@" 
-                            required
-                            name="userEmail"
-                            /* value={inputValue} */
-                            placeholder="Enter your email" 
-                            className="inputBox"
-                            onChange={inputHandler} /> 
-                    </div>
-                    <div>
-                        <input 
-                            type="password" 
-                            name="userPassword"
-                            /* value={inputValue} */
-                            placeholder="Enter your password" 
-                            className="inputBox" 
-                            onChange={inputHandler} /> 
-                    </div>
-                    <div>
-                        <input 
-                            type="text" 
-                            name="userName"
-                            /* value={inputValue} */
-                            placeholder="Enter your name" 
-                            className="inputBox" 
-                            onChange={inputHandler} /> 
-                    </div>
-                    <div>
-                        <input 
-                            type="text" 
-                            name="userLastName"
-                            /* value={inputValue} */
-                            placeholder="Enter your last name" 
-                            className="inputBox" 
-                            onChange={inputHandler} /> 
-                    </div>
-                    <div>
-                        <input 
-                            type="text" 
-                            name="userPhoto"
-                            /* value={inputValue} */
-                            placeholder="Enter your photo" 
-                            className="inputBox" 
-                            onChange={inputHandler} /> 
-                    </div>
-                    <div>
-                        <select 
-                            /* value={inputValue} */
-                            name="userCountry"
-                            className="btn text-xl text-center hover:scale-100 px-12"
-                            onChange={inputHandler}>
-                            <option>Select a country</option>
-                            <option>pais1</option>
-                            <option>pais2</option>
-                        </select>
-                    </div>
-                    <div className="flex flex-col h-10">
-                        <h2 className={`${userData === {} && error === true  ? "block" : "hidden"} text-red-500`}>{messageToUser}</h2>
-                        <h2 className={`${userData === {} ? "hidden" : "block"} text-red-500`}>{messageToUser}</h2>
-                    </div>
-                    <button
-                        onClick={clickSignUpHandler} 
-                        className="btn text-xl">Sign up!</button>
-                    <div>
-                        <h2>If you already have an account, click here to <Link to="/login" className="text-lg text-indigo-700">Log in!</Link></h2>
+                    <div className="w-1/2 flex flex-col justify-center items-center">
+                        <div className="flex flex-col py-2">
+                            <h2 className="text-center text-4xl">Create an account!</h2>
+                        </div>
+                        <div className="w-full">
+                            <input 
+                                type="email"                //cambiar type a email ?? revisar
+                                pattern=".+@" 
+                                required
+                                name="userEmail"
+                                // value={userData.userEmail}
+                                placeholder="* Enter your email" 
+                                className={`inputBox w-full `}
+                                onChange={inputHandler} /> 
+                            <div className="w-full h-5 mb-1">{errorJoi.userEmail && <h2 className="text-sm text-red-700">{errorJoi.userEmail}</h2>}</div>
+                        </div>
+                        <div className="w-full">
+                            <input 
+                                type="password" 
+                                name="userPassword"
+                                /* value={e.target.value}  */
+                                placeholder="* Enter your password" 
+                                className="inputBox w-full" 
+                                onChange={inputHandler} /> 
+                            <div className="w-full h-5 mb-1">{errorJoi.userPassword && <h2 className="text-sm text-red-700">{errorJoi.userPassword}</h2>}</div>
+                        </div>
+                        <div className="w-full">
+                            <input 
+                                type="text" 
+                                name="userName"
+                                /* value={inputValue} */
+                                placeholder="* Enter your name" 
+                                className="inputBox w-full" 
+                                onChange={inputHandler} />
+                            <div className="w-full h-5 mb-1">{errorJoi.userName && <h2 className="text-sm text-red-700">{errorJoi.userName}</h2>}</div> 
+                        </div>
+                        <div className="w-full"> 
+                            <input 
+                                type="text" 
+                                name="userLastName"
+                                /* value={inputValue} */
+                                placeholder="* Enter your last name" 
+                                className="inputBox w-full" 
+                                onChange={inputHandler} /> 
+                            <div className="w-full h-5 mb-1">{errorJoi.userLastName && <h2 className="text-sm text-red-700">{errorJoi.userLastName}</h2>}</div>
+                        </div>
+                        <div className="w-full">
+                            <input 
+                                type="text" 
+                                name="userPhoto"
+                                /* value={inputValue} */
+                                placeholder="* Enter your photo" 
+                                className="inputBox w-full" 
+                                onChange={inputHandler} />
+                            <div className="w-full h-5 mb-1">{errorJoi.userPhoto && <h2 className="text-sm text-red-700">{errorJoi.userPhoto}</h2>}</div> 
+                        </div>
+                        <div className="">
+                            <select 
+                                /* value={inputValue} */
+                                name="userCountry"
+                                className="bg-gradient-to-t from-indigo-500 to-indigo-200 px-4 py-2 text-lg ring-0 border rounded-md "
+                                onChange={inputHandler}
+                                >
+                                <option>* Select a country</option>
+                                <option>pais1</option>
+                                <option>pais2</option>
+                            </select>
+                            <div className="w-full h-5 mb-1">{errorJoi.userCountry && <h2 className="text-sm text-red-700">{errorJoi.userCountry}</h2>}</div>
+                        </div>
+                        {/* <div className="flex flex-col h-10">
+                            <h2 className={`${userData === {} ? "hidden" : "block"} text-red-500`}>{messageToUser}</h2>
+                        </div> */}
+                        <div className="w-full flex justify-center items-center gap-4">
+                            <button
+                            onClick={clickSignUpHandler} 
+                            disabled={disabledBtn}
+                            className={` ${disabledBtn ? "btnDisabled" : "btn"} `}>Sign up!</button>
+                            <h2>Or</h2>
+                            <div className="">
+                                <GoogleLogin
+                                clientId="1086726256498-432u6e7a0ukbsfj0lnkqqf3bli5u3c5a.apps.googleusercontent.com"
+                                buttonText="Sign up with Google"
+                                render={renderProps => (
+                                    <button className="btn flex items-center gap-2" onClick={renderProps.onClick} disabled={renderProps.disabled}><img className="w-6 h-6" src="https://i.imgur.com/kxqxIXj.png" /> Sign up with Google</button>
+                                  )}
+                                onSuccess={responseGoogle}
+                                onFailure={responseGoogle}
+                                cookiePolicy={'single_host_origin'}
+                                className="btn"/>
+                            </div>
+                        </div>
+                    </div> 
+                    <div className="w-1/3 ">
+                        <div className="flex flex-col py-2">
+                            {/* <h2 className="text-center text-4xl">lado derecho</h2> */}
+                            <div className="h-10"></div>
+                            <div className={`flex flex-col w-30 px-2.5 py-2 ml-1.5 mt-4 text-justify bg-indigo-200 bg-opacity-80 rounded-sm shadow-md border border-gray-400 ${userGuide === "" ? "hidden" : "block"}`}>
+                                <h2 className={`${userGuide === "" ? "hidden" : "block"} text-black`}>{userGuide}</h2>
+                            </div>
+                            <div className={`flex flex-col w-30 px-2.5 py-2 ml-1.5 mt-4 text-justify bg-indigo-200 bg-opacity-80 rounded-sm shadow-md border border-gray-400 ${!userData === "" ? "block" : "hidden"}`}>
+                                <h2 className={`${userData === "" ? "hidden" : "block"} text-black`}>{messageToUser}</h2>
+                            </div>
+                        </div>   
                     </div>
                 </div> 
+                <div className="flex justify-center pb-12">
+                    <h2>If you already have an account, click here to <Link to="/login" className="text-lg text-indigo-700">Log in!</Link></h2>
+                </div>   
             </div>
         </div>
     )
