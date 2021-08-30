@@ -48,7 +48,7 @@ const Footer = (props) => {
                 </div>
                 <div className="flex justify-between md:justify-around w-full h-24 gap-6 md:gap-2 md:flex md:flex-row md:items-center md:justify-center text-lg md:text-2xl lg:gap-10">
                     <div className="flex items-center gap-4 md:text-2xl pl-2 md:pl-0">
-                        <NavLink to="/" activeClassName="text-indigo-700" className="hover:text-indigo-700">
+                        <NavLink exact to="/" activeClassName="text-indigo-700" className="hover:text-indigo-700">
                             <h2>Home</h2>
                         </NavLink>
                         <NavLink to="/cities" activeClassName="text-indigo-700" className="hover:text-indigo-700">

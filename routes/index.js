@@ -35,6 +35,9 @@ router.route("/user/signup")
 router.route("/user/login")
 .post(usersControllers.logInUser)
 
+router.route("/verifyToken")
+.get(passport.authenticate('jwt', { session: false }), usersControllers.verifyToken)
+
 router.route("/activities")
 .get(activitiesControllers.getActivities)
 .post(activitiesControllers.addNewActivity)

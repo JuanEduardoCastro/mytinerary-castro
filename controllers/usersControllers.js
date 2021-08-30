@@ -33,17 +33,21 @@ const usersControllers = {
                         const token = jwt.sign({ ...userEmailCheck }, process.env.SECRETORKEY)
                         res.json({ success: true, response: { token, userName: userEmailCheck.userName, userPhoto: userEmailCheck.userPhoto }})
                     } else {
-                        throw new Error("The password is not valid")
+                        throw new Error("The username or password is not valid")
                     }
                 } else {
                     throw new Error("You have a Gmail account, please try with that one")
                 }
             } else {
-                throw new Error("The username is not valid")
+                throw new Error("The username or password is not valid")
             } 
         } catch (error) {
             res.json({ succes: false, error: error.message }) //revisar mensajes
         }
+    },
+
+    verifyToken: (req, res) =>{
+        res.json({ userName: req.user.userName, userPhoto: req.user.userPhoto }) 
     }
 }
 module.exports = usersControllers

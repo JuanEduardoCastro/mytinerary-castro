@@ -20,7 +20,9 @@ const usersActions = {
             }
             return response
         }
-    },
+    }, 
+
+
 
     logOutUser: () => {
         return (dispatch) => {
@@ -28,9 +30,18 @@ const usersActions = {
         }
     },
 
-    logInLocalStorage: (token, userName, userPhoto) => {
-        return (dispatch) => {
-            dispatch({ type: "LOG_IN_USER", payload: { token, userName, userPhoto } })
+    logInLocalStorage: (token) => {
+        return async (dispatch) => {
+            try{
+                let response = await axios.get("http://localhost:4000/api/veryfyToken", {
+                    headers: {
+                        Authorization: "Bearer " + token
+                    }
+                })
+                dispatch({type: 'LOG_IN_USER', payload: { token, userName: response.data.userNam, userPhoto: response.data.userPhoto }})
+            } catch (error){
+                 return dispatch({ type: "LOG_OUT_USER" })
+            }    
         }
     },
 

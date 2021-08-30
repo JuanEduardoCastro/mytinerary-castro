@@ -14,5 +14,5 @@ module.exports = passport.use(new jwtStrategy({
         } else {
             return done(null, response)
         }
-    }).catch(error => donde(error, false))
+    }).catch(error => done(error, false))
 }))
