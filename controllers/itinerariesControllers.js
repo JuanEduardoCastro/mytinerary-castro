@@ -12,7 +12,6 @@ const itinerariesControllers = {
             }
         } catch (error) {
             res.json({ success: false, response: "Couldn´t get all documents" })
-            console.error(error.message)
         }
     },
 
@@ -66,7 +65,6 @@ const itinerariesControllers = {
             }
         } catch (error) {
             res.json({ success: false, error: "Couldn´t find the document to remove" })
-            console.error(error.message)
         }
     },
 

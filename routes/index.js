@@ -3,7 +3,8 @@ const citiesControllers = require("../controllers/citiesControllers");
 const itinerariesControllers = require("../controllers/itinerariesControllers");
 const usersControllers = require("../controllers/usersControllers");
 const userValidator = require("../controllers/userValidator");
-const passport = require("passport")
+const passport = require("passport");
+const activitiesControllers = require("../controllers/activitiesControllers");
 
 const router = express.Router()
 
@@ -34,5 +35,15 @@ router.route("/user/signup")
 router.route("/user/login")
 .post(usersControllers.logInUser)
 
+router.route("/activities")
+.get(activitiesControllers.getActivities)
+.post(activitiesControllers.addNewActivity)
+
+router.route("/activity/:id")
+.get(activitiesControllers.getActivity)
+.delete(activitiesControllers.removeActivity)
+
+router.route("/activities/:itineraryId")
+.get(activitiesControllers.getActivitiesForItinerary)
 
 module.exports = router
