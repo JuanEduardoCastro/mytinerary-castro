@@ -39,12 +39,7 @@ router.route("/verifyToken")
 .get(passport.authenticate('jwt', { session: false }), usersControllers.verifyToken)
 
 router.route("/activities")
-.get(activitiesControllers.getActivities)
 .post(activitiesControllers.addNewActivity)
-
-router.route("/activity/:id")
-.get(activitiesControllers.getActivity)
-.delete(activitiesControllers.removeActivity)
 
 router.route("/activities/:itineraryId")
 .get(activitiesControllers.getActivitiesForItinerary)

@@ -107,7 +107,7 @@ const UserLogIn = (props) => {
                             <button
                             onClick={clickLogInHandler} 
                             disabled={disabledBtn}
-                            className={` ${disabledBtn ? "btnDisabled" : "btn"} `}>Sign up!</button>
+                            className={` ${disabledBtn ? "btnDisabled" : "btn"} `}>Log in!</button>
                             <h2>Or</h2>
                             <div className="">
                                 <GoogleLogin

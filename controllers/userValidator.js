@@ -8,17 +8,17 @@ const userValidator = (req, res, next) => {
             "string.max":"That´s to long..",
             "any.required":"This field is required"
         }),
-        userPassword: joi.string().trim().min(6).max(50).required().messages({      //revisar regex
+        userPassword: joi.string().trim().min(6).max(50).required().messages({      
             "string.min":"The length must be at least 6 characters long",
             "string.max":"That´s to long..",
             "any.required":"This field is required"
         }),
-        userName: joi.string().trim().min(4).max(20).required().messages({          //convertir primera en mayuscula
+        userName: joi.string().trim().min(4).max(20).required().messages({          
             "string.min":"The length must be at least 4 characters long",
             "string.max":"That´s to long..",
             "any.required":"This field is required"
         }),
-        userLastName: joi.string().trim().min(4).max(20).required().messages({      //convertir primera en mayuscula
+        userLastName: joi.string().trim().min(4).max(20).required().messages({      
             "string.min":"The length must be at least 4 characters long",
             "string.max":"That´s to long..",
             "any.required":"This field is required"
@@ -28,7 +28,7 @@ const userValidator = (req, res, next) => {
             "string.max":"That´s to long..",
             "any.required":"This field is required"
         }),
-        userCountry: joi.string().trim().required().messages({                      //traer paises
+        userCountry: joi.string().trim().required().messages({                      
             "any.required":"You must select a country"
         }),
         google: joi.boolean()

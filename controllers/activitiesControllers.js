@@ -15,46 +15,6 @@ const activitiesControllers = {
         } 
     },
 
-    getActivities: async (req, res) => {
-        try {
-            let getActivities = await Activity.find()
-            if (getActivities) {
-                res.json({ success: true, response: getActivities })
-            } else {
-                throw new Error()
-            }
-        } catch (error) {
-            res.json({ success: false, error: "no se pudo traer los activities"})
-        }
-    },
-
-    getActivity: async (req, res) => {
-        try {
-            let getActivity = await Avtivity.findOne({ _id: req.params.id})
-            if (getActivity) {
-                res.json({ success: true, response: getActivity })
-            } else {
-                throw new Error()
-            }
-        } catch (error) {
-            res.json({ success: false, error: "no se pudo traer el activity"})
-        }
-    },
- 
-    
-    removeActivity: async (req, res) => {
-        try {
-            let removeActivity = await Activity.findOneAndDelete({ _id: req.body.id })
-            if (removeActivity) {
-                res.json({ success: true, response: removeActivity })
-            } else {
-                throw new Error()
-            }
-        } catch (error) {
-            res.json({ success: false, error: "no se pudo borrar el activity" })
-        }
-    },
-    
     getActivitiesForItinerary: async (req, res) => {
         try {
             let getActivitiesForItinerary = await Activity.find({ itineraryId: req.params.itineraryId })
@@ -70,32 +30,3 @@ const activitiesControllers = {
 }
 
 module.exports = activitiesControllers 
-
-    
-// updateItinerary: async (req, res) => {
-//     try {
-//         let updateItinerary = await Itinerary.findOneAndUpdate({ _id: req.params.id}, {...req.body}, {new: true})
-//         if (updateItinerary) {
-//             res.json({ success: true, response: updateItinerary })
-//         } else {
-//             throw new Error()
-//         }
-//     } catch (error) {
-//         res.json({ success: false, error: "Couldn´t update the document" })
-//     }
-// },
-
-
-// getItinerariesOfACity: async (req, res) => {
-
-//     try {
-//         let getItinerariesOfACity = await Itinerary.find({ cityId: req.params.cityId })
-//         if (getItinerariesOfACity) {
-//             res.json({ success: true, response: getItinerariesOfACity })
-//         } else {
-//             throw new Error()
-//         }
-//     } catch (error) {
-//         res.json({ success: false, error: "Couldn´t get all documents for that city"})
-//     }
-// }

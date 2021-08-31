@@ -22,8 +22,6 @@ const usersActions = {
         }
     }, 
 
-
-
     logOutUser: () => {
         return (dispatch) => {
             dispatch({ type: "LOG_OUT_USER" })

@@ -3,6 +3,8 @@ import { faClock } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 import Aos from 'aos';
 import "aos/dist/aos.css";
+import Activities from './Activities';
+import Comments from './Comments';
 
 
 const Itinerary = (props) => {
@@ -22,6 +24,7 @@ const Itinerary = (props) => {
 
     const activitiesButtonHandler = () => {
         setActivitiesButton(!activitesButton)
+        
     }
 
     return (
@@ -79,25 +82,22 @@ const Itinerary = (props) => {
                         </div>
                     </div>
                 </div>
-                <div className="flex flex-col justify-center items-center">
+                <div className="w-full flex flex-col justify-center items-center m-2.5">
                     <div className={!activitesButton ? "block" : "hidden"} >
-                            <button 
-                            onClick={activitiesButtonHandler}
-                            className="btn"
-                            >View more</button>
+                        <button onClick={activitiesButtonHandler} className="btn" >View more</button>
                     </div>
                     <div className="w-full h-full fotoText">
-                        <div className={activitesButton ? "block" : "hidden"} data-aos="fade-down" >
-                            <div className="w-full py-4 pb- flex flex-col items-center justify-around bg-gradient-to-t from-red-200 tracking-wide">
-                                <img src="https://i.imgur.com/LmKOcmk.png" alt="Not found logo" className="w-32 h-32" />
-                                <h2 className="text-center text-4xl text-black">We are under construction!</h2>
-                                <h2 className="text-center text-3xl text-black">Please come back later!</h2>
-                                <div className="flex flex-col items-center mt-4 gap-4 text-indigo-900">
-                                </div>
-                                <button 
-                                onClick={activitiesButtonHandler}
-                                className="btn"
-                                >View less</button>
+                        <div className={`${activitesButton ? "block" : "hidden"}`} >
+                            <div className="w-full h-full py-4 pb- flex flex-col items-center justify-around tracking-wide ">
+                                <div className="w-full h-full flex flex-col md:flex-row m-2.5 justify-center ">
+                                    <div className="flex flex-col w-auto md:w-3/5 h-auto border-2 border-grey-500 rounded-md shadow-md " >
+                                        <Comments />
+                                    </div>
+                                    <div className="w-auto md:w-2/5 h-80 p-4 md:p-2 " >
+                                        {activitesButton && <Activities itineraryId={props.itinerary._id} className=""/>}
+                                    </div>
+                                </div>                           
+                                <button onClick={activitiesButtonHandler} className="btn">View less</button>
                             </div>
                         </div>
                     </div>
@@ -108,3 +108,13 @@ const Itinerary = (props) => {
 }
 
 export default Itinerary
+
+
+
+
+
+                                {/* <img src="https://i.imgur.com/LmKOcmk.png" alt="Not found logo" className="w-32 h-32" />
+                                <h2 className="text-center text-4xl text-black">We are under construction!</h2>
+                                <h2 className="text-center text-3xl text-black">Please come back later!</h2>
+                                <div className="flex flex-col items-center mt-4 gap-4 text-indigo-900">
+                                </div> */}
