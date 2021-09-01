@@ -9,30 +9,37 @@ import { connect } from 'react-redux';
 import itinerariesActions from '../redux/actions/itinerariesActions';
 
 
+
 const Itinerary = (props) => {
 
-    // console.log(props)
-
     const [activitesButton, setActivitiesButton] = useState(false)
-    const [likeItinerary, setLikeItinerary] = useState(false)
-    const [likesCount, setLikesCount] = useState()
+    // const [likeItinerary, setLikeItinerary] = useState(false)
+    const [userLike, setUserLike] = useState(false)
+    const [likesCount, setLikesCount] = useState(parseInt(props.itinerary.usersIdList.length))
 
     useLayoutEffect (() => {
         Aos.init({ offset: 120, duration: 600 })
     })
-    // console.log(props.itinerary)
+    // console.log(props.itinerary.usersIdList)
+    
     useEffect(() => {
-        // setLikesCount(parseInt(props.itinerary.likes))
-        async function updateLikes() {
-            try {
-                // console.log("response")
-                let response = await props.updateLikes(props.itinerary._id, props.token)
-            } catch (error) {
-                return false
-            }
-        }
-        updateLikes()
+        if(props.token) {
 
+            async function getItineraryForUserLike() {
+                try {
+                    let response = await props.getItineraryForUserLike(props.token, props.itinerary._id)
+                    console.log(response.userLike)
+                    if (response.success) {
+                        response.userLike ? setUserLike(true) : setUserLike(false)
+                        // setLikesCount(response.response.usersIdList.length)
+                    }
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+            getItineraryForUserLike()
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     var moneyCount = []
@@ -48,18 +55,31 @@ const Itinerary = (props) => {
 
     const likeClickHandle = () => {
         if(props.token) {
-            setLikeItinerary(!likeItinerary)
-            if (!likeItinerary) {
-                setLikesCount(likesCount+1)
-            } else {
+            updateLikes()
+            if (userLike) {
                 setLikesCount(likesCount-1)
+                setUserLike(false)
+            } else {
+                setLikesCount(likesCount+1)
+                setUserLike(true)
             }
         } else {
-            setLikeItinerary(false)
+            setUserLike(false)
         }
     }
 
-    // console.log(likesCount)
+    async function updateLikes() {
+        try {
+            let response = await props.updateLikes(props.token, props.itinerary._id)
+            if (response) {
+                console.log(response.usersIdList)
+            }
+        } catch (error) {
+            console.log("error")
+        }
+    }
+
+    console.log(userLike)
     return (
         <div className="w-full h-full mb-14 ">
             <div className="w-9/12 border mx-auto shadow-md bg-gradient-to-b from-indigo-200">
@@ -85,7 +105,7 @@ const Itinerary = (props) => {
                                 className="w-20 h-20 bg-cover bg-center rounded-full"></div>
                             </div>
                             <div className="flex items-center gap-2">
-                                {likeItinerary ? <FontAwesomeIcon onClick={likeClickHandle} icon={faHeart} size="2x" className="pr-1 transform scale-105 text-red-600 cursor-pointer" /> : <div onClick={likeClickHandle} style={{backgroundImage: `url("https://i.imgur.com/DK0P6fj.png")`}} className="w-9 h-9 bg-center transform scale-90 ml-1 bg-cover cursor-pointer"></div>  }
+                                {userLike ? <FontAwesomeIcon onClick={likeClickHandle} icon={faHeart} size="2x" className="pr-1 transform scale-105 text-red-600 cursor-pointer" /> : <div onClick={likeClickHandle} style={{backgroundImage: `url("https://i.imgur.com/DK0P6fj.png")`}} className="w-9 h-9 bg-center transform scale-90 ml-1 bg-cover cursor-pointer"></div>  }
                                 
                                 <h2 className="text-xl">{likesCount}</h2>
                             </div>
@@ -141,12 +161,13 @@ const Itinerary = (props) => {
 const mapStateToProps = (state) => {
     return {
         token: state.users.token,
-        
+        updateLikes: state.users.updateLikes  
     }
 }
 
 const mapDispatchToProps = {
-    updateLikes: itinerariesActions.updateLikes
+    updateLikes: itinerariesActions.updateLikes,
+    getItineraryForUserLike: itinerariesActions.getItineraryForUserLike
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Itinerary)

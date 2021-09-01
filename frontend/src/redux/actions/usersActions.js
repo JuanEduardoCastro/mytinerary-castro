@@ -30,14 +30,14 @@ const usersActions = {
 
     logInLocalStorage: (token) => {
         return async (dispatch) => {
-            try{
+            try {
                 let response = await axios.get("http://localhost:4000/api/verifyToken", {
                     headers: {
                         Authorization: "Bearer " + token
                     }
                 })
                 dispatch({type: 'LOG_IN_USER', payload: { token, userName: response.data.userName, userPhoto: response.data.userPhoto }})
-            } catch (error){
+            } catch (error) {
                  return dispatch({ type: "LOG_OUT_USER" })
             }    
         }

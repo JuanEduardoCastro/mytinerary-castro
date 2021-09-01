@@ -23,8 +23,12 @@ router.route("/itineraries")
 
 router.route("/itinerary/:id")
 .get(itinerariesControllers.getItinerary)
-.put(/* passport.authenticate('jwt', { session: false }), */ itinerariesControllers.updateItinerary)
+.put(itinerariesControllers.updateItinerary)
 .delete(itinerariesControllers.removeItinerary)
+
+router.route("/itinerary/likes/:id")
+.get(passport.authenticate("jwt", { session: false }), itinerariesControllers.getItineraryForUserLike)
+.put(passport.authenticate("jwt", { session: false }), itinerariesControllers.updateLikes)
 
 router.route("/itineraries/:cityId")
 .get(itinerariesControllers.getItinerariesOfACity)
@@ -36,7 +40,7 @@ router.route("/user/login")
 .post(usersControllers.logInUser)
 
 router.route("/verifyToken")
-.get(passport.authenticate('jwt', { session: false }), usersControllers.verifyToken)
+.get(passport.authenticate("jwt", { session: false }), usersControllers.verifyToken)
 
 router.route("/activities")
 .post(activitiesControllers.addNewActivity)

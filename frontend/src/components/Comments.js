@@ -2,8 +2,13 @@ import React from 'react'
 
 const Comments = () => {
     return (
-        <div>
-            COMMENTS
+        <div className="">
+            
+            <div className="">
+                <input type="text" placeholder="place your comment here" className=""/> 
+            </div>
+
+
         </div>
     )
 }
