@@ -1,3 +1,4 @@
+const { response } = require("express")
 const Itinerary = require("../models/Itinerary")
 
 const itinerariesControllers = {
@@ -12,6 +13,7 @@ const itinerariesControllers = {
             }
         } catch (error) {
             res.json({ success: false, response: "Couldn´t get all documents" })
+            console.error(error.message)
         }
     },
 
@@ -43,8 +45,11 @@ const itinerariesControllers = {
     },
 
     updateItinerary: async (req, res) => {
+        console.log(req.params)
         try {
-            let updateItinerary = await Itinerary.findOneAndUpdate({ _id: req.params.id}, {...req.body}, {new: true})
+            let getItinerary = await Itinerary.findOne({ _id: req.params.id })
+
+            let updateItinerary = await Itinerary.findOneAndUpdate({ _id: req.params.id }, { $push:{ userIdList:req.user.id }}, { new: true })
             if (updateItinerary) {
                 res.json({ success: true, response: updateItinerary })
             } else {
@@ -65,6 +70,7 @@ const itinerariesControllers = {
             }
         } catch (error) {
             res.json({ success: false, error: "Couldn´t find the document to remove" })
+            console.error(error.message)
         }
     },
 

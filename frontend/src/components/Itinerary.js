@@ -1,19 +1,39 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClock } from '@fortawesome/free-solid-svg-icons';
-import { useEffect, useState } from 'react';
+import { faClock, faHeart } from '@fortawesome/free-solid-svg-icons';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import Aos from 'aos';
 import "aos/dist/aos.css";
 import Activities from './Activities';
 import Comments from './Comments';
+import { connect } from 'react-redux';
+import itinerariesActions from '../redux/actions/itinerariesActions';
 
 
 const Itinerary = (props) => {
 
-    const [activitesButton, setActivitiesButton] = useState(false)
+    // console.log(props)
 
-    useEffect(() => {
+    const [activitesButton, setActivitiesButton] = useState(false)
+    const [likeItinerary, setLikeItinerary] = useState(false)
+    const [likesCount, setLikesCount] = useState()
+
+    useLayoutEffect (() => {
         Aos.init({ offset: 120, duration: 600 })
     })
+    // console.log(props.itinerary)
+    useEffect(() => {
+        // setLikesCount(parseInt(props.itinerary.likes))
+        async function updateLikes() {
+            try {
+                // console.log("response")
+                let response = await props.updateLikes(props.itinerary._id, props.token)
+            } catch (error) {
+                return false
+            }
+        }
+        updateLikes()
+
+    }, [])
 
     var moneyCount = []
     for (let i = 0; i < props.itinerary.price; i++) {
@@ -24,9 +44,22 @@ const Itinerary = (props) => {
 
     const activitiesButtonHandler = () => {
         setActivitiesButton(!activitesButton)
-        
     }
 
+    const likeClickHandle = () => {
+        if(props.token) {
+            setLikeItinerary(!likeItinerary)
+            if (!likeItinerary) {
+                setLikesCount(likesCount+1)
+            } else {
+                setLikesCount(likesCount-1)
+            }
+        } else {
+            setLikeItinerary(false)
+        }
+    }
+
+    // console.log(likesCount)
     return (
         <div className="w-full h-full mb-14 ">
             <div className="w-9/12 border mx-auto shadow-md bg-gradient-to-b from-indigo-200">
@@ -52,11 +85,9 @@ const Itinerary = (props) => {
                                 className="w-20 h-20 bg-cover bg-center rounded-full"></div>
                             </div>
                             <div className="flex items-center gap-2">
-                                <div 
-                                style={{backgroundImage: `url("https://i.imgur.com/DK0P6fj.png")`}}
-                                className="w-10 h-10 bg-center bg-cover cursor-pointer"
-                                ></div>
-                                <h2 className="text-xl">0</h2>
+                                {likeItinerary ? <FontAwesomeIcon onClick={likeClickHandle} icon={faHeart} size="2x" className="pr-1 transform scale-105 text-red-600 cursor-pointer" /> : <div onClick={likeClickHandle} style={{backgroundImage: `url("https://i.imgur.com/DK0P6fj.png")`}} className="w-9 h-9 bg-center transform scale-90 ml-1 bg-cover cursor-pointer"></div>  }
+                                
+                                <h2 className="text-xl">{likesCount}</h2>
                             </div>
                         </div>
                         <h2 className="block md:hidden text-2xl px-4 pb-3">{props.itinerary.authorName}</h2>
@@ -107,7 +138,18 @@ const Itinerary = (props) => {
     )
 }
 
-export default Itinerary
+const mapStateToProps = (state) => {
+    return {
+        token: state.users.token,
+        
+    }
+}
+
+const mapDispatchToProps = {
+    updateLikes: itinerariesActions.updateLikes
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Itinerary)
 
 
 

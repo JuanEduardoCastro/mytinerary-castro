@@ -23,7 +23,7 @@ router.route("/itineraries")
 
 router.route("/itinerary/:id")
 .get(itinerariesControllers.getItinerary)
-.put(itinerariesControllers.updateItinerary)
+.put(/* passport.authenticate('jwt', { session: false }), */ itinerariesControllers.updateItinerary)
 .delete(itinerariesControllers.removeItinerary)
 
 router.route("/itineraries/:cityId")
