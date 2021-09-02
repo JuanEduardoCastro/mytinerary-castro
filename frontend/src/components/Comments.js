@@ -1,66 +1,67 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPaperPlane, faTrashAlt, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import itinerariesActions from '../redux/actions/itinerariesActions';
+import Comment from './Comment';
 
 const Comments = (props) => {
 
-    const [comment, setComment] = useState("")
-    const [comentarios, setComentarios] = useState([])
-    
-    
-    useEffect(() => {
+    // console.log(props)
+    const [send, setSend] = useState(false)
+    const [commentsList, setCommentsList] = useState([])
+    const [comment, setComment] = useState({ itineraryId: "", userComment: "", commentId: "", flag: "send" })
+
+    useEffect (() => {
         async function getComments() {
+            console.log("re renderiza y fetchea")
             try {
                 let response = await props.getComments(props.itineraryId)
-                console.log(response)
                 if (response.success) {
-                    setComments(response.response[0].comments)
+                setCommentsList(response.response[0].comments)
+                setSend(false)
                 }
             } catch (error) {
                 console.log("error al traer comentarios")
             }
         }
         getComments()
-    }, [])
 
+    },[send])
+
+    console.log(commentsList)
     const inputHandler = (e) => {
-        setComment(e.target.value)
+        // console.log(e.target.value)
+        setComment({
+            itineraryId: props.itineraryId,
+            userComment: e.target.value,
+            commentId: (commentsList.length)+1,
+            flag: "send"
+        })
     }
 
-    // console.log(props)
-    
-    const sendMessageHandle = () => {
+    const sendCommentHandler = () => {
+        console.log("send")
         props.addNewComment(props.itineraryId, comment, props.token)
+        setSend(true)
+        
     }
-
-    console.log(comments)
+    console.log(send)
+    const trashMessageHandle = (id, comment, token) => {
+        console.log("click en borrar")
+        props.deleteCommentByUserId(id, comment, token)
+        setSend(true)
+    }
+    
     return (
         <div className="flex flex-col items-center w-full h-full rounded-md">
-            <div className="flex-col items-end justify-start w-11/12 h-5/6 mt-2 p-">
-
+            <div className="flex-col items-end justify-start w-11/12 h-5/6 mt-2 overflow-y-auto">
+            
                 {/* COMENTARIO */}
-                {comments.map((comment, index) => {
-                    <div className="w-full ">
-                        <div className="w-full flex items-center justify-start gap-1 ">
-                            <div className=" ">
-                                <div 
-                                style={{backgroundImage: `url("${comment.userPhoto}")`}}
-                                className="w-10 h-10 bg-cover bg-center rounded-full "></div>
-                            </div>
-                            <div className="w-11/12 flex flex-col mx-auto border border-gray rounded-lg bg-gray-100 px-2">
-                                <h2 className="text-sm">{comment.userName}</h2>
-                                <h2 className="text-base">{comment.comment}</h2>
-                            </div>
-                        </div>
-                        <div className="flex justify-end gap-3 pr-4 py-1">
-                             {/* <FontAwesomeIcon icon={faTrashAlt} className=""/>
-                            <FontAwesomeIcon icon={faPencilAlt} className=""/> */}
-                        </div>
-                    </div>
+                {commentsList.map((comment, index) => {
+                    return <Comment key={index} trashMessageHandle={trashMessageHandle} comment={comment}  />
                 })}
-
+            
             </div> 
             <div className="relative w-4/5 flex items-center justify-center mx-auto">
                 <input 
@@ -68,10 +69,8 @@ const Comments = (props) => {
                     onChange={inputHandler}
                     placeholder="Your comment here" 
                     className="w-full pr-10 pl-3 inputBox"/> 
-                <FontAwesomeIcon icon={faPaperPlane} onClick={sendMessageHandle} className="absolute position right-3 transform rotate-45 scale-125 text-indigo-800 cursor-pointer"/>
+                <FontAwesomeIcon icon={faPaperPlane} onClick={sendCommentHandler} className="absolute position right-3 transform rotate-45 scale-125 text-indigo-800 cursor-pointer"/>
             </div>
-
-
         </div>
     )
 }
@@ -79,14 +78,14 @@ const Comments = (props) => {
 const mapStateToProps = (state) => {
     return {
         token: state.users.token,
-        userName: state.users.userNameStore,
-        userPhoto: state.users.userPhotoStore
+        /* commentsFromStore: state.itineraries.commentsStore */
     }
 }
 
 const mapDispatchToProps = {
     addNewComment: itinerariesActions.addNewComment,
-    getComments: itinerariesActions.getComments
+    getComments: itinerariesActions.getComments,
+    deleteCommentByUserId: itinerariesActions.deleteCommentByUserId
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(Comments)

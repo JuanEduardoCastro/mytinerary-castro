@@ -32,7 +32,7 @@ router.route("/itinerary/likes/:id")
 
 router.route("/itinerary/comments/:id")
 .get(itinerariesControllers.getItineraryComments)
-.put(passport.authenticate("jwt", { session: false }), itinerariesControllers.addNewItineraryComment)
+.put(passport.authenticate("jwt", { session: false }), itinerariesControllers.updateItineraryComment)
 
 router.route("/itineraries/:cityId")
 .get(itinerariesControllers.getItinerariesOfACity)

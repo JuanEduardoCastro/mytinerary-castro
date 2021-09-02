@@ -48,7 +48,6 @@ const itinerariesControllers = {
         try {
             let getItineraryForUserLike = await Itinerary.findOne({ _id: req.params.id })
             if (!getItineraryForUserLike.usersIdList.includes(req.user._id)) {
-                console.log("backend")
                 res.json({ success: true, userLike: false, response: getItineraryForUserLike })
             } else {
                 res.json({ success: true, userLike: true, response: getItineraryForUserLike })
@@ -60,7 +59,9 @@ const itinerariesControllers = {
 
     updateLikes: async (req, res) => {
         try {
-            let updateLike = await Itinerary.findOneAndUpdate({ _id: req.params.id })
+            console.log(req.params.id)
+            let updateLike = await Itinerary.findOne({ _id: req.params.id })
+            console.log(updateLike)
             if (!updateLike.usersIdList.includes(req.user._id)) {
                 await updateLike.updateOne({ $push: { "usersIdList": req.user._id }}, { new: true }) 
                 if (updateLike) {
@@ -129,39 +130,43 @@ const itinerariesControllers = {
         }
     },
 
-    addNewItineraryComment: async (req, res) => {
-        try {
-            // console.log(req.body)
-            let addNewItineraryComment = await Itinerary.findOneAndUpdate({ _id: req.params.id }, { $push: { "comments": { "userName": req.user.userName, "userPhoto": req.user.userPhoto, "userComment": req.body.comment, "userId": req.user._id }}})
-            if (addNewItineraryComment) {
-                res.json({ success: true, response: addNewItineraryComment })
-            } else {
-                throw new Error ("no grabo el comentario")
+    updateItineraryComment: async (req, res) => {
+        console.log(req.body.comment.commentId)
+
+        if (req.body.comment.flag === "edit") {
+            console.log("entro al flag true para editar")
+
+        } else if (req.body.comment.flag === "trash") {
+            console.log("entro al elseif para borrar")
+
+            try {
+                let forItineraryId = await Itinerary.findOneAndUpdate({ _id: req.params.id }, { $pull: { comments: { commentId: { $in: [ req.body.comment.commentId ] }}}} )
+                if (forItineraryId) {
+                    res.json({ success: true })
+                } else {
+                    throw new Error("no se pudo borrar")
+                }
+                // console.log(forItineraryId)
+                // let deleteComment = await forItineraryId.updateOne({ comments.commentId: req.body.comment.commentId })
+                // console.log(deleteComment)
+            } catch (error) {
+                console.log( error )
             }
-        } catch (error) {
-            res.json({ success: false, error: error.message})
+
+        } else {
+            console.log("entro al else para agregar nuevo")
+            try {
+                let addNewItineraryComment = await Itinerary.findOneAndUpdate({ _id: req.params.id }, { $push: { "comments": { "itineraryId": req.body.comment.itineraryId, "userName": req.user.userName, "userPhoto": req.user.userPhoto, "userComment": req.body.comment.userComment, "userId": req.user._id, "commentId": req.body.comment.commentId }}})
+                if (addNewItineraryComment) {
+                    res.json({ success: true, response: addNewItineraryComment })
+                } else {
+                    throw new Error ("no grabo el comentario")
+                }
+            } catch (error) {
+                res.json({ success: false, error: error.message})
+            }
         }
     },
-
-    // updateLikes: async (req, res) => {
-    //     try {
-    //         let updateLike = await Itinerary.findOneAndUpdate({ _id: req.params.id })
-    //         if (!updateLike.usersIdList.includes(req.user._id)) {
-    //             await updateLike.updateOne({ $push: { "usersIdList": req.user._id }}, { new: true }) 
-    //             if (updateLike) {
-    //                 res.json({ success: true, response: updateLike })
-    //             }
-    //         } else {
-    //             await updateLike.updateOne({ $pull: { "usersIdList": req.user._id }}, /* { new: true } */)
-    //             if (updateLike) {
-    //                 res.json({ success: true, response: updateLike })
-    //             }
-    //         }    
-    //     } catch (error) {
-    //         res.json({ success: false, error: error.message/* "Couldn´t get the document" */})
-    //         console.log(error)
-    //     }    
-    // },
 }
 
 module.exports = itinerariesControllers

@@ -19,7 +19,6 @@ const Itinerary = (props) => {
     useLayoutEffect (() => {
         Aos.init({ offset: 120, duration: 600 })
     })
-    // console.log(props.itinerary.usersIdList)
     
     useEffect(() => {
         if(props.token) {
@@ -68,16 +67,16 @@ const Itinerary = (props) => {
 
     async function updateLikes() {
         try {
-            let response = await props.updateLikes(props.token, props.itinerary._id)
-            if (response) {
-                console.log(response.usersIdList)
-            }
+            await props.updateLikes(props.token, props.itinerary._id)
+            // let response = 
+            // if (response) {
+            //     console.log(response.usersIdList)
+            // }
         } catch (error) {
             console.log("error")
         }
     }
 
-    // console.log(userLike)
     return (
         <div className="w-full h-full mb-14 ">
             <div className="w-9/12 border mx-auto shadow-md bg-gradient-to-b from-indigo-200">
@@ -132,14 +131,14 @@ const Itinerary = (props) => {
                     </div>
                 </div>
                 <div className="w-full flex flex-col justify-center items-center m-2.5">
-                    <div className={!activitesButton ? "block" : "hidden"} >
+                    <div className={activitesButton ? "hidden" : "block"} >
                         <button onClick={activitiesButtonHandler} className="btn" >View more</button>
                     </div>
                     <div className="w-full h-full fotoText">
-                        <div className={`${activitesButton ? "block" : "hidden"}`} >
+                        <div className={!activitesButton ? "hidden" : "block"}>
                             <div className="w-full h-full py-4 pb- flex flex-col items-center justify-around tracking-wide ">
                                 <div className="w-full h-full flex flex-col md:flex-row m-2.5 justify-center ">
-                                    <div className="flex flex-col w-auto md:w-3/5 h-auto border-2 border-grey-500 rounded-md shadow-md " >
+                                    <div className="flex flex-col w-auto md:w-3/5 h-80 border-2 border-grey-500 rounded-md shadow-md " >
                                         <Comments itineraryId={props.itinerary._id} />
                                     </div>
                                     <div className="w-auto md:w-2/5 h-80 p-4 md:p-2 " >
@@ -169,13 +168,3 @@ const mapDispatchToProps = {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Itinerary)
-
-
-
-
-
-                                {/* <img src="https://i.imgur.com/LmKOcmk.png" alt="Not found logo" className="w-32 h-32" />
-                                <h2 className="text-center text-4xl text-black">We are under construction!</h2>
-                                <h2 className="text-center text-3xl text-black">Please come back later!</h2>
-                                <div className="flex flex-col items-center mt-4 gap-4 text-indigo-900">
-                                </div> */}
