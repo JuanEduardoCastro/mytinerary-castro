@@ -13,7 +13,6 @@ import itinerariesActions from '../redux/actions/itinerariesActions';
 const Itinerary = (props) => {
 
     const [activitesButton, setActivitiesButton] = useState(false)
-    // const [likeItinerary, setLikeItinerary] = useState(false)
     const [userLike, setUserLike] = useState(false)
     const [likesCount, setLikesCount] = useState(parseInt(props.itinerary.usersIdList.length))
 
@@ -24,11 +23,10 @@ const Itinerary = (props) => {
     
     useEffect(() => {
         if(props.token) {
-
             async function getItineraryForUserLike() {
                 try {
                     let response = await props.getItineraryForUserLike(props.token, props.itinerary._id)
-                    console.log(response.userLike)
+                    // console.log(response.userLike)
                     if (response.success) {
                         response.userLike ? setUserLike(true) : setUserLike(false)
                         // setLikesCount(response.response.usersIdList.length)
@@ -79,7 +77,7 @@ const Itinerary = (props) => {
         }
     }
 
-    console.log(userLike)
+    // console.log(userLike)
     return (
         <div className="w-full h-full mb-14 ">
             <div className="w-9/12 border mx-auto shadow-md bg-gradient-to-b from-indigo-200">
@@ -142,7 +140,7 @@ const Itinerary = (props) => {
                             <div className="w-full h-full py-4 pb- flex flex-col items-center justify-around tracking-wide ">
                                 <div className="w-full h-full flex flex-col md:flex-row m-2.5 justify-center ">
                                     <div className="flex flex-col w-auto md:w-3/5 h-auto border-2 border-grey-500 rounded-md shadow-md " >
-                                        <Comments />
+                                        <Comments itineraryId={props.itinerary._id} />
                                     </div>
                                     <div className="w-auto md:w-2/5 h-80 p-4 md:p-2 " >
                                         {activitesButton && <Activities itineraryId={props.itinerary._id} className=""/>}

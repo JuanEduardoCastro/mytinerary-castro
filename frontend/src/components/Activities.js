@@ -23,8 +23,6 @@ const Activities = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    console.log(props)
-
     return (
         <div className="">
             <Swiper

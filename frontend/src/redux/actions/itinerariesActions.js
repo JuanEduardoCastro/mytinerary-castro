@@ -44,6 +44,30 @@ const itinerariesActions = {
                 return response.data.response
             }
         }   
+    },
+
+    addNewComment: (id, comment, token) => {
+        return async (dispatch) => {
+            console.log("action")
+            let response = await axios.put(`http://localhost:4000/api/itinerary/comments/${id}`, { comment }, { headers: { Authorization: "Bearer " + token }}, )
+            if (!response.data.success) {
+                throw new Error("There was a problem with the database")
+            } else {
+                return response
+            }
+        }
+    },
+
+    getComments: (id) => {
+        console.log("controller")
+        return async (dispatch) => {
+            let response = await axios.get(`http://localhost:4000/api/itinerary/comments/${id}`)
+            if (!response.data.success) {
+                throw new Error("There was a problem with the database")
+            } else {
+                return response.data
+            }
+        }
     }
 }
 
