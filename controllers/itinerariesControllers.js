@@ -59,9 +59,7 @@ const itinerariesControllers = {
 
     updateLikes: async (req, res) => {
         try {
-            console.log(req.params.id)
             let updateLike = await Itinerary.findOne({ _id: req.params.id })
-            console.log(updateLike)
             if (!updateLike.usersIdList.includes(req.user._id)) {
                 await updateLike.updateOne({ $push: { "usersIdList": req.user._id }}, { new: true }) 
                 if (updateLike) {
@@ -131,10 +129,7 @@ const itinerariesControllers = {
     },
 
     updateItineraryComment: async (req, res) => {
-        console.log(req.body.comment)
-
         if (req.body.comment.flag === "edit") {
-            console.log("entro al flag true para editar")
             try {
                 let editItineraryComment = await Itinerary.findOneAndUpdate({ _id: req.params.id, "comments.commentId": req.body.comment.commentId }, { $set: { "comments.$.userComment": req.body.comment.userComment }})
                 if (editItineraryComment) {
@@ -143,9 +138,7 @@ const itinerariesControllers = {
             } catch (error) {
                 console.log(error)
             }
-
         } else if (req.body.comment.flag === "trash") {
-            console.log("entro al elseif para borrar")
             try {
                 let forItineraryId = await Itinerary.findOneAndUpdate({ _id: req.params.id }, { $pull: { comments: { commentId: { $in: [ req.body.comment.commentId ] }}}} )
                 if (forItineraryId) {
@@ -157,9 +150,9 @@ const itinerariesControllers = {
                 console.log( error )
             }
         } else {
-            console.log("entro al else para agregar nuevo")
+            // console.log("entro al else para agregar nuevo")
             try {
-                let addNewItineraryComment = await Itinerary.findOneAndUpdate({ _id: req.params.id }, { $push: { "comments": { "itineraryId": req.body.comment.itineraryId, "userName": req.user.userName, "userPhoto": req.user.userPhoto, "userComment": req.body.comment.userComment, "userId": req.user._id, "commentId": req.body.comment.commentId }}})
+                let addNewItineraryComment = await Itinerary.findOneAndUpdate({ _id: req.params.id }, { $push: { "comments": { "itineraryId": req.body.comment.itineraryId, "userName": req.user.userName, "userPhoto": req.user.userPhoto, "userComment": req.body.comment.userComment, "userId": req.user._id, "commentId": req.body.comment.commentId, "userEmail": req.user.userEmail }}})
                 if (addNewItineraryComment) {
                     res.json({ success: true, response: addNewItineraryComment })
                 } else {

@@ -29,6 +29,7 @@ const Header = (props) => {
 
     const logOutClick = () => {
         props.logOutUser()
+        props.history.push("/")
     }
 
     const clickAwayRef = useClickAwayListener(handleClickAway)
@@ -136,7 +137,8 @@ const mapStateToProps = (state) => {
     return {
         token: state.users.token,
         userName: state.users.userNameStore,
-        userPhoto: state.users.userPhotoStore
+        userPhoto: state.users.userPhotoStore,
+        userEmail: state.users.userEmailStore,
     }
 }
 

@@ -54,8 +54,7 @@ const Comment = (props) => {
         })
     }
 
-    console.log(comment)
-    console.log(inputValue)
+    console.log(props)
 
     return (
         <div className="w-full ">
@@ -77,10 +76,10 @@ const Comment = (props) => {
                 </div>
             </div>
             <div className="flex justify-end gap-3 pr-4 py-1">
-                <button >
+                <button className={props.userEmail === props.comment.userEmail ? "block" : "hidden"}>
                     <FontAwesomeIcon onClick={() => { props.trashMessageHandle(props.comment.itineraryId, comment, props.token); trashMessageHandler2(); }}  icon={faTrashAlt} className="cursor-pointer"/>
                 </button>
-                <button >
+                <button className={props.userEmail === props.comment.userEmail ? "block" : "hidden"}>
                     <FontAwesomeIcon onClick={editCommentHandler} icon={faPencilAlt} className="cursor-pointer"/>
                 </button>
             </div>
@@ -90,6 +89,7 @@ const Comment = (props) => {
 const mapStateToProps = (state) => {
     return {
         token: state.users.token,
+        userEmail: state.users.userEmailStore,
     }
 }
 

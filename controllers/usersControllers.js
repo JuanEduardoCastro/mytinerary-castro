@@ -31,7 +31,7 @@ const usersControllers = {
                     let userPasswordCheck = bcrypt.compareSync(userPassword, userEmailCheck.userPassword)
                     if (userPasswordCheck) {
                         const token = jwt.sign({ ...userEmailCheck }, process.env.SECRETORKEY)
-                        res.json({ success: true, response: { token, userName: userEmailCheck.userName, userPhoto: userEmailCheck.userPhoto }})
+                        res.json({ success: true, response: { token, userName: userEmailCheck.userName, userPhoto: userEmailCheck.userPhoto, userEmail: userEmailCheck.userEmail }})
                     } else {
                         throw new Error("The username or password is not valid")
                     }
@@ -47,7 +47,7 @@ const usersControllers = {
     },
 
     verifyToken: (req, res) =>{
-        res.json({ userName: req.user.userName, userPhoto: req.user.userPhoto }) 
+        res.json({ userName: req.user.userName, userPhoto: req.user.userPhoto, userEmail: req.user.userEmail }) 
     }
 }
 module.exports = usersControllers

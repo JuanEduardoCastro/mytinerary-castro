@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import itinerariesActions from '../redux/actions/itinerariesActions';
 import Comment from './Comment';
+import { Link } from 'react-router-dom';
 
 const Comments = (props) => {
 
     const [send, setSend] = useState(false)
     const [commentsList, setCommentsList] = useState([])
     const [comment, setComment] = useState({ itineraryId: "", userComment: "", commentId: "", flag: "send" })
+    const [error, setError] = useState(false)
 
     useEffect (() => {
         async function getComments() {
@@ -24,40 +26,57 @@ const Comments = (props) => {
             }
         }
         getComments()
-    },[send])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [send])
 
     //input nuevo
     const inputHandler = (e) => {
-        setComment({
-            itineraryId: props.itineraryId,
-            userComment: e.target.value,
-            commentId: (commentsList.length)+1,
-            flag: "send"
-        })
+        if (props.token) {
+            setComment({
+                itineraryId: props.itineraryId,
+                userComment: e.target.value,
+                commentId: (commentsList.length)+1,
+                flag: "send"
+            })
+        } else {
+            setError(true)
+        }
     }
 
     //envia nuevo
     const sendCommentHandler = () => {
-        props.addNewComment(props.itineraryId, comment, props.token)
-        setComment({ itineraryId: "", userComment: "", commentId: "", flag: "send" })
-        setSend(true) 
+        if (props.token) {
+            props.addNewComment(props.itineraryId, comment, props.token)
+            setComment({ itineraryId: "", userComment: "", commentId: "", flag: "send" })
+            setSend(true) 
+        } else {
+            setError(true)
+        }
     }
     
     //borrar
     const trashMessageHandle = (id, comment, token) => {
-        props.deleteCommentByUserId(id, comment, token)
-        setSend(true)
+        if(props.token) {
+            props.deleteCommentByUserId(id, comment, token)
+            setSend(true)   
+        } else {
+            setError(true)
+        }
     }
 
     //editar
     const sendEditCommentHandler = (id, comment, token) => {
-
-        props.deleteCommentByUserId(id, comment, token)
-        setSend(true)
-        // console.log(id)
-        // console.log(comment)
-
+        if (props.token) {
+            props.deleteCommentByUserId(id, comment, token)
+            setSend(true)
+        } else {
+            setError(true)
+        }
     }
+
+    setTimeout(() => {
+        setError(false)
+    }, 4000)
     
     return (
         <div className="flex flex-col items-center w-full h-full rounded-md">
@@ -69,7 +88,7 @@ const Comments = (props) => {
                 })}
             
             </div> 
-            <div className="relative w-4/5 flex items-center justify-center mx-auto">
+            <div className="relative w-4/5 flex flex-col items-center justify-center mx-auto pb-2">
                 <input 
                     type="text" 
                     onChange={inputHandler}
@@ -78,6 +97,9 @@ const Comments = (props) => {
                     className="w-full pr-10 pl-3 inputBox"/> 
                 <FontAwesomeIcon icon={faPaperPlane} onClick={sendCommentHandler}  className="absolute position right-3 transform rotate-45 scale-125 text-indigo-800 cursor-pointer"/>
             </div>
+            <div className={error ? "block" : "hidden" } >
+                <h2>You must be logged in to post a message. <Link to="/login" className="text-lg text-indigo-700">Log in!</Link></h2>
+            </div>
         </div>
     )
 }
@@ -85,6 +107,7 @@ const Comments = (props) => {
 const mapStateToProps = (state) => {
     return {
         token: state.users.token,
+        userEmail: state.users.userEmailStore
         /* commentsFromStore: state.itineraries.commentsStore */
     }
 }

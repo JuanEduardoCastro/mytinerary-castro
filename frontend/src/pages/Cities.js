@@ -96,7 +96,7 @@ const Cities = (props) => {
                         style={{backgroundImage: `url("https://i.imgur.com/6zHiJfR.jpg?1")`}} 
                         alt="background living" 
                         className="w-full h-72 flex flex-col justify-between bg-top bg-cover border-b-8 border-indigo-700 rounded-b-sm">
-                            <Header />
+                            <Header history={props.history} />
                             <div className="w-full h-48 flex justify-center items-center">
                                 <input 
                                 type="text" 

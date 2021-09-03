@@ -7,6 +7,7 @@ import Activities from './Activities';
 import Comments from './Comments';
 import { connect } from 'react-redux';
 import itinerariesActions from '../redux/actions/itinerariesActions';
+import { Link } from 'react-router-dom';
 
 
 
@@ -14,6 +15,7 @@ const Itinerary = (props) => {
 
     const [activitesButton, setActivitiesButton] = useState(false)
     const [userLike, setUserLike] = useState(false)
+    const [error, setError] = useState(false)
     const [likesCount, setLikesCount] = useState(parseInt(props.itinerary.usersIdList.length))
 
     useLayoutEffect (() => {
@@ -25,17 +27,15 @@ const Itinerary = (props) => {
             async function getItineraryForUserLike() {
                 try {
                     let response = await props.getItineraryForUserLike(props.token, props.itinerary._id)
-                    // console.log(response.userLike)
                     if (response.success) {
                         response.userLike ? setUserLike(true) : setUserLike(false)
-                        // setLikesCount(response.response.usersIdList.length)
                     }
                 } catch (error) {
                     console.log(error)
                 }
             }
             getItineraryForUserLike()
-        }
+        } 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -62,6 +62,7 @@ const Itinerary = (props) => {
             }
         } else {
             setUserLike(false)
+            setError(true)
         }
     }
 
@@ -76,6 +77,10 @@ const Itinerary = (props) => {
             console.log("error")
         }
     }
+
+    setTimeout(() => {
+        setError(false)
+    }, 4000)
 
     return (
         <div className="w-full h-full mb-14 ">
@@ -93,7 +98,7 @@ const Itinerary = (props) => {
                     </div>
                     {/* ESCRITO */}
                     <div className="flex flex-col w-auto md:w-3/5 h-auto border-2 border-grey-500 rounded-md shadow-md ">
-                        <div className="flex items-center justify-between pr-12">
+                        <div className="relative flex items-center justify-between pr-12">
                             <div className="flex justify-start items-center p-4 gap-4 ">
                                 <h2 className="hidden md:block">{props.itinerary.authorName}</h2>
                                 <div 
@@ -105,6 +110,9 @@ const Itinerary = (props) => {
                                 {userLike ? <FontAwesomeIcon onClick={likeClickHandle} icon={faHeart} size="2x" className="pr-1 transform scale-105 text-red-600 cursor-pointer" /> : <div onClick={likeClickHandle} style={{backgroundImage: `url("https://i.imgur.com/DK0P6fj.png")`}} className="w-9 h-9 bg-center transform scale-90 ml-1 bg-cover cursor-pointer"></div>  }
                                 
                                 <h2 className="text-xl">{likesCount}</h2>
+                            </div>
+                            <div className="absolute top-1 right-4" >
+                                <h2 className={error ? "block" : "hidden"}>You must be logged in to like. <Link to="/login" className="text-lg text-indigo-700">Log in!</Link></h2>
                             </div>
                         </div>
                         <h2 className="block md:hidden text-2xl px-4 pb-3">{props.itinerary.authorName}</h2>

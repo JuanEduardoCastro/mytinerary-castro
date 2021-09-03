@@ -10,11 +10,6 @@ const itinerariesReducer = (state = {itinerariesStore: [], itinerariesOfACitySto
                 ...state,
                 itinerariesOfACityStore: action.payload
             }
-        // case "GET_COMMENTS":
-        //     return {
-        //         ...state,
-        //         commentsStore: action.payload
-        //     }
         default:
             return state
     }
