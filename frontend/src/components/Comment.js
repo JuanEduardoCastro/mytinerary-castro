@@ -1,26 +1,61 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+import { faPaperPlane, faTrashAlt, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import itinerariesActions from '../redux/actions/itinerariesActions';
 
 const Comment = (props) => {
 
-    // const [flagUp, setFlagUp] = useState("")
     const [comment, setComment] = useState({ flag: "trash", commentId: props.comment.commentId })
-    
-    // const trashMessageHandle = () => {
-    //     props.deleteCommentByUserId(props.comment.itineraryId, comment, props.token)
-    // }
+    const [changeInput, setChangeInput] = useState(false)
+    const [inputValue, setInputValue] = useState("") 
 
-    const editMessageHandle = () => {
-        console.log("edit")
-        // setComment({
-        //     userComment: "",
-        //     commentId: "",
-        //     flag: "edit"
-        // })
+    useEffect(() => {
+        setInputValue(props.comment.userComment)
+        setComment({ flag: "trash", commentId: props.comment.commentId })
+    }, [])
+    
+    //input
+    const editInputHandler = (e) => {
+        setInputValue(e.target.value)
+        setComment({ 
+            ...comment,
+            userComment: e.target.value,
+            flag: "edit",
+        })
     }
+
+    //boton editar
+    const editCommentHandler = () => {
+        setChangeInput(!changeInput)
+        setComment({
+            ...comment,
+            userComment: inputValue,
+            flag: "edit"
+        })
+        
+    }
+
+    //mandar msg editado
+    const sendEditCommentHandler2 = () => {
+        setChangeInput(!changeInput)
+        setComment({ 
+            ...comment,
+            userComment: inputValue,
+            flag: "trash",
+        })
+
+    }
+
+    const trashMessageHandler2 = () => {
+        setComment({
+            ...comment,
+            flag: "trash"
+        })
+    }
+
+    console.log(comment)
+    console.log(inputValue)
 
     return (
         <div className="w-full ">
@@ -30,17 +65,23 @@ const Comment = (props) => {
                     style={{backgroundImage: `url("${props.comment.userPhoto}")`}}
                     className="w-10 h-10 bg-cover bg-center rounded-full "></div>
                 </div>
-                <div className="w-11/12 h-12 flex flex-col mx-auto border border-gray rounded-lg bg-gray-100 px-2">
+                <div className="relative w-11/12 h-12 flex flex-col mx-auto border border-gray rounded-lg bg-gray-100 px-2">
                     <h2 className="text-sm">{props.comment.userName}</h2>
-                    <h2 className="text-base">{props.comment.userComment}</h2>
+                    {!changeInput ? <h2 className="text-base">{props.comment.userComment}</h2> : <div><input 
+                    type="text" 
+                    onChange={editInputHandler}
+                    value={inputValue}
+                    placeholder="Your comment here" 
+                    className="w-full pr-10 pl-3 inputBox"/> 
+                    <FontAwesomeIcon icon={faPaperPlane}  onClick={() => { props.sendEditCommentHandler(props.comment.itineraryId, comment, props.token); sendEditCommentHandler2(); }}  className="absolute position top-8 right-6 transform rotate-45 scale-125 text-indigo-800 cursor-pointer"/></div>}    
                 </div>
             </div>
             <div className="flex justify-end gap-3 pr-4 py-1">
                 <button >
-                    <FontAwesomeIcon onClick={() => props.trashMessageHandle(props.comment.itineraryId, comment, props.token)} icon={faTrashAlt} className="cursor-pointer"/>
+                    <FontAwesomeIcon onClick={() => { props.trashMessageHandle(props.comment.itineraryId, comment, props.token); trashMessageHandler2(); }}  icon={faTrashAlt} className="cursor-pointer"/>
                 </button>
                 <button >
-                    <FontAwesomeIcon onClick={editMessageHandle} icon={faPencilAlt} className="cursor-pointer"/>
+                    <FontAwesomeIcon onClick={editCommentHandler} icon={faPencilAlt} className="cursor-pointer"/>
                 </button>
             </div>
         </div>

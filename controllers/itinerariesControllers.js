@@ -131,14 +131,21 @@ const itinerariesControllers = {
     },
 
     updateItineraryComment: async (req, res) => {
-        console.log(req.body.comment.commentId)
+        console.log(req.body.comment)
 
         if (req.body.comment.flag === "edit") {
             console.log("entro al flag true para editar")
+            try {
+                let editItineraryComment = await Itinerary.findOneAndUpdate({ _id: req.params.id, "comments.commentId": req.body.comment.commentId }, { $set: { "comments.$.userComment": req.body.comment.userComment }})
+                if (editItineraryComment) {
+                    res.json({ success: true, response: editItineraryComment })
+                }
+            } catch (error) {
+                console.log(error)
+            }
 
         } else if (req.body.comment.flag === "trash") {
             console.log("entro al elseif para borrar")
-
             try {
                 let forItineraryId = await Itinerary.findOneAndUpdate({ _id: req.params.id }, { $pull: { comments: { commentId: { $in: [ req.body.comment.commentId ] }}}} )
                 if (forItineraryId) {
@@ -146,13 +153,9 @@ const itinerariesControllers = {
                 } else {
                     throw new Error("no se pudo borrar")
                 }
-                // console.log(forItineraryId)
-                // let deleteComment = await forItineraryId.updateOne({ comments.commentId: req.body.comment.commentId })
-                // console.log(deleteComment)
             } catch (error) {
                 console.log( error )
             }
-
         } else {
             console.log("entro al else para agregar nuevo")
             try {

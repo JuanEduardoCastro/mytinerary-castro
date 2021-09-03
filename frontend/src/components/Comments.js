@@ -7,14 +7,12 @@ import Comment from './Comment';
 
 const Comments = (props) => {
 
-    // console.log(props)
     const [send, setSend] = useState(false)
     const [commentsList, setCommentsList] = useState([])
     const [comment, setComment] = useState({ itineraryId: "", userComment: "", commentId: "", flag: "send" })
 
     useEffect (() => {
         async function getComments() {
-            console.log("re renderiza y fetchea")
             try {
                 let response = await props.getComments(props.itineraryId)
                 if (response.success) {
@@ -26,12 +24,10 @@ const Comments = (props) => {
             }
         }
         getComments()
-
     },[send])
 
-    console.log(commentsList)
+    //input nuevo
     const inputHandler = (e) => {
-        // console.log(e.target.value)
         setComment({
             itineraryId: props.itineraryId,
             userComment: e.target.value,
@@ -40,17 +36,27 @@ const Comments = (props) => {
         })
     }
 
+    //envia nuevo
     const sendCommentHandler = () => {
-        console.log("send")
         props.addNewComment(props.itineraryId, comment, props.token)
-        setSend(true)
-        
+        setComment({ itineraryId: "", userComment: "", commentId: "", flag: "send" })
+        setSend(true) 
     }
-    console.log(send)
+    
+    //borrar
     const trashMessageHandle = (id, comment, token) => {
-        console.log("click en borrar")
         props.deleteCommentByUserId(id, comment, token)
         setSend(true)
+    }
+
+    //editar
+    const sendEditCommentHandler = (id, comment, token) => {
+
+        props.deleteCommentByUserId(id, comment, token)
+        setSend(true)
+        // console.log(id)
+        // console.log(comment)
+
     }
     
     return (
@@ -59,7 +65,7 @@ const Comments = (props) => {
             
                 {/* COMENTARIO */}
                 {commentsList.map((comment, index) => {
-                    return <Comment key={index} trashMessageHandle={trashMessageHandle} comment={comment}  />
+                    return <Comment key={index} sendEditCommentHandler={sendEditCommentHandler} trashMessageHandle={trashMessageHandle} comment={comment}  />
                 })}
             
             </div> 
@@ -67,9 +73,10 @@ const Comments = (props) => {
                 <input 
                     type="text" 
                     onChange={inputHandler}
+                    value={comment.userComment}
                     placeholder="Your comment here" 
                     className="w-full pr-10 pl-3 inputBox"/> 
-                <FontAwesomeIcon icon={faPaperPlane} onClick={sendCommentHandler} className="absolute position right-3 transform rotate-45 scale-125 text-indigo-800 cursor-pointer"/>
+                <FontAwesomeIcon icon={faPaperPlane} onClick={sendCommentHandler}  className="absolute position right-3 transform rotate-45 scale-125 text-indigo-800 cursor-pointer"/>
             </div>
         </div>
     )
