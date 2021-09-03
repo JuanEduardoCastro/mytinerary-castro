@@ -80,7 +80,7 @@ const Itinerary = (props) => {
 
     setTimeout(() => {
         setError(false)
-    }, 4000)
+    }, 5000)
 
     return (
         <div className="w-full h-full mb-14 ">
@@ -138,7 +138,7 @@ const Itinerary = (props) => {
                         </div>
                     </div>
                 </div>
-                <div className="w-full flex flex-col justify-center items-center m-2.5">
+                <div className="w-full flex flex-col justify-center items-center my-2.5 ">
                     <div className={activitesButton ? "hidden" : "block"} >
                         <button onClick={activitiesButtonHandler} className="btn" >View more</button>
                     </div>
@@ -146,10 +146,10 @@ const Itinerary = (props) => {
                         <div className={!activitesButton ? "hidden" : "block"}>
                             <div className="w-full h-full py-4 pb- flex flex-col items-center justify-around tracking-wide ">
                                 <div className="w-full h-full flex flex-col md:flex-row m-2.5 justify-center ">
-                                    <div className="flex flex-col w-auto md:w-3/5 h-80 border-2 border-grey-500 rounded-md shadow-md " >
+                                    <div className="flex flex-col w-auto md:w-3/5 h-80 border-2 border-grey-500 rounded-md shadow-md mt-8 md:mt-2" >
                                         <Comments itineraryId={props.itinerary._id} />
                                     </div>
-                                    <div className="w-auto md:w-2/5 h-80 p-4 md:p-2 " >
+                                    <div className="w-auto md:w-2/5 h-80 p-4 md:p-2 order-first md:order-last" >
                                         {activitesButton && <Activities itineraryId={props.itinerary._id} className=""/>}
                                     </div>
                                 </div>                           

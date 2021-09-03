@@ -76,7 +76,7 @@ const Comments = (props) => {
 
     setTimeout(() => {
         setError(false)
-    }, 4000)
+    }, 5000)
     
     return (
         <div className="flex flex-col items-center w-full h-full rounded-md">
@@ -84,7 +84,7 @@ const Comments = (props) => {
             
                 {/* COMENTARIO */}
                 {commentsList.map((comment, index) => {
-                    return <Comment key={index} sendEditCommentHandler={sendEditCommentHandler} trashMessageHandle={trashMessageHandle} comment={comment}  />
+                    return <Comment key={index} sendEditCommentHandler={sendEditCommentHandler} trashMessageHandle={trashMessageHandle} comment={comment}  className="bg-red-300"/>
                 })}
             
             </div> 

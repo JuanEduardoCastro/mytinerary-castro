@@ -4,10 +4,12 @@ import { faPaperPlane, faTrashAlt, faPencilAlt } from '@fortawesome/free-solid-s
 import { connect } from 'react-redux';
 import itinerariesActions from '../redux/actions/itinerariesActions';
 
+
 const Comment = (props) => {
 
     const [comment, setComment] = useState({ flag: "trash", commentId: props.comment.commentId })
     const [changeInput, setChangeInput] = useState(false)
+    const [confirmOpen, setConfirmOpen] = useState(false)
     const [inputValue, setInputValue] = useState("") 
 
     useEffect(() => {
@@ -54,10 +56,17 @@ const Comment = (props) => {
         })
     }
 
-    console.log(props)
+    const confirmHandler = () => {
+        setConfirmOpen(true)
+    }
 
+    const closeConfirmation = () => {
+        setConfirmOpen(false)
+    }
+
+    
     return (
-        <div className="w-full ">
+        <div className="relative w-full ">
             <div className="w-full flex items-center justify-start gap-1 ">
                 <div className=" ">
                     <div 
@@ -77,12 +86,23 @@ const Comment = (props) => {
             </div>
             <div className="flex justify-end gap-3 pr-4 py-1">
                 <button className={props.userEmail === props.comment.userEmail ? "block" : "hidden"}>
-                    <FontAwesomeIcon onClick={() => { props.trashMessageHandle(props.comment.itineraryId, comment, props.token); trashMessageHandler2(); }}  icon={faTrashAlt} className="cursor-pointer"/>
+                    <FontAwesomeIcon onClick={() => { confirmHandler(); trashMessageHandler2(); }}  icon={faTrashAlt} className="cursor-pointer"/>
                 </button>
                 <button className={props.userEmail === props.comment.userEmail ? "block" : "hidden"}>
                     <FontAwesomeIcon onClick={editCommentHandler} icon={faPencilAlt} className="cursor-pointer"/>
                 </button>
             </div>
+            {
+            confirmOpen && <div className="absolute w-64 h-32 md:w-80 md:h-40 left-3 md:top-5 md:left-28 bg-indigo-300 bg-opacity-40 text-center border border-gray-200 rounded-md  ">
+                <div className="w-full h-full flex flex-col justify-center items-center gap-8">
+                    <h2 className="text-xl heroText">Are you sure?</h2>
+                    <div className="flex justify-center gap-12">
+                        <button onClick={closeConfirmation} className="btn py-1 px-3 ">No!</button>
+                        <button onClick={() => props.trashMessageHandle(props.comment.itineraryId, comment, props.token) } className="btn py-1 px-3 ">Erase</button>
+                    </div>
+                </div>
+            </div>
+            }
         </div>
     )
 }
