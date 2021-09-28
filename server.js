@@ -22,4 +22,4 @@ if (process.env.NODE_ENV === "production") {
     })
 }
 
-app.listen(process.env.PORT || 4000, process.env.HOST || "0.0.0.0", () => console.log("Server listening on port 4000"))
+app.listen(process.env.PORT, process.env.HOST, () => console.log("Server listening"))
