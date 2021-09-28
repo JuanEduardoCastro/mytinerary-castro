@@ -63,8 +63,6 @@ const itinerariesActions = {
             if (!response.data.success) {
                 throw new Error("There was a problem with the database")
             } else {
-                // let data = response.data.response
-                // dispatch({ type: "GET_COMMENTS", payload: data })
                 return response.data
             }
         }

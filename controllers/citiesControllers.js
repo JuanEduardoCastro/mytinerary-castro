@@ -16,7 +16,6 @@ const citiesControllers = {
         }
     },
 
-    //catchea error
     addCity: async (req, res) => {
         try {
         const city = new City({ ...req.body })
@@ -32,7 +31,6 @@ const citiesControllers = {
         }
     },
 
-    //catchea error
     getCity: async (req, res) => {
         try {
             var getCity = await City.findOne({ _id: req.params.id })
@@ -49,7 +47,6 @@ const citiesControllers = {
         }
     },
 
-    //catchea error
     removeCity: async (req, res) => {
         try {
             var removeCity = await City.findOneAndDelete({ _id: req.params.id })
@@ -64,7 +61,6 @@ const citiesControllers = {
         }
     },
 
-    //catchea error
     updateCity: async (req, res) => {
         try {
             var updateCity = await City.findOneAndUpdate({ _id: req.params.id}, {...req.body}, {new: true} )

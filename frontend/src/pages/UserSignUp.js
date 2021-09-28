@@ -6,8 +6,6 @@ import { Link } from 'react-router-dom';
 import GoogleLogin from "react-google-login";
 import Loader from '../components/Loader';
 
-// 1086726256498-432u6e7a0ukbsfj0lnkqqf3bli5u3c5a.apps.googleusercontent.com
-
 const UserSignUp = (props) => {
 
     document.title="Sign up"
@@ -33,13 +31,16 @@ const UserSignUp = (props) => {
                 return false
             }
         }
-        getCountries()
+        getCountries() 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     if (loader) {
         return <div><Loader /></div>
     }
+
+    let countries = props.countriesList.map(country => country.name.common)
+    countries = countries.sort()
 
     const inputHandler = (e) => {
         if ((e.target.value).length > 0) {
@@ -108,9 +109,11 @@ const UserSignUp = (props) => {
         }
         let response = await props.addNewUser(googleUser)
         if (!response.data.success) {
-            setUserGuide(response.data.error)           //ver impresion de errores
+            setUserGuide(response.data.error)           
         }
     }
+
+    
 
     return (
         <div 
@@ -125,14 +128,14 @@ const UserSignUp = (props) => {
                     </div>
                     <div className="w-full md:w-1/2 flex flex-col justify-center items-center">
                         <div className="flex flex-col h-40 md:h-full py-2">
-                            <h2 className="text-center text-4xl tracking-wide heroeText">Create an account!</h2>
+                            <h2 className="text-center text-4xl tracking-wide">Create an account!</h2>
                             <div className={`block md:hidden flex flex-col w-30 px-2.5 py-2 mt-4 text-justify bg-indigo-200 bg-opacity-80 rounded-sm shadow-md border border-gray-400 ${userGuide === "" ? "hidden" : "block"}`}>
                                 <h2 className={`${userGuide === "" ? "hidden" : "block"} text-sm text-black`}>{userGuide}</h2>
                             </div>
                         </div>
                         <div className="w-full">
                             <input 
-                                type="email"                //cambiar type a email ?? revisar
+                                type="email"                
                                 name="userEmail"
                                 placeholder="* Enter your email" 
                                 className={`inputBox w-full `}
@@ -181,8 +184,8 @@ const UserSignUp = (props) => {
                                 className="w-full bg-gradient-to-t from-indigo-500 to-indigo-200 px-4 py-2 text-lg ring-0 border rounded-md "
                                 onChange={inputHandler}>
                                 <option>* Select a country</option>
-                                {props.countriesList.map((country, index) => {
-                                    return <option value={country.name} key={index}>{country.name}</option>
+                                {countries.map((country, index) => {
+                                    return <option value={country} key={index}>{country}</option>
                                 })}
                             </select>
                             <div className="w-full h-5 mb-1">{errorJoi.userCountry && <h2 className="text-sm text-red-700">{errorJoi.userCountry}</h2>}</div>

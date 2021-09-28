@@ -55,7 +55,6 @@ const UserLogIn = (props) => {
     }
 
     const responseGoogle = async (info) => {
-        // console.log(info)
         let googleLogIn = {
             userEmail: info.profileObj.email,
             userPassword: info.profileObj.googleId,
@@ -80,14 +79,14 @@ const UserLogIn = (props) => {
                     </div> 
                     <div className="w-full md:w-1/2 flex flex-col justify-center items-center">
                         <div className="flex flex-col py-2">
-                            <h2 className="text-center text-3xl md:text-4xl tracking-wide heroText">Log into your account!</h2>
+                            <h2 className="text-center text-3xl md:text-4xl tracking-wide ">Log into your account!</h2>
                         </div>
                         <div className={`block md:hidden flex flex-col w-30 px-2.5 py-2 ml-1.5 mt- md:mt-14 text-justify bg-indigo-200 bg-opacity-80 rounded-sm shadow-md border border-gray-400 ${userGuide === "" ? "hidden" : "block"}`}>
                             <h2 className={`${userGuide === "" ? "hidden" : "block"} text-sm text-black`}>{userGuide}</h2>
                         </div>
                         <div className="w-full">
                             <input 
-                                type="email"                //cambiar type a email ?? revisar
+                                type="email"
                                 name="userEmail"
                                 placeholder="* Enter your email" 
                                 className={`inputBox w-full `}

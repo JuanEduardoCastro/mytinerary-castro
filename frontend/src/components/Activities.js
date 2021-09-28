@@ -3,8 +3,6 @@ import activitiesActions from "../redux/actions/activitiesActions";
 import { connect } from "react-redux";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-
-
 const Activities = (props) => {
 
     const [activities, setActivities] = useState([])
@@ -28,8 +26,8 @@ const Activities = (props) => {
             <Swiper
                 id="swiperActivites"
                 grabCursor={true}
-                navigation 
-                pagination={{"clickable": true}}
+                navigation
+                pagination={false}
                 spaceBetween={10} 
                 slidesPerView={1}
                 loop={true}
@@ -43,14 +41,13 @@ const Activities = (props) => {
                                 alt={`slide ${activity.activityTitle}`} 
                                 key={`slide-${index}`} 
                                 className="flex items-end w-full h-80 bg-center bg-cover rounded-md " >
-                                <div className="font-medium text-white text-xl md:text-xl p-2.5 text-justify bg-indigo-300 bg-opacity-80"> 
+                                <div className="w-full font-medium text-white text-xl md:text-xl p-2.5 text-justify bg-indigo-300 bg-opacity-80"> 
                                     <h2>{activity.activityTitle}</h2>
                                 </div>
                             </div>
                         </div>
                     </SwiperSlide>
-                ))}
-                
+                ))}  
             </Swiper>
         </div>
     )

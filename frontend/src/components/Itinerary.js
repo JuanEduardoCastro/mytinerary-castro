@@ -9,8 +9,6 @@ import { connect } from 'react-redux';
 import itinerariesActions from '../redux/actions/itinerariesActions';
 import { Link } from 'react-router-dom';
 
-
-
 const Itinerary = (props) => {
 
     const [activitesButton, setActivitiesButton] = useState(false)
@@ -69,10 +67,6 @@ const Itinerary = (props) => {
     async function updateLikes() {
         try {
             await props.updateLikes(props.token, props.itinerary._id)
-            // let response = 
-            // if (response) {
-            //     console.log(response.usersIdList)
-            // }
         } catch (error) {
             console.log("error")
         }
@@ -86,17 +80,15 @@ const Itinerary = (props) => {
         <div className="w-full h-full mb-14 ">
             <div className="w-9/12 border mx-auto shadow-md bg-gradient-to-b from-indigo-200">
                 <div className="text-2xl text-center p-2.5 sm:p-3">
-                    <h2 className="carouselText">{props.itinerary.itineraryName}</h2>                    
+                    <h2 className="">{props.itinerary.itineraryName}</h2>                    
                 </div>
                 <div className="flex flex-col md:flex-row m-2.5 justify-center ">
-                    {/* IMAGEN */}
                     <div className="w-auto md:w-2/5 h-auto p-4 md:p-2.5 ">
                         <div 
                         style={{backgroundImage: `url("${props.itinerary.itineraryPhoto}")`}} 
                         alt={`Photo ${props.itinerary.itineraryName}`}
                         className="w-full h-80 bg-cover bg-center rounded-md shadow-md"></div>
                     </div>
-                    {/* ESCRITO */}
                     <div className="flex flex-col w-auto md:w-3/5 h-auto border-2 border-grey-500 rounded-md shadow-md ">
                         <div className="relative flex items-center justify-between pr-12">
                             <div className="flex justify-start items-center p-4 gap-4 ">
@@ -142,7 +134,7 @@ const Itinerary = (props) => {
                     <div className={activitesButton ? "hidden" : "block"} >
                         <button onClick={activitiesButtonHandler} className="btn" >View more</button>
                     </div>
-                    <div className="w-full h-full fotoText">
+                    <div className="w-full h-full">
                         <div className={!activitesButton ? "hidden" : "block"}>
                             <div className="w-full h-full py-4 pb- flex flex-col items-center justify-around tracking-wide ">
                                 <div className="w-full h-full flex flex-col md:flex-row m-2.5 justify-center ">

@@ -42,7 +42,7 @@ const usersControllers = {
                 throw new Error("The username or password is not valid")
             } 
         } catch (error) {
-            res.json({ succes: false, error: error.message }) //revisar mensajes
+            res.json({ succes: false, error: error.message }) 
         }
     },
 

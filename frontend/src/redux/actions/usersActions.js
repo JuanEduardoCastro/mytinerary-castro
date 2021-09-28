@@ -41,7 +41,7 @@ const usersActions = {
 
     getCountriesList: () => {
         return async (dispatch) => {
-            let response = await axios.get("https://restcountries.eu/rest/v2/all?fields=name")
+            let response = await axios.get("https://restcountries.com/v3.1/all")
             if (!response.status === "200") {
                 throw new Error("Ther was a problem with the database")
             }

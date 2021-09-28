@@ -61,9 +61,6 @@ const Cities = (props) => {
         }
     }
 
-    //corregir vuelta extra 
-    // var citiesFromFilter = (inputValue === "" && filteredCities.length < 1 ? citiesList : filteredCities).map((filteredCity, index) => (
-
     var citiesFromFilter = (inputValue === "" ? props.allCitiesList : props.citiesFiltered).map((filteredCity, index) => (
         <Link to={`/city/${filteredCity._id}`} key={index} className="flex justify-center w-10/12 mx-auto">
             <div 
@@ -82,7 +79,7 @@ const Cities = (props) => {
                             <h2>{filteredCity.countryName}</h2>
                         </div> 
                         <div className="w-full h-full text-transparent sm:hover:text-black ">
-                            <div className="absolute w-8/12  bottom-3 right-3 sm:text-lg md:text-2xl lg:text:2xl text-justify fotoText" >
+                            <div className="absolute w-8/12  bottom-3 right-3 sm:text-lg md:text-2xl lg:text:2xl text-justify " >
                                 <h2>{filteredCity.description}</h2>
                             </div>
                         </div>

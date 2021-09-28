@@ -29,7 +29,6 @@ const Comments = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [send])
 
-    //input nuevo
     const inputHandler = (e) => {
         if (props.token) {
             setComment({
@@ -43,7 +42,6 @@ const Comments = (props) => {
         }
     }
 
-    //envia nuevo
     const sendCommentHandler = () => {
         if (props.token) {
             props.addNewComment(props.itineraryId, comment, props.token)
@@ -54,7 +52,6 @@ const Comments = (props) => {
         }
     }
     
-    //borrar
     const trashMessageHandle = (id, comment, token) => {
         if(props.token) {
             props.deleteCommentByUserId(id, comment, token)
@@ -64,7 +61,6 @@ const Comments = (props) => {
         }
     }
 
-    //editar
     const sendEditCommentHandler = (id, comment, token) => {
         if (props.token) {
             props.deleteCommentByUserId(id, comment, token)
@@ -81,12 +77,9 @@ const Comments = (props) => {
     return (
         <div className="flex flex-col items-center w-full h-full rounded-md">
             <div className="flex-col items-end justify-start w-11/12 h-5/6 mt-2 overflow-y-auto">
-            
-                {/* COMENTARIO */}
                 {commentsList.map((comment, index) => {
                     return <Comment key={index} sendEditCommentHandler={sendEditCommentHandler} trashMessageHandle={trashMessageHandle} comment={comment}  className="bg-red-300"/>
                 })}
-            
             </div> 
             <div className="relative w-4/5 flex flex-col items-center justify-center mx-auto pb-2">
                 <input 
@@ -108,7 +101,6 @@ const mapStateToProps = (state) => {
     return {
         token: state.users.token,
         userEmail: state.users.userEmailStore
-        /* commentsFromStore: state.itineraries.commentsStore */
     }
 }
 

@@ -73,7 +73,7 @@ export default class Home extends React.Component {
                     </div>
                 </div>
                 <div data-aos="fade-up" className="m-2 md:m-20">
-                    <div className="carouselText text-center text-3xl sm:text-4xl md:text-6xl mb-6 mt-6 md:mb-12 md:mr-8 permanentMarkerFont tracking-wider">
+                    <div className="text-center text-3xl sm:text-4xl md:text-6xl mb-6 mt-6 md:mb-12 md:mr-8 permanentMarkerFont tracking-wider">
                         <h2>Popular Mytineraries</h2>
                     </div>
                     {carousel}

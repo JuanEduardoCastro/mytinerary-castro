@@ -72,8 +72,7 @@ const itinerariesControllers = {
                 }
             }    
         } catch (error) {
-            res.json({ success: false, error: error.message/* "Couldn´t get the document" */})
-            console.log(error)
+            res.json({ success: false, error: error.message})
         }    
     },
 
@@ -124,7 +123,7 @@ const itinerariesControllers = {
                 throw new Error()
             }
         } catch (error) {
-            res.json({ success: false, error: "no pudo traer los itinerarios"})
+            res.json({ success: false, error: "Sorry. We had a problem with database"})
         }
     },
 
@@ -136,7 +135,7 @@ const itinerariesControllers = {
                     res.json({ success: true, response: editItineraryComment })
                 }
             } catch (error) {
-                console.log(error)
+                res.json({ success: false, error: "Sorry. We had a problem with database"})
             }
         } else if (req.body.comment.flag === "trash") {
             try {
@@ -147,16 +146,15 @@ const itinerariesControllers = {
                     throw new Error("no se pudo borrar")
                 }
             } catch (error) {
-                console.log( error )
+                res.json({ success: false, error: "Sorry. We had a problem with database"})
             }
         } else {
-            // console.log("entro al else para agregar nuevo")
             try {
                 let addNewItineraryComment = await Itinerary.findOneAndUpdate({ _id: req.params.id }, { $push: { "comments": { "itineraryId": req.body.comment.itineraryId, "userName": req.user.userName, "userPhoto": req.user.userPhoto, "userComment": req.body.comment.userComment, "userId": req.user._id, "commentId": req.body.comment.commentId, "userEmail": req.user.userEmail }}})
                 if (addNewItineraryComment) {
                     res.json({ success: true, response: addNewItineraryComment })
                 } else {
-                    throw new Error ("no grabo el comentario")
+                    res.json({ success: false, error: "Sorry. We had a problem with database"})
                 }
             } catch (error) {
                 res.json({ success: false, error: error.message})

@@ -10,7 +10,6 @@ import { motion } from "framer-motion";
 import { connect } from "react-redux";
 import usersActions from "../redux/actions/usersActions";
 
-
 const Footer = (props) => {
     
     const [isOpenMenuGuy, setIsOpenMenuGuy] = useState(false)
@@ -40,7 +39,7 @@ const Footer = (props) => {
     }
 
     return (
-        <footer className="bg-indigo-500 gap-2 sm:gap-0 bg-opacity-90 w-full h-60 flex flex-col justify-between fotoText">
+        <footer className="bg-indigo-500 gap-2 sm:gap-0 bg-opacity-90 w-full h-60 flex flex-col justify-between ">
             <div data-aos="fade-up" className="flex flex-col items-center justify-center w-full px-12 gap-2 md:flex md:flex-row md:justify-center  md:items-center md:w-full md:h-3/5 pt-4 lg:px-40">
                 <div className=" justify-center items-center  gap-3 text-4xl pt-8 font-semibold tracking-wider hidden md:block permanentMarkerFont">
                     <img src="https://i.imgur.com/slgCIZZ.png" alt="logo mytinenrary" className="w-24 h-24"/>

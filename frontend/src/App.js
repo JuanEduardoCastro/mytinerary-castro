@@ -31,7 +31,6 @@ const App = (props) => {
         {!props.token && <Route path="/login" component={UserLogIn} />}
         <Route path="/error404" component={Error404} /> 
         {!props.token ? <Redirect to="/Error404"/> : <Redirect to="/"/>}
-        {/* <Redirect to="/" /> */}
       </Switch>
       <Footer />
     </BrowserRouter>

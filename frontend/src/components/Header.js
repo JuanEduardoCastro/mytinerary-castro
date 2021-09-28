@@ -9,7 +9,6 @@ import { connect } from "react-redux";
 import usersActions from '../redux/actions/usersActions';
 import { motion } from "framer-motion";
 
-
 const Header = (props) => {
 
     const [isOpenMenu, setIsOpenMenu] = useState(false)
@@ -29,7 +28,9 @@ const Header = (props) => {
 
     const logOutClick = () => {
         props.logOutUser()
-        props.history.push("/")
+        if (window.location.pathname !== '/') {
+            props.history.push("/")
+        }
     }
 
     const clickAwayRef = useClickAwayListener(handleClickAway)
@@ -57,7 +58,7 @@ const Header = (props) => {
                     <img src="https://i.imgur.com/slgCIZZ.png" alt="logo mytinerary" className="w-24 h-24 m-1"/>
                     <h1 className={`${props.textColorTag && dinamicTextColor.white }`} >Mytinerary</h1>
                 </div>
-                <div className="w-full h-full flex justify-between md:justify-end items-start md:items-start md:gap-4 pt-3 px-8 fotoText">
+                <div className="w-full h-full flex justify-between md:justify-end items-start md:items-start md:gap-4 pt-3 px-8">
                     <div className=" flex flex-col items-start justify-center pt-4">
                         <motion.div    
                             ref={clickAwayRef}                     

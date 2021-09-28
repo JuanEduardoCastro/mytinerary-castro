@@ -17,7 +17,6 @@ const Comment = (props) => {
         setComment({ flag: "trash", commentId: props.comment.commentId })
     }, [])
     
-    //input
     const editInputHandler = (e) => {
         setInputValue(e.target.value)
         setComment({ 
@@ -27,7 +26,6 @@ const Comment = (props) => {
         })
     }
 
-    //boton editar
     const editCommentHandler = () => {
         setChangeInput(!changeInput)
         setComment({
@@ -35,10 +33,8 @@ const Comment = (props) => {
             userComment: inputValue,
             flag: "edit"
         })
-        
     }
 
-    //mandar msg editado
     const sendEditCommentHandler2 = () => {
         setChangeInput(!changeInput)
         setComment({ 
@@ -46,7 +42,6 @@ const Comment = (props) => {
             userComment: inputValue,
             flag: "trash",
         })
-
     }
 
     const trashMessageHandler2 = () => {
@@ -64,7 +59,6 @@ const Comment = (props) => {
         setConfirmOpen(false)
     }
 
-    
     return (
         <div className="relative w-full ">
             <div className="w-full flex items-center justify-start gap-1 ">
@@ -95,7 +89,7 @@ const Comment = (props) => {
             {
             confirmOpen && <div className="absolute w-64 h-32 md:w-80 md:h-40 left-3 md:top-5 md:left-28 bg-indigo-300 bg-opacity-40 text-center border border-gray-200 rounded-md  ">
                 <div className="w-full h-full flex flex-col justify-center items-center gap-8">
-                    <h2 className="text-xl heroText">Are you sure?</h2>
+                    <h2 className="text-xl ">Are you sure?</h2>
                     <div className="flex justify-center gap-12">
                         <button onClick={closeConfirmation} className="btn py-1 px-3 ">No!</button>
                         <button onClick={() => props.trashMessageHandle(props.comment.itineraryId, comment, props.token) } className="btn py-1 px-3 ">Erase</button>
@@ -106,6 +100,7 @@ const Comment = (props) => {
         </div>
     )
 }
+
 const mapStateToProps = (state) => {
     return {
         token: state.users.token,
