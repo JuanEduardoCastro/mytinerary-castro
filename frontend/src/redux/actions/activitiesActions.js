@@ -4,7 +4,7 @@ const activitiesActions = {
 
     getActivitiesOfItinerary: (id) => {
         return async (dispatch) => {
-            let response = await axios.get(`http://localhost:4000/api/activities/${id}`) 
+            let response = await axios.get(`https://mytinerary-castro.herokuapp.com/api/activities/${id}`) 
             if (!response.data.success) {
                 throw new Error("problema con DB")
             } else {

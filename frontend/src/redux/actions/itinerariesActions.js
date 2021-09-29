@@ -4,7 +4,7 @@ const itinerariesActions = {
 
     getItineraries: () => {
         return async (dispatch) => {
-            let response = await axios.get("http://localhost:4000/api/itineraries")
+            let response = await axios.get("https://mytinerary-castro.herokuapp.com/api/itineraries")
             if (!response.data.success) {
                 throw new Error("There was a problem with the database")
             }
@@ -15,7 +15,7 @@ const itinerariesActions = {
     
     getItinerariesOfACity: (cityId) => {
         return async (dispatch) => {
-            let response = await axios.get(`http://localhost:4000/api/itineraries/${cityId}`)
+            let response = await axios.get(`https://mytinerary-castro.herokuapp.com/api/itineraries/${cityId}`)
             if (!response.data.success) {
                 throw new Error("There was a problem with the database")
             }
@@ -26,7 +26,7 @@ const itinerariesActions = {
 
     getItineraryForUserLike: (token, id) => {
         return async (dispatch) => {
-            let response = await axios.get(`http://localhost:4000/api/itinerary/likes/${id}`, { headers: { Authorization: "Bearer " + token }}, )
+            let response = await axios.get(`https://mytinerary-castro.herokuapp.com/api/itinerary/likes/${id}`, { headers: { Authorization: "Bearer " + token }}, )
             if (!response.data.success) {
                 throw new Error("There was a problem with the database")
             } else {
@@ -37,7 +37,7 @@ const itinerariesActions = {
 
     updateLikes: (token, id) => {
         return async (dispatch) => {
-            let response = await axios.put(`http://localhost:4000/api/itinerary/likes/${id}`, void 0, { headers: { Authorization: "Bearer " + token }}, )
+            let response = await axios.put(`https://mytinerary-castro.herokuapp.com/api/itinerary/likes/${id}`, void 0, { headers: { Authorization: "Bearer " + token }}, )
             if (!response.data.success) {
                 throw new Error("There was a problem with the database")
             } else {
@@ -48,7 +48,7 @@ const itinerariesActions = {
 
     addNewComment: (id, comment, token) => {
         return async (dispatch) => {
-            let response = await axios.put(`http://localhost:4000/api/itinerary/comments/${id}`, { comment }, { headers: { Authorization: "Bearer " + token }}, )
+            let response = await axios.put(`https://mytinerary-castro.herokuapp.com/api/itinerary/comments/${id}`, { comment }, { headers: { Authorization: "Bearer " + token }}, )
             if (!response.data.success) {
                 throw new Error("There was a problem with the database")
             } else {
@@ -59,7 +59,7 @@ const itinerariesActions = {
 
     getComments: (id) => {
         return async (dispatch) => {
-            let response = await axios.get(`http://localhost:4000/api/itinerary/comments/${id}`)
+            let response = await axios.get(`https://mytinerary-castro.herokuapp.com/api/itinerary/comments/${id}`)
             if (!response.data.success) {
                 throw new Error("There was a problem with the database")
             } else {
@@ -70,7 +70,7 @@ const itinerariesActions = {
 
     deleteCommentByUserId: (id, comment, token) => {
         return async (dispatch) => {
-            let response = await axios.put(`http://localhost:4000/api/itinerary/comments/${id}`,  { comment } , { headers: { Authorization: "Bearer " + token }}, )
+            let response = await axios.put(`https://mytinerary-castro.herokuapp.com/api/itinerary/comments/${id}`,  { comment } , { headers: { Authorization: "Bearer " + token }}, )
             if (!response.data.success) {
                 throw new Error("problem con database")
             } else {
